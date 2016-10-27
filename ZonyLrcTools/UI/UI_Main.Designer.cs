@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_Main));
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStrip_TopMenus = new System.Windows.Forms.ToolStrip();
             this.button_SetWorkDirectory = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.button_DownLoadLyric = new System.Windows.Forms.ToolStripButton();
@@ -52,18 +53,21 @@
             this.pictureBox_AlbumImage = new System.Windows.Forms.PictureBox();
             this.label_Lryic = new System.Windows.Forms.Label();
             this.textBox_Lryic = new System.Windows.Forms.TextBox();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip_BottomTools = new System.Windows.Forms.StatusStrip();
             this.statusLabel_StateText = new System.Windows.Forms.ToolStripStatusLabel();
             this.progress_DownLoad = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStrip1.SuspendLayout();
+            this.contextMenuStrip_FileListView = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuItem_EditLyric = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip_TopMenus.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_AlbumImage)).BeginInit();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip_BottomTools.SuspendLayout();
+            this.contextMenuStrip_FileListView.SuspendLayout();
             this.SuspendLayout();
             // 
-            // toolStrip1
+            // toolStrip_TopMenus
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStrip_TopMenus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.button_SetWorkDirectory,
             this.toolStripSeparator1,
             this.button_DownLoadLyric,
@@ -74,11 +78,11 @@
             this.button_AboutSoftware,
             this.toolStripSeparator3,
             this.button_PluginsMrg});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1007, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip_TopMenus";
+            this.toolStrip_TopMenus.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip_TopMenus.Name = "toolStrip_TopMenus";
+            this.toolStrip_TopMenus.Size = new System.Drawing.Size(1007, 25);
+            this.toolStrip_TopMenus.TabIndex = 0;
+            this.toolStrip_TopMenus.Text = "toolStrip_TopMenus";
             // 
             // button_SetWorkDirectory
             // 
@@ -154,6 +158,10 @@
             // 
             // listView1
             // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView1.ContextMenuStrip = this.contextMenuStrip_FileListView;
             this.listView1.Location = new System.Drawing.Point(12, 28);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(746, 496);
@@ -162,6 +170,8 @@
             // 
             // groupBox_MusicInfo
             // 
+            this.groupBox_MusicInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox_MusicInfo.Controls.Add(this.textBox_Lryic);
             this.groupBox_MusicInfo.Controls.Add(this.label_Lryic);
             this.groupBox_MusicInfo.Controls.Add(this.pictureBox_AlbumImage);
@@ -264,16 +274,16 @@
             this.textBox_Lryic.Size = new System.Drawing.Size(213, 130);
             this.textBox_Lryic.TabIndex = 4;
             // 
-            // statusStrip1
+            // statusStrip_BottomTools
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip_BottomTools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel_StateText,
             this.progress_DownLoad});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 533);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1007, 22);
-            this.statusStrip1.TabIndex = 3;
-            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip_BottomTools.Location = new System.Drawing.Point(0, 533);
+            this.statusStrip_BottomTools.Name = "statusStrip_BottomTools";
+            this.statusStrip_BottomTools.Size = new System.Drawing.Size(1007, 22);
+            this.statusStrip_BottomTools.TabIndex = 3;
+            this.statusStrip_BottomTools.Text = "statusStrip1";
             // 
             // statusLabel_StateText
             // 
@@ -287,26 +297,42 @@
             this.progress_DownLoad.Name = "progress_DownLoad";
             this.progress_DownLoad.Size = new System.Drawing.Size(222, 16);
             // 
+            // contextMenuStrip_FileListView
+            // 
+            this.contextMenuStrip_FileListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_EditLyric});
+            this.contextMenuStrip_FileListView.Name = "contextMenuStrip_FileListView";
+            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(149, 26);
+            // 
+            // ToolStripMenuItem_EditLyric
+            // 
+            this.ToolStripMenuItem_EditLyric.Name = "ToolStripMenuItem_EditLyric";
+            this.ToolStripMenuItem_EditLyric.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_EditLyric.Text = "编辑选中歌词";
+            // 
             // UI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1007, 555);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip_BottomTools);
             this.Controls.Add(this.groupBox_MusicInfo);
             this.Controls.Add(this.listView1);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.toolStrip_TopMenus);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "UI_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZonyLrcTools";
             this.Load += new System.EventHandler(this.UI_Main_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.toolStrip_TopMenus.ResumeLayout(false);
+            this.toolStrip_TopMenus.PerformLayout();
             this.groupBox_MusicInfo.ResumeLayout(false);
             this.groupBox_MusicInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_AlbumImage)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip_BottomTools.ResumeLayout(false);
+            this.statusStrip_BottomTools.PerformLayout();
+            this.contextMenuStrip_FileListView.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,7 +340,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip toolStrip_TopMenus;
         private System.Windows.Forms.ToolStripButton button_SetWorkDirectory;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton button_DownLoadLyric;
@@ -337,8 +363,10 @@
         private System.Windows.Forms.PictureBox pictureBox_AlbumImage;
         private System.Windows.Forms.Label label_Lryic;
         private System.Windows.Forms.TextBox textBox_Lryic;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip_BottomTools;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel_StateText;
         private System.Windows.Forms.ToolStripProgressBar progress_DownLoad;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip_FileListView;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_EditLyric;
     }
 }
