@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("ZonyLrcTools")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("集成歌词下载，编辑，以及歌曲信息编辑。")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Zony")]
 [assembly: AssemblyProduct("ZonyLrcTools")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]

@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ZonyLrcTools
+namespace ZonyLrcTools.UI
 {
-    public partial class Form1 : Form
+    public partial class UI_Settings : Form
     {
-        public Form1()
+        public UI_Settings()
         {
             InitializeComponent();
         }
