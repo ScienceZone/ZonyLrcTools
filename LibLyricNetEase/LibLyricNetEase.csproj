@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AA0B7F42-C97B-4052-B92A-E6AE2B63B14A}</ProjectGuid>
+    <ProjectGuid>{CACF706F-0BB4-4D6F-8780-C1F2BAA4DEEC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LibPlug</RootNamespace>
-    <AssemblyName>LibPlug</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>LibLyricNetEase</RootNamespace>
+    <AssemblyName>LibLyricNetEase</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,12 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interface\IPlug_Lrc.cs" />
-    <Compile Include="Model\MusicInfoModel.cs" />
-    <Compile Include="PluginsAttribute.cs" />
-    <Compile Include="PluginTypesEnum.cs" />
+    <Compile Include="LibLyricNetEase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\ResourceModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibPlug\LibPlug.csproj">
+      <Project>{AA0B7F42-C97B-4052-B92A-E6AE2B63B14A}</Project>
+      <Name>LibPlug</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
