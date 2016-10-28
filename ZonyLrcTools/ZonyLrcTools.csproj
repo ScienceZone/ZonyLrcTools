@@ -100,6 +100,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UI\UI_Donate.resx">
+      <DependentUpon>UI_Donate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\UI_Main.resx">
       <DependentUpon>UI_Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -121,6 +124,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resource\Icon\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibNet\LibNet.csproj">
+      <Project>{D38DDC8C-36C2-47EB-B40E-3B5B11B469A9}</Project>
+      <Name>LibNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibPlug\LibPlug.csproj">
+      <Project>{AA0B7F42-C97B-4052-B92A-E6AE2B63B14A}</Project>
+      <Name>LibPlug</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

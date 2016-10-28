@@ -31,6 +31,7 @@ namespace ZonyLrcTools.UI
 
         private void UI_Main_Load(object sender, EventArgs e)
         {
+            CheckForIllegalCrossThreadCalls = false;
             setBottomStatusText(StatusHeadEnum.WAIT, "等待操作...");
         }
 
@@ -42,6 +43,11 @@ namespace ZonyLrcTools.UI
         private void setBottomStatusText(string head, string content)
         {
             statusLabel_StateText.Text = string.Format("{0}:{1}", head, content);
+        }
+
+        private void button_DonateAuthor_Click(object sender, EventArgs e)
+        {
+            new UI_Donate().ShowDialog();
         }
     }
 }
