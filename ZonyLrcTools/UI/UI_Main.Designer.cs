@@ -42,27 +42,27 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.button_PluginsMrg = new System.Windows.Forms.ToolStripButton();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.contextMenuStrip_FileListView = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuItem_EditLyric = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox_MusicInfo = new System.Windows.Forms.GroupBox();
-            this.label_MusicTitle = new System.Windows.Forms.Label();
-            this.textBox_MusicTitle = new System.Windows.Forms.TextBox();
-            this.label_Aritst = new System.Windows.Forms.Label();
-            this.textBox_Aritst = new System.Windows.Forms.TextBox();
-            this.label_Album = new System.Windows.Forms.Label();
-            this.textBox_Album = new System.Windows.Forms.TextBox();
-            this.label_AlbumImage = new System.Windows.Forms.Label();
-            this.pictureBox_AlbumImage = new System.Windows.Forms.PictureBox();
-            this.label_Lryic = new System.Windows.Forms.Label();
             this.textBox_Lryic = new System.Windows.Forms.TextBox();
+            this.label_Lryic = new System.Windows.Forms.Label();
+            this.pictureBox_AlbumImage = new System.Windows.Forms.PictureBox();
+            this.label_AlbumImage = new System.Windows.Forms.Label();
+            this.textBox_Album = new System.Windows.Forms.TextBox();
+            this.label_Album = new System.Windows.Forms.Label();
+            this.textBox_Aritst = new System.Windows.Forms.TextBox();
+            this.label_Aritst = new System.Windows.Forms.Label();
+            this.textBox_MusicTitle = new System.Windows.Forms.TextBox();
+            this.label_MusicTitle = new System.Windows.Forms.Label();
             this.statusStrip_BottomTools = new System.Windows.Forms.StatusStrip();
             this.statusLabel_StateText = new System.Windows.Forms.ToolStripStatusLabel();
             this.progress_DownLoad = new System.Windows.Forms.ToolStripProgressBar();
-            this.contextMenuStrip_FileListView = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripMenuItem_EditLyric = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip_TopMenus.SuspendLayout();
+            this.contextMenuStrip_FileListView.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_AlbumImage)).BeginInit();
             this.statusStrip_BottomTools.SuspendLayout();
-            this.contextMenuStrip_FileListView.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip_TopMenus
@@ -168,6 +168,19 @@
             this.listView1.TabIndex = 1;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
+            // contextMenuStrip_FileListView
+            // 
+            this.contextMenuStrip_FileListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_EditLyric});
+            this.contextMenuStrip_FileListView.Name = "contextMenuStrip_FileListView";
+            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(149, 26);
+            // 
+            // ToolStripMenuItem_EditLyric
+            // 
+            this.ToolStripMenuItem_EditLyric.Name = "ToolStripMenuItem_EditLyric";
+            this.ToolStripMenuItem_EditLyric.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem_EditLyric.Text = "编辑选中歌词";
+            // 
             // groupBox_MusicInfo
             // 
             this.groupBox_MusicInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -189,71 +202,15 @@
             this.groupBox_MusicInfo.TabStop = false;
             this.groupBox_MusicInfo.Text = "歌曲信息";
             // 
-            // label_MusicTitle
+            // textBox_Lryic
             // 
-            this.label_MusicTitle.AutoSize = true;
-            this.label_MusicTitle.Location = new System.Drawing.Point(6, 17);
-            this.label_MusicTitle.Name = "label_MusicTitle";
-            this.label_MusicTitle.Size = new System.Drawing.Size(35, 12);
-            this.label_MusicTitle.TabIndex = 0;
-            this.label_MusicTitle.Text = "标题:";
-            // 
-            // textBox_MusicTitle
-            // 
-            this.textBox_MusicTitle.Location = new System.Drawing.Point(8, 32);
-            this.textBox_MusicTitle.Name = "textBox_MusicTitle";
-            this.textBox_MusicTitle.Size = new System.Drawing.Size(213, 21);
-            this.textBox_MusicTitle.TabIndex = 1;
-            // 
-            // label_Aritst
-            // 
-            this.label_Aritst.AutoSize = true;
-            this.label_Aritst.Location = new System.Drawing.Point(6, 56);
-            this.label_Aritst.Name = "label_Aritst";
-            this.label_Aritst.Size = new System.Drawing.Size(77, 12);
-            this.label_Aritst.TabIndex = 0;
-            this.label_Aritst.Text = "艺术家/歌手:";
-            // 
-            // textBox_Aritst
-            // 
-            this.textBox_Aritst.Location = new System.Drawing.Point(8, 71);
-            this.textBox_Aritst.Name = "textBox_Aritst";
-            this.textBox_Aritst.Size = new System.Drawing.Size(213, 21);
-            this.textBox_Aritst.TabIndex = 1;
-            // 
-            // label_Album
-            // 
-            this.label_Album.AutoSize = true;
-            this.label_Album.Location = new System.Drawing.Point(6, 95);
-            this.label_Album.Name = "label_Album";
-            this.label_Album.Size = new System.Drawing.Size(77, 12);
-            this.label_Album.TabIndex = 0;
-            this.label_Album.Text = "专辑/唱片集:";
-            // 
-            // textBox_Album
-            // 
-            this.textBox_Album.Location = new System.Drawing.Point(8, 110);
-            this.textBox_Album.Name = "textBox_Album";
-            this.textBox_Album.Size = new System.Drawing.Size(213, 21);
-            this.textBox_Album.TabIndex = 1;
-            // 
-            // label_AlbumImage
-            // 
-            this.label_AlbumImage.AutoSize = true;
-            this.label_AlbumImage.Location = new System.Drawing.Point(6, 134);
-            this.label_AlbumImage.Name = "label_AlbumImage";
-            this.label_AlbumImage.Size = new System.Drawing.Size(59, 12);
-            this.label_AlbumImage.TabIndex = 0;
-            this.label_AlbumImage.Text = "专辑图片:";
-            // 
-            // pictureBox_AlbumImage
-            // 
-            this.pictureBox_AlbumImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox_AlbumImage.Location = new System.Drawing.Point(14, 149);
-            this.pictureBox_AlbumImage.Name = "pictureBox_AlbumImage";
-            this.pictureBox_AlbumImage.Size = new System.Drawing.Size(200, 200);
-            this.pictureBox_AlbumImage.TabIndex = 2;
-            this.pictureBox_AlbumImage.TabStop = false;
+            this.textBox_Lryic.Location = new System.Drawing.Point(8, 367);
+            this.textBox_Lryic.MaxLength = 0;
+            this.textBox_Lryic.Multiline = true;
+            this.textBox_Lryic.Name = "textBox_Lryic";
+            this.textBox_Lryic.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.textBox_Lryic.Size = new System.Drawing.Size(213, 130);
+            this.textBox_Lryic.TabIndex = 4;
             // 
             // label_Lryic
             // 
@@ -264,15 +221,71 @@
             this.label_Lryic.TabIndex = 3;
             this.label_Lryic.Text = "歌词:";
             // 
-            // textBox_Lryic
+            // pictureBox_AlbumImage
             // 
-            this.textBox_Lryic.Location = new System.Drawing.Point(8, 367);
-            this.textBox_Lryic.MaxLength = 0;
-            this.textBox_Lryic.Multiline = true;
-            this.textBox_Lryic.Name = "textBox_Lryic";
-            this.textBox_Lryic.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox_Lryic.Size = new System.Drawing.Size(213, 130);
-            this.textBox_Lryic.TabIndex = 4;
+            this.pictureBox_AlbumImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox_AlbumImage.Location = new System.Drawing.Point(14, 149);
+            this.pictureBox_AlbumImage.Name = "pictureBox_AlbumImage";
+            this.pictureBox_AlbumImage.Size = new System.Drawing.Size(200, 200);
+            this.pictureBox_AlbumImage.TabIndex = 2;
+            this.pictureBox_AlbumImage.TabStop = false;
+            // 
+            // label_AlbumImage
+            // 
+            this.label_AlbumImage.AutoSize = true;
+            this.label_AlbumImage.Location = new System.Drawing.Point(6, 134);
+            this.label_AlbumImage.Name = "label_AlbumImage";
+            this.label_AlbumImage.Size = new System.Drawing.Size(59, 12);
+            this.label_AlbumImage.TabIndex = 0;
+            this.label_AlbumImage.Text = "专辑图片:";
+            // 
+            // textBox_Album
+            // 
+            this.textBox_Album.Location = new System.Drawing.Point(8, 110);
+            this.textBox_Album.Name = "textBox_Album";
+            this.textBox_Album.Size = new System.Drawing.Size(213, 21);
+            this.textBox_Album.TabIndex = 1;
+            // 
+            // label_Album
+            // 
+            this.label_Album.AutoSize = true;
+            this.label_Album.Location = new System.Drawing.Point(6, 95);
+            this.label_Album.Name = "label_Album";
+            this.label_Album.Size = new System.Drawing.Size(77, 12);
+            this.label_Album.TabIndex = 0;
+            this.label_Album.Text = "专辑/唱片集:";
+            // 
+            // textBox_Aritst
+            // 
+            this.textBox_Aritst.Location = new System.Drawing.Point(8, 71);
+            this.textBox_Aritst.Name = "textBox_Aritst";
+            this.textBox_Aritst.Size = new System.Drawing.Size(213, 21);
+            this.textBox_Aritst.TabIndex = 1;
+            // 
+            // label_Aritst
+            // 
+            this.label_Aritst.AutoSize = true;
+            this.label_Aritst.Location = new System.Drawing.Point(6, 56);
+            this.label_Aritst.Name = "label_Aritst";
+            this.label_Aritst.Size = new System.Drawing.Size(77, 12);
+            this.label_Aritst.TabIndex = 0;
+            this.label_Aritst.Text = "艺术家/歌手:";
+            // 
+            // textBox_MusicTitle
+            // 
+            this.textBox_MusicTitle.Location = new System.Drawing.Point(8, 32);
+            this.textBox_MusicTitle.Name = "textBox_MusicTitle";
+            this.textBox_MusicTitle.Size = new System.Drawing.Size(213, 21);
+            this.textBox_MusicTitle.TabIndex = 1;
+            // 
+            // label_MusicTitle
+            // 
+            this.label_MusicTitle.AutoSize = true;
+            this.label_MusicTitle.Location = new System.Drawing.Point(6, 17);
+            this.label_MusicTitle.Name = "label_MusicTitle";
+            this.label_MusicTitle.Size = new System.Drawing.Size(35, 12);
+            this.label_MusicTitle.TabIndex = 0;
+            this.label_MusicTitle.Text = "标题:";
             // 
             // statusStrip_BottomTools
             // 
@@ -297,19 +310,6 @@
             this.progress_DownLoad.Name = "progress_DownLoad";
             this.progress_DownLoad.Size = new System.Drawing.Size(222, 16);
             // 
-            // contextMenuStrip_FileListView
-            // 
-            this.contextMenuStrip_FileListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_EditLyric});
-            this.contextMenuStrip_FileListView.Name = "contextMenuStrip_FileListView";
-            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(149, 26);
-            // 
-            // ToolStripMenuItem_EditLyric
-            // 
-            this.ToolStripMenuItem_EditLyric.Name = "ToolStripMenuItem_EditLyric";
-            this.ToolStripMenuItem_EditLyric.Size = new System.Drawing.Size(152, 22);
-            this.ToolStripMenuItem_EditLyric.Text = "编辑选中歌词";
-            // 
             // UI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -324,15 +324,16 @@
             this.Name = "UI_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZonyLrcTools";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UI_Main_FormClosed);
             this.Load += new System.EventHandler(this.UI_Main_Load);
             this.toolStrip_TopMenus.ResumeLayout(false);
             this.toolStrip_TopMenus.PerformLayout();
+            this.contextMenuStrip_FileListView.ResumeLayout(false);
             this.groupBox_MusicInfo.ResumeLayout(false);
             this.groupBox_MusicInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_AlbumImage)).EndInit();
             this.statusStrip_BottomTools.ResumeLayout(false);
             this.statusStrip_BottomTools.PerformLayout();
-            this.contextMenuStrip_FileListView.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

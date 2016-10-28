@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ZonyLrcTools.Enum;
+using ZonyLrcTools.EnumDefine;
 
 namespace ZonyLrcTools.UI
 {
@@ -29,14 +29,19 @@ namespace ZonyLrcTools.UI
             }
         }
 
-        private void setBottomStatusText(string head,string content)
-        {
-            statusLabel_StateText.Text = string.Format("{0}:{1}", head, content);
-        }
-
         private void UI_Main_Load(object sender, EventArgs e)
         {
             setBottomStatusText(StatusHeadEnum.WAIT, "等待操作...");
+        }
+
+        private void UI_Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void setBottomStatusText(string head, string content)
+        {
+            statusLabel_StateText.Text = string.Format("{0}:{1}", head, content);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace ZonyLrcTools.Enum
+﻿namespace ZonyLrcTools.EnumDefine
 {
     public struct StatusHeadEnum
     {
