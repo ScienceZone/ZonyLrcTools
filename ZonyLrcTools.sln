@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLyricNetEase", "LibLyric
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibNet", "LibNet\LibNet.csproj", "{D38DDC8C-36C2-47EB-B40E-3B5B11B469A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibMusicInfo.cs", "LibMusicInfo.cs\LibMusicInfo.cs.csproj", "{D5478546-C869-479D-A986-D75557CFB3AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D38DDC8C-36C2-47EB-B40E-3B5B11B469A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D38DDC8C-36C2-47EB-B40E-3B5B11B469A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D38DDC8C-36C2-47EB-B40E-3B5B11B469A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5478546-C869-479D-A986-D75557CFB3AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5478546-C869-479D-A986-D75557CFB3AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5478546-C869-479D-A986-D75557CFB3AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5478546-C869-479D-A986-D75557CFB3AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

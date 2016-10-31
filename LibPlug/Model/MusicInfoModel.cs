@@ -29,5 +29,9 @@
         /// 歌曲文件后缀名
         /// </summary>
         public string FileExt { get; set; }
+        /// <summary>
+        /// 标签类型
+        /// </summary>
+        public string TagType { get; set; }
     }
 }

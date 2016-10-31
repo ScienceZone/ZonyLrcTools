@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CACF706F-0BB4-4D6F-8780-C1F2BAA4DEEC}</ProjectGuid>
+    <ProjectGuid>{D5478546-C869-479D-A986-D75557CFB3AF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LibLyricNetEase</RootNamespace>
-    <AssemblyName>LibLyricNetEase</AssemblyName>
+    <RootNamespace>LibMusicInfo.cs</RootNamespace>
+    <AssemblyName>LibMusicInfo.cs</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ID3">
+      <HintPath>..\..\ZonyLrcDownLoad 4\ZonyLrcDownLoad 4\DLL\ID3.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LibLyricNetEase.cs" />
+    <Compile Include="LibMusicInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

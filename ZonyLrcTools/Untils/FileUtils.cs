@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LibPlug.Model;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -55,6 +57,42 @@ namespace ZonyLrcTools.Untils
                 return false;
             }
             return false;
+        }
+
+        /// <summary>
+        /// 搜索文件，并将文件存入全局音乐文件字典
+        /// </summary>
+        /// <param name="dirPath">要搜索的目录</param>
+        /// <param name="exts">音乐文件后缀名集合</param>
+        /// <returns></returns>
+        public static bool SearchFiles(string dirPath,string[] exts)
+        {
+            if (!Directory.Exists(dirPath)) return false;
+            int _invaildCount = 0; // 未搜索到的后缀名文件计数
+            try
+            {
+                foreach(var ext in exts)
+                {
+                    string[] _files = Directory.GetFiles(dirPath, ext, SearchOption.AllDirectories);
+                    if (_files.Length > 0)
+                    {
+                        int _count = 0;
+                        foreach (var fileName in _files)
+                        {
+                            GlobalMember.AllMusics.Add(_count, new MusicInfoModel() { Path = fileName });
+                            _count++;
+                        }
+                    }
+                    else _invaildCount++;
+                }
+
+                if (_invaildCount == exts.Length) return false;
+                else return true;
+            }
+            catch(Exception E)
+            {
+                return false;
+            }
         }
     }
 }

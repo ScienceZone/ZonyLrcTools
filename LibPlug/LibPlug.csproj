@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\IPlug_Lrc.cs" />
+    <Compile Include="Interface\IPlug_MusicTag.cs" />
     <Compile Include="Model\MusicInfoModel.cs" />
     <Compile Include="PluginsAttribute.cs" />
     <Compile Include="PluginTypesEnum.cs" />

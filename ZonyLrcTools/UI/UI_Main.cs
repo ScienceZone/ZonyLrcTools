@@ -8,6 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZonyLrcTools.EnumDefine;
+using System.Threading;
+using ZonyLrcTools.Untils;
+using LibPlug.Model;
+using System.IO;
+using LibPlug.Interface;
 
 namespace ZonyLrcTools.UI
 {
@@ -26,13 +31,29 @@ namespace ZonyLrcTools.UI
             if(!string.IsNullOrEmpty(_folderDlg.SelectedPath))
             {
                 setBottomStatusText(StatusHeadEnum.NORMAL, "开始扫描目录...");
+                button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = false;
+
+                if (FileUtils.SearchFiles(_folderDlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';')))
+                {
+                    progress_DownLoad.Value = 0; progress_DownLoad.Maximum = GlobalMember.AllMusics.Count;
+                    getMusicInfo(GlobalMember.AllMusics);
+                    fillMusicListView(GlobalMember.AllMusics);
+                    setBottomStatusText(StatusHeadEnum.SUCCESS, string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count));
+                }
+                else setBottomStatusText(StatusHeadEnum.NORMAL, "没有搜索到文件...");
+
+                button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = true;
             }
         }
 
         private void UI_Main_Load(object sender, EventArgs e)
         {
+            setBottomStatusText(StatusHeadEnum.WAIT, "等待用户操作...");
+            SettingManager.Load();
+            if(GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR,"加载MusicTag插件管理器失败...");
+            
+
             CheckForIllegalCrossThreadCalls = false;
-            setBottomStatusText(StatusHeadEnum.WAIT, "等待操作...");
         }
 
         private void UI_Main_FormClosed(object sender, FormClosedEventArgs e)
@@ -48,6 +69,49 @@ namespace ZonyLrcTools.UI
         private void button_DonateAuthor_Click(object sender, EventArgs e)
         {
             new UI_Donate().ShowDialog();
+        }
+
+        private void button_AboutSoftware_Click(object sender, EventArgs e)
+        {
+            new UI_About().ShowDialog();
+        }
+
+        /// <summary>
+        /// 填充主界面ListView
+        /// </summary>
+        /// <param name="musics"></param>
+        private void fillMusicListView(Dictionary<int,MusicInfoModel> musics)
+        {
+            foreach(var info in musics)
+            {
+                listView_MusicInfos.Items.Insert(info.Key,new ListViewItem(new string[]
+                {
+                    Path.GetFileName(info.Value.Path),
+                    Path.GetDirectoryName(info.Value.Path),
+                    info.Value.TagType,
+                    info.Value.SongName,
+                    info.Value.Artist,"",""
+                }));
+            }
+        }
+
+        /// <summary>
+        /// 获得歌曲信息
+        /// </summary>
+        /// <param name="musics"></param>
+        private void getMusicInfo(Dictionary<int,MusicInfoModel> musics)
+        {
+            Parallel.ForEach(musics, (item)=> 
+            {
+                //var _plug = GlobalMember.MusicTagPluginsManager.DllAssembly.CreateInstance(GlobalMember.MusicTagPluginsManager.Plug.FullName) as IPlug_MusicTag;
+                //_plug.LoadTag(item.Value.Path, item.Value);
+                GlobalMember.MusicTagPluginsManager.Plugins[0].LoadTag(item.Value.Path, item.Value);
+            });
+        }
+
+        private void listView_MusicInfos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

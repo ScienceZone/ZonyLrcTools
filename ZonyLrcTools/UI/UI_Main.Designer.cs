@@ -1,4 +1,6 @@
-﻿namespace ZonyLrcTools.UI
+﻿using LibPlug.UI;
+
+namespace ZonyLrcTools.UI
 {
     partial class UI_Main
     {
@@ -41,14 +43,6 @@
             this.button_AboutSoftware = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.button_PluginsMrg = new System.Windows.Forms.ToolStripButton();
-            this.listView_MusicInfos = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip_FileListView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_EditLyric = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox_MusicInfo = new System.Windows.Forms.GroupBox();
@@ -65,6 +59,14 @@
             this.statusStrip_BottomTools = new System.Windows.Forms.StatusStrip();
             this.statusLabel_StateText = new System.Windows.Forms.ToolStripStatusLabel();
             this.progress_DownLoad = new System.Windows.Forms.ToolStripProgressBar();
+            this.listView_MusicInfos = new LibPlug.UI.ListViewNF();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStrip_TopMenus.SuspendLayout();
             this.contextMenuStrip_FileListView.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
@@ -150,6 +152,7 @@
             this.button_AboutSoftware.Name = "button_AboutSoftware";
             this.button_AboutSoftware.Size = new System.Drawing.Size(52, 22);
             this.button_AboutSoftware.Text = "关于";
+            this.button_AboutSoftware.Click += new System.EventHandler(this.button_AboutSoftware_Click);
             // 
             // toolStripSeparator3
             // 
@@ -163,61 +166,6 @@
             this.button_PluginsMrg.Name = "button_PluginsMrg";
             this.button_PluginsMrg.Size = new System.Drawing.Size(76, 22);
             this.button_PluginsMrg.Text = "插件管理";
-            // 
-            // listView_MusicInfos
-            // 
-            this.listView_MusicInfos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listView_MusicInfos.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7});
-            this.listView_MusicInfos.ContextMenuStrip = this.contextMenuStrip_FileListView;
-            this.listView_MusicInfos.Location = new System.Drawing.Point(12, 28);
-            this.listView_MusicInfos.Name = "listView_MusicInfos";
-            this.listView_MusicInfos.Size = new System.Drawing.Size(746, 496);
-            this.listView_MusicInfos.TabIndex = 1;
-            this.listView_MusicInfos.UseCompatibleStateImageBehavior = false;
-            this.listView_MusicInfos.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "文件名";
-            this.columnHeader1.Width = 146;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "路径";
-            this.columnHeader2.Width = 131;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "标签类型";
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "标题";
-            this.columnHeader4.Width = 148;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "艺术家/歌手";
-            this.columnHeader5.Width = 110;
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "专辑/唱片集";
-            this.columnHeader6.Width = 85;
-            // 
-            // columnHeader7
-            // 
-            this.columnHeader7.Text = "状态";
-            this.columnHeader7.Width = 57;
             // 
             // contextMenuStrip_FileListView
             // 
@@ -361,6 +309,62 @@
             this.progress_DownLoad.Name = "progress_DownLoad";
             this.progress_DownLoad.Size = new System.Drawing.Size(222, 16);
             // 
+            // listView_MusicInfos
+            // 
+            this.listView_MusicInfos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView_MusicInfos.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7});
+            this.listView_MusicInfos.ContextMenuStrip = this.contextMenuStrip_FileListView;
+            this.listView_MusicInfos.Location = new System.Drawing.Point(12, 28);
+            this.listView_MusicInfos.Name = "listView_MusicInfos";
+            this.listView_MusicInfos.Size = new System.Drawing.Size(746, 496);
+            this.listView_MusicInfos.TabIndex = 1;
+            this.listView_MusicInfos.UseCompatibleStateImageBehavior = false;
+            this.listView_MusicInfos.View = System.Windows.Forms.View.Details;
+            this.listView_MusicInfos.SelectedIndexChanged += new System.EventHandler(this.listView_MusicInfos_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "文件名";
+            this.columnHeader1.Width = 150;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "路径";
+            this.columnHeader2.Width = 111;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "标签类型";
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "标题";
+            this.columnHeader4.Width = 148;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "艺术家/歌手";
+            this.columnHeader5.Width = 110;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "专辑/唱片集";
+            this.columnHeader6.Width = 85;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "状态";
+            this.columnHeader7.Width = 57;
+            // 
             // UI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -403,7 +407,7 @@
         private System.Windows.Forms.ToolStripButton button_AboutSoftware;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton button_PluginsMrg;
-        private System.Windows.Forms.ListView listView_MusicInfos;
+        private ListViewNF listView_MusicInfos;
         private System.Windows.Forms.GroupBox groupBox_MusicInfo;
         private System.Windows.Forms.Label label_MusicTitle;
         private System.Windows.Forms.TextBox textBox_MusicTitle;

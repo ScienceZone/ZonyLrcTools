@@ -2,6 +2,6 @@
 {
     public interface IPlug_Lrc
     {
-        bool DownLoad();
+        bool DownLoad(string artist,string songName,out byte[] lrcData);
     }
 }
