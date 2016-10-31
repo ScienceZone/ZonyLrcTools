@@ -4,8 +4,6 @@ namespace LibPlug
 {
     public class PluginsAttribute : Attribute
     {
-        public PluginsAttribute() { }
-
         /// <summary>
         /// 初始化插件信息
         /// </summary>
