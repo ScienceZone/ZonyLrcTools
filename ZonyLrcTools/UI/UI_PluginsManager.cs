@@ -16,5 +16,10 @@ namespace ZonyLrcTools.UI
         {
             InitializeComponent();
         }
+
+        private void button_Save_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

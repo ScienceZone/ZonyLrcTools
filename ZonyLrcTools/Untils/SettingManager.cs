@@ -77,6 +77,7 @@ namespace ZonyLrcTools.Untils
             SetValue.EncodingName = "utf-8";
             SetValue.UserDirectory = string.Empty;
             SetValue.IsCheckUpdate = true;
+            SetValue.IsAgree = false;
         }
     }
 
@@ -110,6 +111,10 @@ namespace ZonyLrcTools.Untils
         /// 是否自动检测更新
         /// </summary>
         public bool IsCheckUpdate { get; set; }
+        /// <summary>
+        /// 是否同意用户协议
+        /// </summary>
+        public bool IsAgree { get; set; }
     }
     #endregion
 }

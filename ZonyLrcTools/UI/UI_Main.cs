@@ -28,6 +28,7 @@ namespace ZonyLrcTools.UI
             FolderBrowserDialog _folderDlg = new FolderBrowserDialog();
             _folderDlg.Description = "请选择程序的工作目录:";
             _folderDlg.ShowDialog();
+
             if(!string.IsNullOrEmpty(_folderDlg.SelectedPath))
             {
                 setBottomStatusText(StatusHeadEnum.NORMAL, "开始扫描目录...");
@@ -48,10 +49,10 @@ namespace ZonyLrcTools.UI
 
         private void UI_Main_Load(object sender, EventArgs e)
         {
-            setBottomStatusText(StatusHeadEnum.WAIT, "等待用户操作...");
             SettingManager.Load();
+            if (!SettingManager.SetValue.IsAgree) new UI_About().ShowDialog();
+            setBottomStatusText(StatusHeadEnum.WAIT, "等待用户操作...");
             if(GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR,"加载MusicTag插件管理器失败...");
-            
 
             CheckForIllegalCrossThreadCalls = false;
         }
@@ -111,7 +112,15 @@ namespace ZonyLrcTools.UI
 
         private void listView_MusicInfos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            if(listView_MusicInfos.SelectedItems.Count != 0)
+            {
+
+            }
+        }
+
+        private void button_PluginsMrg_Click(object sender, EventArgs e)
+        {
+            new UI_PluginsManager().ShowDialog();
         }
     }
 }

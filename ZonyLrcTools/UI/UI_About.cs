@@ -13,6 +13,7 @@ namespace ZonyLrcTools.UI
 
         private void button_Exit_Click(object sender, EventArgs e)
         {
+            SettingManager.SetValue.IsAgree = false;
             Close();
         }
 
@@ -23,7 +24,18 @@ namespace ZonyLrcTools.UI
 
         private void button_Agree_Click(object sender, EventArgs e)
         {
+            SettingManager.SetValue.IsAgree = true;
             Close();
+        }
+
+        private void UI_About_Load(object sender, EventArgs e)
+        {
+            button_Agree.Visible = button_Disagree.Visible = false;
+        }
+
+        private void UI_About_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SettingManager.Save();
         }
     }
 }

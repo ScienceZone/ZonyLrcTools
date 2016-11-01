@@ -166,6 +166,7 @@ namespace ZonyLrcTools.UI
             this.button_PluginsMrg.Name = "button_PluginsMrg";
             this.button_PluginsMrg.Size = new System.Drawing.Size(76, 22);
             this.button_PluginsMrg.Text = "插件管理";
+            this.button_PluginsMrg.Click += new System.EventHandler(this.button_PluginsMrg_Click);
             // 
             // contextMenuStrip_FileListView
             // 

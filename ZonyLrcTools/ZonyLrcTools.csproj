@@ -115,6 +115,9 @@
     <EmbeddedResource Include="UI\UI_Main.resx">
       <DependentUpon>UI_Main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_PluginsManager.resx">
+      <DependentUpon>UI_PluginsManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\UI_Settings.resx">
       <DependentUpon>UI_Settings.cs</DependentUpon>
     </EmbeddedResource>
