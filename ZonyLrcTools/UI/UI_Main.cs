@@ -33,17 +33,20 @@ namespace ZonyLrcTools.UI
             {
                 setBottomStatusText(StatusHeadEnum.NORMAL, "开始扫描目录...");
                 button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = false;
+                GlobalMember.AllMusics.Clear();listView_MusicInfos.Items.Clear();
 
                 if (FileUtils.SearchFiles(_folderDlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';')))
                 {
                     progress_DownLoad.Value = 0; progress_DownLoad.Maximum = GlobalMember.AllMusics.Count;
-                    getMusicInfo(GlobalMember.AllMusics);
-                    fillMusicListView(GlobalMember.AllMusics);
-                    setBottomStatusText(StatusHeadEnum.SUCCESS, string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count));
+                    new Thread(() => 
+                    {
+                        getMusicInfo(GlobalMember.AllMusics);
+                        fillMusicListView(GlobalMember.AllMusics);
+                        setBottomStatusText(StatusHeadEnum.SUCCESS, string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count));
+                        button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = true;
+                    }).Start();
                 }
                 else setBottomStatusText(StatusHeadEnum.NORMAL, "没有搜索到文件...");
-
-                button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = true;
             }
         }
 
@@ -77,6 +80,11 @@ namespace ZonyLrcTools.UI
             new UI_About().ShowDialog();
         }
 
+        private void button_PluginsMrg_Click(object sender, EventArgs e)
+        {
+            new UI_PluginsManager().ShowDialog();
+        }
+
         /// <summary>
         /// 填充主界面ListView
         /// </summary>
@@ -85,14 +93,17 @@ namespace ZonyLrcTools.UI
         {
             foreach(var info in musics)
             {
-                listView_MusicInfos.Items.Insert(info.Key,new ListViewItem(new string[]
+                listView_MusicInfos.Items.Insert(info.Key, new ListViewItem(new string[]
                 {
                     Path.GetFileName(info.Value.Path),
                     Path.GetDirectoryName(info.Value.Path),
                     info.Value.TagType,
                     info.Value.SongName,
-                    info.Value.Artist,"",""
+                    info.Value.Artist,
+                    info.Value.Album,
+                    ""
                 }));
+                progress_DownLoad.Value += 1;
             }
         }
 
@@ -104,6 +115,7 @@ namespace ZonyLrcTools.UI
         {
             Parallel.ForEach(musics, (item)=> 
             {
+                //为每个Task实例化T对象
                 //var _plug = GlobalMember.MusicTagPluginsManager.DllAssembly.CreateInstance(GlobalMember.MusicTagPluginsManager.Plug.FullName) as IPlug_MusicTag;
                 //_plug.LoadTag(item.Value.Path, item.Value);
                 GlobalMember.MusicTagPluginsManager.Plugins[0].LoadTag(item.Value.Path, item.Value);
@@ -114,13 +126,12 @@ namespace ZonyLrcTools.UI
         {
             if(listView_MusicInfos.SelectedItems.Count != 0)
             {
-
+                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
+                textBox_Aritst.Text = GlobalMember.AllMusics[_selectCount].Artist;
+                textBox_MusicTitle.Text = GlobalMember.AllMusics[_selectCount].SongName;
+                textBox_Album.Text = GlobalMember.AllMusics[_selectCount].Album;
+                pictureBox_AlbumImage.Image = Image.FromStream(GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(GlobalMember.AllMusics[_selectCount].Path));
             }
-        }
-
-        private void button_PluginsMrg_Click(object sender, EventArgs e)
-        {
-            new UI_PluginsManager().ShowDialog();
         }
     }
 }

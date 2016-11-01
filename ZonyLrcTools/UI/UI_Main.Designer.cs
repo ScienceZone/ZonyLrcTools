@@ -227,6 +227,7 @@ namespace ZonyLrcTools.UI
             this.pictureBox_AlbumImage.Location = new System.Drawing.Point(14, 149);
             this.pictureBox_AlbumImage.Name = "pictureBox_AlbumImage";
             this.pictureBox_AlbumImage.Size = new System.Drawing.Size(200, 200);
+            this.pictureBox_AlbumImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox_AlbumImage.TabIndex = 2;
             this.pictureBox_AlbumImage.TabStop = false;
             // 
@@ -326,6 +327,7 @@ namespace ZonyLrcTools.UI
             this.listView_MusicInfos.ContextMenuStrip = this.contextMenuStrip_FileListView;
             this.listView_MusicInfos.Location = new System.Drawing.Point(12, 28);
             this.listView_MusicInfos.Name = "listView_MusicInfos";
+            this.listView_MusicInfos.ShowItemToolTips = true;
             this.listView_MusicInfos.Size = new System.Drawing.Size(746, 496);
             this.listView_MusicInfos.TabIndex = 1;
             this.listView_MusicInfos.UseCompatibleStateImageBehavior = false;

@@ -54,13 +54,13 @@ namespace ZonyLrcTools.Plugin
                     {
                         if(t.GetInterface(m_infaceType.Name) != null)
                         {
-                            T _plug = (T)_asm.CreateInstance(t.FullName);
-                            Plug = t;
+                            T _plug = (T)_asm.CreateInstance(t.FullName); Plug = t;
                             Plugins.Add(_plug);
-
                             // 获得插件信息
                             _info = t.GetCustomAttribute(typeof(PluginsAttribute), false) as PluginsAttribute;
                             PluginInfos.Add(_info);
+
+                            CallBack();
                         }
                     }
                 }catch
@@ -71,5 +71,7 @@ namespace ZonyLrcTools.Plugin
 
             return PluginInfos.Count;
         }
+
+        protected virtual void CallBack() { }
     }
 }

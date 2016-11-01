@@ -18,6 +18,10 @@
         /// </summary>
         public string Path { get; set; }
         /// <summary>
+        /// 专辑/唱片集名称
+        /// </summary>
+        public string Album { get; set; }
+        /// <summary>
         /// 是否有专辑图像
         /// </summary>
         public bool IsAlbumImg { get; set; }

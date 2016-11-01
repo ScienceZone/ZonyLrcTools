@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listViewNF1 = new LibPlug.UI.ListViewNF();
+            this.listView_Plugins = new LibPlug.UI.ListViewNF();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -37,33 +37,37 @@
             this.button_Save = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // listViewNF1
+            // listView_Plugins
             // 
-            this.listViewNF1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listView_Plugins.CheckBoxes = true;
+            this.listView_Plugins.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5});
-            this.listViewNF1.Location = new System.Drawing.Point(12, 12);
-            this.listViewNF1.Name = "listViewNF1";
-            this.listViewNF1.Size = new System.Drawing.Size(501, 456);
-            this.listViewNF1.TabIndex = 0;
-            this.listViewNF1.UseCompatibleStateImageBehavior = false;
-            this.listViewNF1.View = System.Windows.Forms.View.Details;
+            this.listView_Plugins.Location = new System.Drawing.Point(12, 12);
+            this.listView_Plugins.Name = "listView_Plugins";
+            this.listView_Plugins.ShowItemToolTips = true;
+            this.listView_Plugins.Size = new System.Drawing.Size(501, 456);
+            this.listView_Plugins.TabIndex = 0;
+            this.listView_Plugins.UseCompatibleStateImageBehavior = false;
+            this.listView_Plugins.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
             this.columnHeader1.Text = "插件名";
+            this.columnHeader1.Width = 120;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "描述";
-            this.columnHeader2.Width = 240;
+            this.columnHeader2.Width = 200;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "作者";
+            this.columnHeader3.Width = 40;
             // 
             // columnHeader4
             // 
@@ -89,20 +93,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(525, 507);
             this.Controls.Add(this.button_Save);
-            this.Controls.Add(this.listViewNF1);
+            this.Controls.Add(this.listView_Plugins);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "UI_PluginsManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "插件管理";
+            this.Load += new System.EventHandler(this.UI_PluginsManager_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private LibPlug.UI.ListViewNF listViewNF1;
+        private LibPlug.UI.ListViewNF listView_Plugins;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;

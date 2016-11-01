@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZonyLrcTools.Plugin;
+using ZonyLrcTools.Untils;
 
 namespace ZonyLrcTools.UI
 {
@@ -20,6 +22,21 @@ namespace ZonyLrcTools.UI
         private void button_Save_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void UI_PluginsManager_Load(object sender, EventArgs e)
+        {
+            foreach(var item in GlobalMember.MusicTagPluginsManager.Plugins)
+            {
+                listView_Plugins.Items.Add(new ListViewItem(new string[]
+                {
+                    item.PlugInfo.PlugName,
+                    item.PlugInfo.Descript,
+                    item.PlugInfo.Author,
+                    item.PlugInfo.TypeEnum.ToString(),
+                    item.PlugInfo.Version.ToString()
+                }));
+            }
         }
     }
 }

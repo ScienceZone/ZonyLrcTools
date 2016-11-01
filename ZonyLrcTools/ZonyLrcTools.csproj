@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="EnumDefine\StatusHeadEnum.cs" />
     <Compile Include="Plugin\BasePlugins.cs" />
+    <Compile Include="Plugin\LryicPlugins.cs" />
     <Compile Include="Plugin\MusicTagPlugins.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
