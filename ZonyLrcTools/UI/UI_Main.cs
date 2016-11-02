@@ -133,5 +133,10 @@ namespace ZonyLrcTools.UI
                 pictureBox_AlbumImage.Image = Image.FromStream(GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(GlobalMember.AllMusics[_selectCount].Path));
             }
         }
+
+        private void button_FeedBack_Click(object sender, EventArgs e)
+        {
+            new UI_FeedBack().ShowDialog();
+        }
     }
 }

@@ -113,6 +113,9 @@
     <EmbeddedResource Include="UI\UI_Donate.resx">
       <DependentUpon>UI_Donate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_FeedBack.resx">
+      <DependentUpon>UI_FeedBack.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\UI_Main.resx">
       <DependentUpon>UI_Main.cs</DependentUpon>
     </EmbeddedResource>

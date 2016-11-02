@@ -135,6 +135,7 @@ namespace ZonyLrcTools.UI
             this.button_FeedBack.Name = "button_FeedBack";
             this.button_FeedBack.Size = new System.Drawing.Size(76, 22);
             this.button_FeedBack.Text = "反馈信息";
+            this.button_FeedBack.Click += new System.EventHandler(this.button_FeedBack_Click);
             // 
             // button_DonateAuthor
             // 
