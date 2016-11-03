@@ -42,6 +42,7 @@ namespace ZonyLrcTools.UI
                     {
                         getMusicInfo(GlobalMember.AllMusics);
                         fillMusicListView(GlobalMember.AllMusics);
+                        MessageBox.Show(string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count), "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         setBottomStatusText(StatusHeadEnum.SUCCESS, string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count));
                         button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = true;
                     }).Start();
@@ -55,7 +56,9 @@ namespace ZonyLrcTools.UI
             SettingManager.Load();
             if (!SettingManager.SetValue.IsAgree) new UI_About().ShowDialog();
             setBottomStatusText(StatusHeadEnum.WAIT, "等待用户操作...");
+
             if(GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR,"加载MusicTag插件管理器失败...");
+            if (GlobalMember.LrcPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR, "加载歌词下载插件失败...");
 
             CheckForIllegalCrossThreadCalls = false;
         }
@@ -130,13 +133,27 @@ namespace ZonyLrcTools.UI
                 textBox_Aritst.Text = GlobalMember.AllMusics[_selectCount].Artist;
                 textBox_MusicTitle.Text = GlobalMember.AllMusics[_selectCount].SongName;
                 textBox_Album.Text = GlobalMember.AllMusics[_selectCount].Album;
-                pictureBox_AlbumImage.Image = Image.FromStream(GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(GlobalMember.AllMusics[_selectCount].Path));
+                Stream _imgStream = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(GlobalMember.AllMusics[_selectCount].Path);
+                if(_imgStream != null) pictureBox_AlbumImage.Image = Image.FromStream(_imgStream);
             }
         }
 
         private void button_FeedBack_Click(object sender, EventArgs e)
         {
             new UI_FeedBack().ShowDialog();
+        }
+
+        private void ToolStripMenuItem_DownLoadSelectMusic_Click(object sender, EventArgs e)
+        {
+            if(listView_MusicInfos.SelectedItems.Count != 0)
+            {
+                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
+                byte[] _lrcData;
+                if(GlobalMember.LrcPluginsManager.Plugins[0].DownLoad(GlobalMember.AllMusics[_selectCount].Artist, GlobalMember.AllMusics[_selectCount].SongName, out _lrcData))
+                {
+                    MessageBox.Show(Encoding.UTF8.GetString(_lrcData));
+                }
+            }
         }
     }
 }

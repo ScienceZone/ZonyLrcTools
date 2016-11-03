@@ -14,6 +14,7 @@ namespace LibMusicInfo.cs
         public Stream LoadAlbumImg(string path)
         {
             ID3Info _info = new ID3Info(path, true);
+            if (_info.ID3v2Info.AttachedPictureFrames.Items.Length == 0) return null;
             MemoryStream _imgStream = _info.ID3v2Info.AttachedPictureFrames.Items[0].Data;
             return _imgStream;
         }

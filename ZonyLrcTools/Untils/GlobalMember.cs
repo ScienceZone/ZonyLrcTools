@@ -8,6 +8,7 @@ namespace ZonyLrcTools.Untils
     {
         public static string WorkPath = null;
         public static MusicTagPlugins MusicTagPluginsManager = new MusicTagPlugins();
+        public static LryicPlugins LrcPluginsManager = new LryicPlugins();
 
         private static Dictionary<int, MusicInfoModel> m_allMusics = null;
         public static Dictionary<int, MusicInfoModel> AllMusics
