@@ -31,16 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_Settings));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.checkBox_IsIgnoreExitsFile = new System.Windows.Forms.CheckBox();
+            this.textBox_SearchSuffixs = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox_LrcOutput = new System.Windows.Forms.ComboBox();
             this.comboBox_Encoding = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.checkBox_IsCheckUpdate = new System.Windows.Forms.CheckBox();
+            this.textBox_DownLoadThreadNum = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button_SaveSetting = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
@@ -58,27 +58,27 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.checkBox2);
-            this.tabPage1.Controls.Add(this.textBox2);
+            this.tabPage1.Controls.Add(this.checkBox_IsIgnoreExitsFile);
+            this.tabPage1.Controls.Add(this.textBox_SearchSuffixs);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.comboBox2);
+            this.tabPage1.Controls.Add(this.comboBox_LrcOutput);
             this.tabPage1.Controls.Add(this.comboBox_Encoding);
             this.tabPage1.Controls.Add(this.label2);
             resources.ApplyResources(this.tabPage1, "tabPage1");
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // checkBox_IsIgnoreExitsFile
             // 
-            resources.ApplyResources(this.checkBox2, "checkBox2");
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.checkBox_IsIgnoreExitsFile, "checkBox_IsIgnoreExitsFile");
+            this.checkBox_IsIgnoreExitsFile.Name = "checkBox_IsIgnoreExitsFile";
+            this.checkBox_IsIgnoreExitsFile.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // textBox_SearchSuffixs
             // 
-            resources.ApplyResources(this.textBox2, "textBox2");
-            this.textBox2.Name = "textBox2";
+            resources.ApplyResources(this.textBox_SearchSuffixs, "textBox_SearchSuffixs");
+            this.textBox_SearchSuffixs.Name = "textBox_SearchSuffixs";
             // 
             // label4
             // 
@@ -90,15 +90,16 @@
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
-            // comboBox2
+            // comboBox_LrcOutput
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            resources.GetString("comboBox2.Items"),
-            resources.GetString("comboBox2.Items1"),
-            resources.GetString("comboBox2.Items2")});
-            resources.ApplyResources(this.comboBox2, "comboBox2");
-            this.comboBox2.Name = "comboBox2";
+            this.comboBox_LrcOutput.FormattingEnabled = true;
+            this.comboBox_LrcOutput.Items.AddRange(new object[] {
+            resources.GetString("comboBox_LrcOutput.Items"),
+            resources.GetString("comboBox_LrcOutput.Items1"),
+            resources.GetString("comboBox_LrcOutput.Items2")});
+            resources.ApplyResources(this.comboBox_LrcOutput, "comboBox_LrcOutput");
+            this.comboBox_LrcOutput.Name = "comboBox_LrcOutput";
+            this.comboBox_LrcOutput.SelectionChangeCommitted += new System.EventHandler(this.comboBox_LrcOutput_SelectionChangeCommitted);
             // 
             // comboBox_Encoding
             // 
@@ -113,23 +114,23 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.checkBox1);
-            this.tabPage2.Controls.Add(this.textBox1);
+            this.tabPage2.Controls.Add(this.checkBox_IsCheckUpdate);
+            this.tabPage2.Controls.Add(this.textBox_DownLoadThreadNum);
             this.tabPage2.Controls.Add(this.label1);
             resources.ApplyResources(this.tabPage2, "tabPage2");
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // checkBox_IsCheckUpdate
             // 
-            resources.ApplyResources(this.checkBox1, "checkBox1");
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.checkBox_IsCheckUpdate, "checkBox_IsCheckUpdate");
+            this.checkBox_IsCheckUpdate.Name = "checkBox_IsCheckUpdate";
+            this.checkBox_IsCheckUpdate.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // textBox_DownLoadThreadNum
             // 
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
+            resources.ApplyResources(this.textBox_DownLoadThreadNum, "textBox_DownLoadThreadNum");
+            this.textBox_DownLoadThreadNum.Name = "textBox_DownLoadThreadNum";
             // 
             // label1
             // 
@@ -170,14 +171,14 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button button_SaveSetting;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.TextBox textBox_DownLoadThreadNum;
+        private System.Windows.Forms.CheckBox checkBox_IsCheckUpdate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox_Encoding;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox_LrcOutput;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.TextBox textBox_SearchSuffixs;
+        private System.Windows.Forms.CheckBox checkBox_IsIgnoreExitsFile;
     }
 }

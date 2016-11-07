@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -44,18 +39,61 @@ namespace ZonyLrcTools.UI
                 }
             });
         }
+        /// <summary>
+        /// 加载设置
+        /// </summary>
         private async void laodSetting()
         {
             await Task.Run(() => 
             {
                 SettingManager.Load();
                 comboBox_Encoding.Text = SettingManager.SetValue.EncodingName;
+                textBox_SearchSuffixs.Text = SettingManager.SetValue.FileSuffixs;
+                checkBox_IsIgnoreExitsFile.Checked = SettingManager.SetValue.IsIgnoreExitsFile;
+                textBox_DownLoadThreadNum.Text = SettingManager.SetValue.DownloadThreadNum.ToString();
+                checkBox_IsCheckUpdate.Checked = SettingManager.SetValue.IsCheckUpdate;
+                if (SettingManager.SetValue.UserDirectory == string.Empty)
+                {
+                    comboBox_LrcOutput.SelectedIndex = 0;
+                }
+                else if (SettingManager.SetValue.UserDirectory.Equals("ID3v2"))
+                {
+                    comboBox_LrcOutput.SelectedIndex = 2;
+                }
+                else
+                {
+                    comboBox_LrcOutput.SelectedIndex = 1;
+                    comboBox_LrcOutput.Text = SettingManager.SetValue.UserDirectory;
+                }
             });
         }
+        /// <summary>
+        /// 保存设置
+        /// </summary>
         private void saveSetting()
         {
             SettingManager.SetValue.EncodingName = comboBox_Encoding.Text;
+            SettingManager.SetValue.FileSuffixs = textBox_SearchSuffixs.Text;
+            SettingManager.SetValue.IsIgnoreExitsFile = checkBox_IsIgnoreExitsFile.Checked;
+            SettingManager.SetValue.IsCheckUpdate = checkBox_IsCheckUpdate.Checked;
+            SettingManager.SetValue.DownloadThreadNum = int.Parse(textBox_DownLoadThreadNum.Text);
+            if (comboBox_LrcOutput.SelectedIndex == 2) SettingManager.SetValue.UserDirectory = "ID3v2";
+            else if(comboBox_LrcOutput.SelectedIndex == 0) SettingManager.SetValue.UserDirectory = string.Empty;
             SettingManager.Save();
+        }
+
+        private void comboBox_LrcOutput_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            if(comboBox_LrcOutput.SelectedIndex == 1)
+            {
+                FolderBrowserDialog _folderDlg = new FolderBrowserDialog();
+                _folderDlg.Description = "请选择歌词的输出目录：";
+                _folderDlg.ShowDialog();
+                if(!string.IsNullOrEmpty(_folderDlg.SelectedPath))
+                {
+                    SettingManager.SetValue.UserDirectory = _folderDlg.SelectedPath;
+                }
+            }
         }
     }
 }

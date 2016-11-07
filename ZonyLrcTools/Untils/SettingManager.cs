@@ -27,6 +27,7 @@ namespace ZonyLrcTools.Untils
 
                 using (m_confFile = new FileStream(m_confFilePath, FileMode.OpenOrCreate))
                 {
+                    m_confFile.SetLength(0);
                     m_confFile.Write(_data, 0, _data.Length);
                 }
                 return true;
