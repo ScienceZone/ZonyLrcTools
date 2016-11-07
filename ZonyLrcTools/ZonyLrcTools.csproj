@@ -122,6 +122,9 @@
     <EmbeddedResource Include="UI\UI_PluginsManager.resx">
       <DependentUpon>UI_PluginsManager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_Settings.byn-ER.resx">
+      <DependentUpon>UI_Settings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\UI_Settings.resx">
       <DependentUpon>UI_Settings.cs</DependentUpon>
     </EmbeddedResource>

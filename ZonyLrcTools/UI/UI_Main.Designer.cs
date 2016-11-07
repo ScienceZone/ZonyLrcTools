@@ -45,6 +45,7 @@ namespace ZonyLrcTools.UI
             this.button_PluginsMrg = new System.Windows.Forms.ToolStripButton();
             this.contextMenuStrip_FileListView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_EditLyric = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_DownLoadSelectMusic = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox_MusicInfo = new System.Windows.Forms.GroupBox();
             this.textBox_Lryic = new System.Windows.Forms.TextBox();
             this.label_Lryic = new System.Windows.Forms.Label();
@@ -67,7 +68,7 @@ namespace ZonyLrcTools.UI
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ToolStripMenuItem_DownLoadSelectMusic = new System.Windows.Forms.ToolStripMenuItem();
+            this.button_Setting = new System.Windows.Forms.ToolStripButton();
             this.toolStrip_TopMenus.SuspendLayout();
             this.contextMenuStrip_FileListView.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
@@ -87,7 +88,8 @@ namespace ZonyLrcTools.UI
             this.button_DonateAuthor,
             this.button_AboutSoftware,
             this.toolStripSeparator3,
-            this.button_PluginsMrg});
+            this.button_PluginsMrg,
+            this.button_Setting});
             this.toolStrip_TopMenus.Location = new System.Drawing.Point(0, 0);
             this.toolStrip_TopMenus.Name = "toolStrip_TopMenus";
             this.toolStrip_TopMenus.Size = new System.Drawing.Size(1007, 25);
@@ -176,13 +178,20 @@ namespace ZonyLrcTools.UI
             this.ToolStripMenuItem_EditLyric,
             this.ToolStripMenuItem_DownLoadSelectMusic});
             this.contextMenuStrip_FileListView.Name = "contextMenuStrip_FileListView";
-            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(173, 70);
+            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(173, 48);
             // 
             // ToolStripMenuItem_EditLyric
             // 
             this.ToolStripMenuItem_EditLyric.Name = "ToolStripMenuItem_EditLyric";
             this.ToolStripMenuItem_EditLyric.Size = new System.Drawing.Size(172, 22);
             this.ToolStripMenuItem_EditLyric.Text = "编辑选中歌词";
+            // 
+            // ToolStripMenuItem_DownLoadSelectMusic
+            // 
+            this.ToolStripMenuItem_DownLoadSelectMusic.Name = "ToolStripMenuItem_DownLoadSelectMusic";
+            this.ToolStripMenuItem_DownLoadSelectMusic.Size = new System.Drawing.Size(172, 22);
+            this.ToolStripMenuItem_DownLoadSelectMusic.Text = "下载选中歌曲歌词";
+            this.ToolStripMenuItem_DownLoadSelectMusic.Click += new System.EventHandler(this.ToolStripMenuItem_DownLoadSelectMusic_Click);
             // 
             // groupBox_MusicInfo
             // 
@@ -371,12 +380,14 @@ namespace ZonyLrcTools.UI
             this.columnHeader7.Text = "状态";
             this.columnHeader7.Width = 57;
             // 
-            // ToolStripMenuItem_DownLoadSelectMusic
+            // button_Setting
             // 
-            this.ToolStripMenuItem_DownLoadSelectMusic.Name = "ToolStripMenuItem_DownLoadSelectMusic";
-            this.ToolStripMenuItem_DownLoadSelectMusic.Size = new System.Drawing.Size(172, 22);
-            this.ToolStripMenuItem_DownLoadSelectMusic.Text = "下载选中歌曲歌词";
-            this.ToolStripMenuItem_DownLoadSelectMusic.Click += new System.EventHandler(this.ToolStripMenuItem_DownLoadSelectMusic_Click);
+            this.button_Setting.Image = ((System.Drawing.Image)(resources.GetObject("button_Setting.Image")));
+            this.button_Setting.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.button_Setting.Name = "button_Setting";
+            this.button_Setting.Size = new System.Drawing.Size(52, 22);
+            this.button_Setting.Text = "设置";
+            this.button_Setting.Click += new System.EventHandler(this.button_Setting_Click);
             // 
             // UI_Main
             // 
@@ -445,5 +456,6 @@ namespace ZonyLrcTools.UI
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_DownLoadSelectMusic;
+        private System.Windows.Forms.ToolStripButton button_Setting;
     }
 }

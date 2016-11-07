@@ -106,7 +106,6 @@ namespace ZonyLrcTools.UI
                     info.Value.Album,
                     ""
                 }));
-                progress_DownLoad.Value += 1;
             }
         }
 
@@ -122,6 +121,7 @@ namespace ZonyLrcTools.UI
                 //var _plug = GlobalMember.MusicTagPluginsManager.DllAssembly.CreateInstance(GlobalMember.MusicTagPluginsManager.Plug.FullName) as IPlug_MusicTag;
                 //_plug.LoadTag(item.Value.Path, item.Value);
                 GlobalMember.MusicTagPluginsManager.Plugins[0].LoadTag(item.Value.Path, item.Value);
+                progress_DownLoad.Value += 1;
             });
         }
 
@@ -154,6 +154,11 @@ namespace ZonyLrcTools.UI
                     MessageBox.Show(Encoding.UTF8.GetString(_lrcData));
                 }
             }
+        }
+
+        private void button_Setting_Click(object sender, EventArgs e)
+        {
+            new UI_Settings().ShowDialog();
         }
     }
 }
