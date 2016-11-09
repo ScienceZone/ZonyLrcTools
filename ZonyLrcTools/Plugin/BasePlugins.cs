@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace ZonyLrcTools.Plugin
 {
-    public class BasePlugins<T> where T : class
+    public class BasePlugins<T>
     {
         /// <summary>
         /// 已加载的插件列表

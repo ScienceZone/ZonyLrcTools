@@ -1,4 +1,5 @@
-﻿using LibPlug.Interface;
+﻿using LibPlug;
+using LibPlug.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,15 @@ namespace ZonyLrcTools.Plugin
             {
                 Plugins[i].PlugInfo = PluginInfos[i];
             }
+        }
+
+        /// <summary>
+        /// 获得指定类型的插件集
+        /// </summary>
+        /// <returns></returns>
+        public List<IPlug_Lrc> BaseOnTypeGetPlugins(PluginTypesEnum pType)
+        {
+            return Plugins.Where(x => x.PlugInfo.TypeEnum == pType).ToList();
         }
     }
 }

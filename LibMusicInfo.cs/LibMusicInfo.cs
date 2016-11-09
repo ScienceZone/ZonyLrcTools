@@ -36,5 +36,15 @@ namespace LibMusicInfo.cs
             info.Album = _album;
             info.IsAlbumImg = _info.ID3v2Info.AttachedPictureFrames.Count > 0 ? true : false;
         }
+
+        public void SaveTag(string path,MusicInfoModel info)
+        {
+            ID3Info _info = new ID3Info(path, true);
+            _info.ID3v2Info.SetTextFrame("TIT2", info.Artist);
+            _info.ID3v2Info.SetTextFrame("TPE1", info.SongName);
+            _info.ID3v2Info.SetTextFrame("TALB", info.Album);
+
+            _info.ID3v2Info.AudioEncryptionFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AudioEncryptionFrame(0,null,0,0,null));
+        }
     }
 }

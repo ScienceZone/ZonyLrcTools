@@ -26,15 +26,21 @@ namespace ZonyLrcTools.UI
 
         private void UI_PluginsManager_Load(object sender, EventArgs e)
         {
-            foreach(var item in GlobalMember.MusicTagPluginsManager.Plugins)
+            fillPluginsInfo(GlobalMember.MusicTagPluginsManager);
+            fillPluginsInfo(GlobalMember.LrcPluginsManager);
+        }
+
+        private void fillPluginsInfo<T>(BasePlugins<T> manager)
+        {
+            foreach (var item in manager.PluginInfos)
             {
                 listView_Plugins.Items.Add(new ListViewItem(new string[]
                 {
-                    item.PlugInfo.PlugName,
-                    item.PlugInfo.Descript,
-                    item.PlugInfo.Author,
-                    item.PlugInfo.TypeEnum.ToString(),
-                    item.PlugInfo.Version.ToString()
+                    item.PlugName,
+                    item.Descript,
+                    item.Author,
+                    item.TypeEnum.ToString(),
+                    item.Version.ToString()
                 }));
             }
         }
