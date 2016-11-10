@@ -21,8 +21,8 @@ namespace LibPlug.Interface
         /// <summary>
         /// 将信息模型保存到歌曲文件的ID3v2
         /// </summary>
-        /// <param name="path">歌曲文件路径</param>
         /// <param name="info">信息模型</param>
-        void SaveTag(string path, MusicInfoModel info);
+        /// <param name="imgBytes">专辑图像数据</param>
+        void SaveTag(MusicInfoModel info, byte[] imgBytes);
     }
 }

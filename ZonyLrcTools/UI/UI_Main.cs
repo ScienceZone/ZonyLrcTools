@@ -81,50 +81,6 @@ namespace ZonyLrcTools.UI
             new UI_PluginsManager().ShowDialog();
         }
 
-        /// <summary>
-        /// 填充主界面ListView
-        /// </summary>
-        /// <param name="musics"></param>
-        private void fillMusicListView()
-        {
-            setBottomStatusText(StatusHeadEnum.NORMAL, "正在填充列表...");
-            progress_DownLoad.Value = 0;
-            foreach(var info in GlobalMember.AllMusics)
-            {
-                listView_MusicInfos.Items.Insert(info.Key, new ListViewItem(new string[]
-                {
-                    Path.GetFileName(info.Value.Path),
-                    Path.GetDirectoryName(info.Value.Path),
-                    info.Value.TagType,
-                    info.Value.SongName,
-                    info.Value.Artist,
-                    info.Value.Album,
-                    ""
-                }));
-                progress_DownLoad.Value += 1;
-            }
-        }
-
-        /// <summary>
-        /// 获得歌曲信息
-        /// </summary>
-        /// <param name="musics"></param>
-        private async void getMusicInfo(Dictionary<int,MusicInfoModel> musics)
-        {
-            await Task.Run(() => 
-            {
-                Parallel.ForEach(musics, (item) =>
-                {
-                    GlobalMember.MusicTagPluginsManager.Plugins[0].LoadTag(item.Value.Path, item.Value);
-                    progress_DownLoad.Value += 1;
-                });
-                fillMusicListView();
-                MessageBox.Show(string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count), "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                setBottomStatusText(StatusHeadEnum.SUCCESS, string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count));
-                enabledButton();
-            });
-        }
-
         private void listView_MusicInfos_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(listView_MusicInfos.SelectedItems.Count != 0)
@@ -171,7 +127,36 @@ namespace ZonyLrcTools.UI
         /// </summary>
         private void button_DownLoadLyric_Click(object sender, EventArgs e)
         {
-            parallelDownLoadLryic();
+            if (listView_MusicInfos.Items.Count != 0) parallelDownLoadLryic();
+            else setBottomStatusText(StatusHeadEnum.ERROR, "请选择歌曲目录再尝试下载歌词！");
+        }
+
+        /// <summary>
+        /// 下载列表当中所有的专辑图像
+        /// </summary>
+        private void button_DownLoadAlbumImage_Click(object sender, EventArgs e)
+        {
+            if (listView_MusicInfos.Items.Count != 0) setBottomStatusText(StatusHeadEnum.NORMAL, "正在下载专辑图像...");
+            else setBottomStatusText(StatusHeadEnum.ERROR, "请选择歌曲目录再尝试下载专辑图像！");
+        }
+
+        /// <summary>
+        /// 下载单首歌曲的专辑图像
+        /// </summary>
+        private void ToolStripMenuItem_DownLoadSelectedAlbumImg_Click(object sender, EventArgs e)
+        {
+            if (listView_MusicInfos.SelectedItems.Count != 0)
+            {
+                byte[] _imgBytes;
+                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
+                MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
+                if (_info.IsAlbumImg == true) return;
+                if(GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(_info.Artist, _info.SongName, out _imgBytes))
+                {
+                    GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info,_imgBytes);
+                    setBottomStatusText(StatusHeadEnum.SUCCESS, "下载专辑图像成功!");
+                }
+            }
         }
 
         /// <summary>
@@ -200,30 +185,6 @@ namespace ZonyLrcTools.UI
         }
 
         /// <summary>
-        /// 下载列表当中所有的专辑图像
-        /// </summary>
-        private void button_DownLoadAlbumImage_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// 下载单首歌曲的专辑图像
-        /// </summary>
-        private void ToolStripMenuItem_DownLoadSelectedAlbumImg_Click(object sender, EventArgs e)
-        {
-            if (listView_MusicInfos.SelectedItems.Count != 0)
-            {
-                byte[] _imgBytes;
-                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
-                MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
-                if (_info.IsAlbumImg == true) return;
-                GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(_info.Artist,_info.SongName,out _imgBytes);
-
-            }
-        }
-
-        /// <summary>
         /// 设置底部状态标识文本
         /// </summary>
         /// <param name="head">状态标识</param>
@@ -233,7 +194,49 @@ namespace ZonyLrcTools.UI
             statusLabel_StateText.Text = string.Format("{0}:{1}", head, content);
         }
 
-        private bool write
+        /// <summary>
+        /// 填充主界面ListView
+        /// </summary>
+        /// <param name="musics"></param>
+        private void fillMusicListView()
+        {
+            setBottomStatusText(StatusHeadEnum.NORMAL, "正在填充列表...");
+            progress_DownLoad.Value = 0;
+            foreach (var info in GlobalMember.AllMusics)
+            {
+                listView_MusicInfos.Items.Insert(info.Key, new ListViewItem(new string[]
+                {
+                    Path.GetFileName(info.Value.Path),
+                    Path.GetDirectoryName(info.Value.Path),
+                    info.Value.TagType,
+                    info.Value.SongName,
+                    info.Value.Artist,
+                    info.Value.Album,
+                    ""
+                }));
+                progress_DownLoad.Value += 1;
+            }
+        }
+
+        /// <summary>
+        /// 获得歌曲信息
+        /// </summary>
+        /// <param name="musics"></param>
+        private async void getMusicInfo(Dictionary<int, MusicInfoModel> musics)
+        {
+            await Task.Run(() =>
+            {
+                Parallel.ForEach(musics, (item) =>
+                {
+                    GlobalMember.MusicTagPluginsManager.Plugins[0].LoadTag(item.Value.Path, item.Value);
+                    progress_DownLoad.Value += 1;
+                });
+                fillMusicListView();
+                MessageBox.Show(string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count), "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                setBottomStatusText(StatusHeadEnum.SUCCESS, string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count));
+                enabledButton();
+            });
+        }
 
         #region > 下载按钮启用/停用 <
         private void disEnabledButton()

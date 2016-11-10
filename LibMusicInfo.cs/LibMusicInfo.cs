@@ -37,14 +37,18 @@ namespace LibMusicInfo.cs
             info.IsAlbumImg = _info.ID3v2Info.AttachedPictureFrames.Count > 0 ? true : false;
         }
 
-        public void SaveTag(string path,MusicInfoModel info)
+        public void SaveTag(MusicInfoModel info,byte[] imgBytes)
         {
-            ID3Info _info = new ID3Info(path, true);
+            ID3Info _info = new ID3Info(info.Path, true);
             _info.ID3v2Info.SetTextFrame("TIT2", info.Artist);
             _info.ID3v2Info.SetTextFrame("TPE1", info.SongName);
             _info.ID3v2Info.SetTextFrame("TALB", info.Album);
 
-            _info.ID3v2Info.AudioEncryptionFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AudioEncryptionFrame(0,null,0,0,null));
+            MemoryStream _ms = new MemoryStream(imgBytes);
+            // 将数据添加进Mp3文件当中
+            _info.ID3v2Info.AttachedPictureFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame(0,"ZonyLrc",TextEncodings.Ascii,"image/jpeg",ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame.PictureTypes.Media, _ms));
+            _info.Save();
+            _ms.Close();
         }
     }
 }
