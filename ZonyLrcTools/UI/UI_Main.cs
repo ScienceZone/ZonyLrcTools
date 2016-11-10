@@ -34,7 +34,7 @@ namespace ZonyLrcTools.UI
             {
                 disEnabledButton();
                 setBottomStatusText(StatusHeadEnum.NORMAL, "开始扫描目录...");
-                GlobalMember.AllMusics.Clear();listView_MusicInfos.Items.Clear();
+                GlobalMember.AllMusics.Clear();listView_MusicInfos.Items.Clear();progress_DownLoad.Value = 0;
 
                 if (FileUtils.SearchFiles(_folderDlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';')))
                 {
@@ -86,11 +86,13 @@ namespace ZonyLrcTools.UI
             if(listView_MusicInfos.SelectedItems.Count != 0)
             {
                 int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
-                textBox_Aritst.Text = GlobalMember.AllMusics[_selectCount].Artist;
-                textBox_MusicTitle.Text = GlobalMember.AllMusics[_selectCount].SongName;
-                textBox_Album.Text = GlobalMember.AllMusics[_selectCount].Album;
-                Stream _imgStream = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(GlobalMember.AllMusics[_selectCount].Path);
+                MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
+                textBox_Aritst.Text = _info.Artist;
+                textBox_MusicTitle.Text = _info.SongName;
+                textBox_Album.Text = _info.Album;
+                Stream _imgStream = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(_info.Path);
                 if(_imgStream != null) pictureBox_AlbumImage.Image = Image.FromStream(_imgStream);
+                if (_info.IsBuildInLyric) textBox_Lryic.Text = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadLyricText(_info.Path);
             }
         }
 
@@ -131,12 +133,17 @@ namespace ZonyLrcTools.UI
             else setBottomStatusText(StatusHeadEnum.ERROR, "请选择歌曲目录再尝试下载歌词！");
         }
 
+        // 吃饭去了
         /// <summary>
         /// 下载列表当中所有的专辑图像
         /// </summary>
         private void button_DownLoadAlbumImage_Click(object sender, EventArgs e)
         {
-            if (listView_MusicInfos.Items.Count != 0) setBottomStatusText(StatusHeadEnum.NORMAL, "正在下载专辑图像...");
+            if (listView_MusicInfos.Items.Count != 0)
+            {
+                disEnabledButton();
+                parallelDownLoadAlbumImg();
+            }
             else setBottomStatusText(StatusHeadEnum.ERROR, "请选择歌曲目录再尝试下载专辑图像！");
         }
 
@@ -150,10 +157,14 @@ namespace ZonyLrcTools.UI
                 byte[] _imgBytes;
                 int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
                 MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
-                if (_info.IsAlbumImg == true) return;
+                if (_info.IsAlbumImg == true)
+                {
+                    setBottomStatusText(StatusHeadEnum.FAILED, "该歌曲已经有专辑图像了！");
+                    return;
+                }
                 if(GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(_info.Artist, _info.SongName, out _imgBytes))
                 {
-                    GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info,_imgBytes);
+                    GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info,_imgBytes,string.Empty);
                     setBottomStatusText(StatusHeadEnum.SUCCESS, "下载专辑图像成功!");
                 }
             }
@@ -164,15 +175,26 @@ namespace ZonyLrcTools.UI
         /// </summary>
         private async void parallelDownLoadLryic()
         {
+            setBottomStatusText(StatusHeadEnum.NORMAL,"正在下载歌词...");
             progress_DownLoad.Maximum = GlobalMember.AllMusics.Count; progress_DownLoad.Value = 0;
             await Task.Run(() => 
             {
+                disEnabledButton();
                 Parallel.ForEach(GlobalMember.AllMusics, new ParallelOptions() { MaxDegreeOfParallelism = SettingManager.SetValue.DownloadThreadNum }, (item) =>
                 {
                     byte[] _lrcData;
-                    if (GlobalMember.LrcPluginsManager.Plugins[0].DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData))
+                    if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource)[0].DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData))
                     {
-                        string _lrcPath = Path.GetDirectoryName(item.Value.Path) + @"\" + Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc";
+                        string _lrcPath = null;
+                        #region > 输出方式 <
+                        if (SettingManager.SetValue.UserDirectory .Equals(string.Empty))
+                        {
+                            _lrcPath = Path.GetDirectoryName(item.Value.Path) + @"\" + Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc";
+                        }else if(SettingManager.SetValue.UserDirectory.Equals("ID3v2"))
+                        {
+                            
+                        }
+                        #endregion
                         // 编码转换
                         _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
                         FileUtils.WriteFile(_lrcPath, _lrcData);
@@ -181,6 +203,34 @@ namespace ZonyLrcTools.UI
                     else listView_MusicInfos.Items[item.Key].SubItems[6].Text = "失败";
                     progress_DownLoad.Value += 1;
                 });
+                enabledButton();
+            });
+        }
+
+        /// <summary>
+        /// 并行下载专辑图像任务
+        /// </summary>
+        private async void parallelDownLoadAlbumImg()
+        {
+            setBottomStatusText(StatusHeadEnum.NORMAL, "正在下载专辑图像...");
+            await Task.Run(() => 
+            {
+                Parallel.ForEach(GlobalMember.AllMusics,new ParallelOptions() { MaxDegreeOfParallelism=SettingManager.SetValue.DownloadThreadNum }, (info) => 
+                {
+                    if (info.Value.IsAlbumImg) listView_MusicInfos.Items[info.Key].SubItems[6].Text = "略过";
+                    else
+                    {
+                        byte[] _imgBytes;
+                        if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(info.Value.Artist, info.Value.SongName, out _imgBytes))
+                        {
+                            GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(info.Value, _imgBytes,string.Empty);
+                            listView_MusicInfos.Items[info.Key].SubItems[6].Text = "成功";
+                        }
+                        else listView_MusicInfos.Items[info.Key].SubItems[6].Text = "失败";
+                        progress_DownLoad.Value += 1;
+                    }
+                });
+                enabledButton();
             });
         }
 

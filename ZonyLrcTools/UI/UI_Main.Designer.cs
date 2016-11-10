@@ -47,6 +47,7 @@ namespace ZonyLrcTools.UI
             this.contextMenuStrip_FileListView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_EditLyric = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_DownLoadSelectMusic = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_DownLoadSelectedAlbumImg = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox_MusicInfo = new System.Windows.Forms.GroupBox();
             this.textBox_Lryic = new System.Windows.Forms.TextBox();
             this.label_Lryic = new System.Windows.Forms.Label();
@@ -69,7 +70,6 @@ namespace ZonyLrcTools.UI
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ToolStripMenuItem_DownLoadSelectedAlbumImg = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip_TopMenus.SuspendLayout();
             this.contextMenuStrip_FileListView.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
@@ -191,7 +191,7 @@ namespace ZonyLrcTools.UI
             this.ToolStripMenuItem_DownLoadSelectMusic,
             this.ToolStripMenuItem_DownLoadSelectedAlbumImg});
             this.contextMenuStrip_FileListView.Name = "contextMenuStrip_FileListView";
-            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(197, 92);
+            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(197, 70);
             // 
             // ToolStripMenuItem_EditLyric
             // 
@@ -205,6 +205,13 @@ namespace ZonyLrcTools.UI
             this.ToolStripMenuItem_DownLoadSelectMusic.Size = new System.Drawing.Size(196, 22);
             this.ToolStripMenuItem_DownLoadSelectMusic.Text = "下载选中歌曲歌词";
             this.ToolStripMenuItem_DownLoadSelectMusic.Click += new System.EventHandler(this.ToolStripMenuItem_DownLoadSelectMusic_Click);
+            // 
+            // ToolStripMenuItem_DownLoadSelectedAlbumImg
+            // 
+            this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Name = "ToolStripMenuItem_DownLoadSelectedAlbumImg";
+            this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Size = new System.Drawing.Size(196, 22);
+            this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Text = "下载选中歌曲专辑图像";
+            this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Click += new System.EventHandler(this.ToolStripMenuItem_DownLoadSelectedAlbumImg_Click);
             // 
             // groupBox_MusicInfo
             // 
@@ -242,9 +249,9 @@ namespace ZonyLrcTools.UI
             this.label_Lryic.AutoSize = true;
             this.label_Lryic.Location = new System.Drawing.Point(6, 352);
             this.label_Lryic.Name = "label_Lryic";
-            this.label_Lryic.Size = new System.Drawing.Size(35, 12);
+            this.label_Lryic.Size = new System.Drawing.Size(59, 12);
             this.label_Lryic.TabIndex = 3;
-            this.label_Lryic.Text = "歌词:";
+            this.label_Lryic.Text = "内置歌词:";
             // 
             // pictureBox_AlbumImage
             // 
@@ -392,13 +399,6 @@ namespace ZonyLrcTools.UI
             // 
             this.columnHeader7.Text = "状态";
             this.columnHeader7.Width = 57;
-            // 
-            // ToolStripMenuItem_DownLoadSelectedAlbumImg
-            // 
-            this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Name = "ToolStripMenuItem_DownLoadSelectedAlbumImg";
-            this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Size = new System.Drawing.Size(196, 22);
-            this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Text = "下载选中歌曲专辑图像";
-            this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Click += new System.EventHandler(this.ToolStripMenuItem_DownLoadSelectedAlbumImg_Click);
             // 
             // UI_Main
             // 

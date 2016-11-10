@@ -3,6 +3,7 @@ using LibPlug;
 using LibPlug.Interface;
 using LibPlug.Model;
 using ID3;
+using System;
 
 namespace LibMusicInfo.cs
 {
@@ -17,6 +18,13 @@ namespace LibMusicInfo.cs
             if (_info.ID3v2Info.AttachedPictureFrames.Items.Length == 0) return null;
             MemoryStream _imgStream = _info.ID3v2Info.AttachedPictureFrames.Items[0].Data;
             return _imgStream;
+        }
+
+        public string LoadLyricText(string path)
+        {
+            ID3Info _info = new ID3Info(path, true);
+            string _lyric = _info.ID3v2Info.GetTextFrame("TEXT");
+            return !string.IsNullOrEmpty(_lyric) ? _lyric : "没有内置歌词";
         }
 
         public void LoadTag(string path, MusicInfoModel info)
@@ -35,9 +43,10 @@ namespace LibMusicInfo.cs
             info.SongName = _songName;
             info.Album = _album;
             info.IsAlbumImg = _info.ID3v2Info.AttachedPictureFrames.Count > 0 ? true : false;
+            info.IsBuildInLyric = string.IsNullOrEmpty(_info.ID3v2Info.GetTextFrame("TEXT"));
         }
 
-        public void SaveTag(MusicInfoModel info,byte[] imgBytes)
+        public void SaveTag(MusicInfoModel info,byte[] imgBytes,string lyric)
         {
             ID3Info _info = new ID3Info(info.Path, true);
             _info.ID3v2Info.SetTextFrame("TIT2", info.Artist);
@@ -45,8 +54,10 @@ namespace LibMusicInfo.cs
             _info.ID3v2Info.SetTextFrame("TALB", info.Album);
 
             MemoryStream _ms = new MemoryStream(imgBytes);
-            // 将数据添加进Mp3文件当中
+            // 将专辑图像数据添加进Mp3文件当中
             _info.ID3v2Info.AttachedPictureFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame(0,"ZonyLrc",TextEncodings.Ascii,"image/jpeg",ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame.PictureTypes.Media, _ms));
+            _info.ID3v2Info.SetTextFrame("TEXT", lyric);
+
             _info.Save();
             _ms.Close();
         }

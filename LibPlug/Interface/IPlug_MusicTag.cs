@@ -23,6 +23,13 @@ namespace LibPlug.Interface
         /// </summary>
         /// <param name="info">信息模型</param>
         /// <param name="imgBytes">专辑图像数据</param>
-        void SaveTag(MusicInfoModel info, byte[] imgBytes);
+        /// <param name="lyric">内置歌词数据</param>
+        void SaveTag(MusicInfoModel info, byte[] imgBytes, string lyric);
+        /// <summary>
+        /// 加载内置歌词
+        /// </summary>
+        /// <param name="path">歌曲文件路径</param>
+        /// <returns></returns>
+        string LoadLyricText(string path);
     }
 }
