@@ -70,6 +70,7 @@ namespace ZonyLrcTools.UI
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ToolStripMenuItem_OpenFileFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip_TopMenus.SuspendLayout();
             this.contextMenuStrip_FileListView.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
@@ -189,15 +190,17 @@ namespace ZonyLrcTools.UI
             this.contextMenuStrip_FileListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem_EditLyric,
             this.ToolStripMenuItem_DownLoadSelectMusic,
-            this.ToolStripMenuItem_DownLoadSelectedAlbumImg});
+            this.ToolStripMenuItem_DownLoadSelectedAlbumImg,
+            this.ToolStripMenuItem_OpenFileFolder});
             this.contextMenuStrip_FileListView.Name = "contextMenuStrip_FileListView";
-            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(197, 70);
+            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(197, 92);
             // 
             // ToolStripMenuItem_EditLyric
             // 
+            this.ToolStripMenuItem_EditLyric.Enabled = false;
             this.ToolStripMenuItem_EditLyric.Name = "ToolStripMenuItem_EditLyric";
             this.ToolStripMenuItem_EditLyric.Size = new System.Drawing.Size(196, 22);
-            this.ToolStripMenuItem_EditLyric.Text = "编辑选中歌词";
+            this.ToolStripMenuItem_EditLyric.Text = "编辑选中歌词(禁用)";
             // 
             // ToolStripMenuItem_DownLoadSelectMusic
             // 
@@ -400,6 +403,13 @@ namespace ZonyLrcTools.UI
             this.columnHeader7.Text = "状态";
             this.columnHeader7.Width = 57;
             // 
+            // ToolStripMenuItem_OpenFileFolder
+            // 
+            this.ToolStripMenuItem_OpenFileFolder.Name = "ToolStripMenuItem_OpenFileFolder";
+            this.ToolStripMenuItem_OpenFileFolder.Size = new System.Drawing.Size(196, 22);
+            this.ToolStripMenuItem_OpenFileFolder.Text = "打开歌曲所在文件夹";
+            this.ToolStripMenuItem_OpenFileFolder.Click += new System.EventHandler(this.ToolStripMenuItem_OpenFileFolder_Click);
+            // 
             // UI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -469,5 +479,6 @@ namespace ZonyLrcTools.UI
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_DownLoadSelectMusic;
         private System.Windows.Forms.ToolStripButton button_Setting;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_DownLoadSelectedAlbumImg;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_OpenFileFolder;
     }
 }

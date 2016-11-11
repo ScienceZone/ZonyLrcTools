@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace ZonyLrcTools.Untils
 {
@@ -25,7 +26,10 @@ namespace ZonyLrcTools.Untils
             {
                 using (FileStream _fs = new FileStream(filePath, FileMode.OpenOrCreate))
                 {
-                    _fs.Write(data, 0, data.Length);
+                    lock(_fs)
+                    {
+                        _fs.Write(data, 0, data.Length);
+                    }
                     return true;
                 }
             }
@@ -93,6 +97,17 @@ namespace ZonyLrcTools.Untils
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 在资源管理器当中定位文件的位置
+        /// </summary>
+        /// <param name="filePath">文件路径</param>
+        public static void OpenFilePos(string filePath)
+        {
+            ProcessStartInfo _start = new ProcessStartInfo("Explorer.exe");
+            _start.Arguments = "/e,/select," + filePath;
+            Process.Start(_start);
         }
     }
 }

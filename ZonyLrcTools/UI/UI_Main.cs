@@ -14,6 +14,7 @@ using LibPlug.Model;
 using System.IO;
 using LibPlug.Interface;
 using LibPlug;
+using System.Diagnostics;
 
 namespace ZonyLrcTools.UI
 {
@@ -106,16 +107,9 @@ namespace ZonyLrcTools.UI
             if(listView_MusicInfos.SelectedItems.Count != 0)
             {
                 int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
-                byte[] _lrcData;
-                MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
-                if(GlobalMember.LrcPluginsManager.Plugins[0].DownLoad(_info.Artist, _info.SongName, out _lrcData))
-                {
-                    string _lrcPath = Path.GetDirectoryName(_info.Path) + @"\" + Path.GetFileNameWithoutExtension(_info.Path) + ".lrc";
-                    // 编码转换
-                    _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
-                    FileUtils.WriteFile(_lrcPath, _lrcData);
-                    listView_MusicInfos.Items[_selectCount].SubItems[6].Text = "成功";
-                }else listView_MusicInfos.Items[_selectCount].SubItems[6].Text = "失败";
+                var _tempDic = new Dictionary<int, MusicInfoModel>();
+                _tempDic.Add(_selectCount, GlobalMember.AllMusics[_selectCount]);
+                parallelDownLoadLryic(_tempDic);
             }
         }
 
@@ -129,11 +123,10 @@ namespace ZonyLrcTools.UI
         /// </summary>
         private void button_DownLoadLyric_Click(object sender, EventArgs e)
         {
-            if (listView_MusicInfos.Items.Count != 0) parallelDownLoadLryic();
+            if (listView_MusicInfos.Items.Count != 0) parallelDownLoadLryic(GlobalMember.AllMusics);
             else setBottomStatusText(StatusHeadEnum.ERROR, "请选择歌曲目录再尝试下载歌词！");
         }
 
-        // 吃饭去了
         /// <summary>
         /// 下载列表当中所有的专辑图像
         /// </summary>
@@ -159,12 +152,14 @@ namespace ZonyLrcTools.UI
                 MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
                 if (_info.IsAlbumImg == true)
                 {
+                    listView_MusicInfos.Items[_selectCount].SubItems[6].Text = "略过";
                     setBottomStatusText(StatusHeadEnum.FAILED, "该歌曲已经有专辑图像了！");
                     return;
                 }
                 if(GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(_info.Artist, _info.SongName, out _imgBytes))
                 {
                     GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info,_imgBytes,string.Empty);
+                    listView_MusicInfos.Items[_selectCount].SubItems[6].Text = "成功";
                     setBottomStatusText(StatusHeadEnum.SUCCESS, "下载专辑图像成功!");
                 }
             }
@@ -173,34 +168,55 @@ namespace ZonyLrcTools.UI
         /// <summary>
         /// 并行下载歌词任务
         /// </summary>
-        private async void parallelDownLoadLryic()
+        private async void parallelDownLoadLryic(Dictionary<int,MusicInfoModel> list)
         {
             setBottomStatusText(StatusHeadEnum.NORMAL,"正在下载歌词...");
-            progress_DownLoad.Maximum = GlobalMember.AllMusics.Count; progress_DownLoad.Value = 0;
+            progress_DownLoad.Maximum = list.Count; progress_DownLoad.Value = 0;
             await Task.Run(() => 
             {
                 disEnabledButton();
-                Parallel.ForEach(GlobalMember.AllMusics, new ParallelOptions() { MaxDegreeOfParallelism = SettingManager.SetValue.DownloadThreadNum }, (item) =>
+                Parallel.ForEach(list, new ParallelOptions() { MaxDegreeOfParallelism = SettingManager.SetValue.DownloadThreadNum }, (item) =>
                 {
-                    byte[] _lrcData;
-                    if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource)[0].DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData))
+                    string _path = Path.GetDirectoryName(item.Value.Path) + @"\" + Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc";
+                    if (SettingManager.SetValue.IsIgnoreExitsFile && File.Exists(_path))
                     {
-                        string _lrcPath = null;
-                        #region > 输出方式 <
-                        if (SettingManager.SetValue.UserDirectory .Equals(string.Empty))
-                        {
-                            _lrcPath = Path.GetDirectoryName(item.Value.Path) + @"\" + Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc";
-                        }else if(SettingManager.SetValue.UserDirectory.Equals("ID3v2"))
-                        {
-                            
-                        }
-                        #endregion
-                        // 编码转换
-                        _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
-                        FileUtils.WriteFile(_lrcPath, _lrcData);
-                        listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
+                        listView_MusicInfos.Items[item.Key].SubItems[6].Text = "略过";
                     }
-                    else listView_MusicInfos.Items[item.Key].SubItems[6].Text = "失败";
+                    else
+                    {
+                        byte[] _lrcData;
+                        if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource)[0].DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData))
+                        {
+                            string _lrcPath = null;
+                            _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
+
+                            #region > 输出方式 <
+                            if (SettingManager.SetValue.UserDirectory.Equals(string.Empty)) // 同目录
+                            {
+                                _lrcPath = Path.GetDirectoryName(item.Value.Path) + @"\" + Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc";
+                            }
+                            else if (SettingManager.SetValue.UserDirectory.Equals("ID3v2")) // 写入ID3v2(bug)
+                            {
+                                #region > 注释 <
+                                //string _lrcString = Encoding.GetEncoding(SettingManager.SetValue.EncodingName).GetString(_lrcData);
+                                //GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(item.Value, null, _lrcString);
+                                //listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
+                                //return;
+                                #endregion
+                            }
+                            else // 自定义目录
+                            {
+                                _lrcPath = Path.Combine(SettingManager.SetValue.UserDirectory, Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc");
+                            }
+                            #endregion
+
+                            // 编码转换
+                            _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
+                            FileUtils.WriteFile(_lrcPath, _lrcData);
+                            listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
+                        }
+                        else listView_MusicInfos.Items[item.Key].SubItems[6].Text = "失败";
+                    }
                     progress_DownLoad.Value += 1;
                 });
                 enabledButton();
@@ -299,5 +315,18 @@ namespace ZonyLrcTools.UI
             button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = true;
         }
         #endregion
+
+        /// <summary>
+        /// 打开歌曲所在文件夹
+        /// </summary>
+        private void ToolStripMenuItem_OpenFileFolder_Click(object sender, EventArgs e)
+        {
+            if(listView_MusicInfos.SelectedItems.Count != 0)
+            {
+                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
+                string _path = GlobalMember.AllMusics[_selectCount].Path;
+                FileUtils.OpenFilePos(_path);
+            }
+        }
     }
 }

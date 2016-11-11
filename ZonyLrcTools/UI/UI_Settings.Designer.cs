@@ -95,8 +95,7 @@
             this.comboBox_LrcOutput.FormattingEnabled = true;
             this.comboBox_LrcOutput.Items.AddRange(new object[] {
             resources.GetString("comboBox_LrcOutput.Items"),
-            resources.GetString("comboBox_LrcOutput.Items1"),
-            resources.GetString("comboBox_LrcOutput.Items2")});
+            resources.GetString("comboBox_LrcOutput.Items1")});
             resources.ApplyResources(this.comboBox_LrcOutput, "comboBox_LrcOutput");
             this.comboBox_LrcOutput.Name = "comboBox_LrcOutput";
             this.comboBox_LrcOutput.SelectionChangeCommitted += new System.EventHandler(this.comboBox_LrcOutput_SelectionChangeCommitted);

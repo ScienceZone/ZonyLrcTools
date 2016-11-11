@@ -53,13 +53,18 @@ namespace LibMusicInfo.cs
             _info.ID3v2Info.SetTextFrame("TPE1", info.SongName);
             _info.ID3v2Info.SetTextFrame("TALB", info.Album);
 
-            MemoryStream _ms = new MemoryStream(imgBytes);
-            // 将专辑图像数据添加进Mp3文件当中
-            _info.ID3v2Info.AttachedPictureFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame(0,"ZonyLrc",TextEncodings.Ascii,"image/jpeg",ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame.PictureTypes.Media, _ms));
-            _info.ID3v2Info.SetTextFrame("TEXT", lyric);
+            MemoryStream _ms = null ;
+            if (imgBytes != null)
+            {
+                // 将专辑图像数据添加进Mp3文件当中
+                _ms = new MemoryStream(imgBytes);
+                _info.ID3v2Info.AttachedPictureFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame(0, "ZonyLrc", TextEncodings.Ascii, "image/jpeg", ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame.PictureTypes.Media, _ms));
+            }
+
+            if (lyric != null) _info.ID3v2Info.SetTextFrame("TEXT", lyric);
 
             _info.Save();
-            _ms.Close();
+            if(_ms != null) _ms.Close();
         }
     }
 }
