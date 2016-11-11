@@ -21,6 +21,7 @@ namespace ZonyLrcTools.UI
 
         private void UI_Settings_Load(object sender, EventArgs e)
         {
+            Icon = Properties.Resources.App;
             loadEncodings();
             laodSetting();
         }

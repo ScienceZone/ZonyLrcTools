@@ -31,6 +31,7 @@ namespace ZonyLrcTools.UI
 
         private void UI_About_Load(object sender, EventArgs e)
         {
+            Icon = Properties.Resources.App;
             if (SettingManager.SetValue.IsAgree) button_Agree.Visible = button_Disagree.Visible = false;
             else button_Exit.Visible = false;
         }

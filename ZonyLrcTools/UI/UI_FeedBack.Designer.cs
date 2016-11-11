@@ -120,6 +120,7 @@
             this.Name = "UI_FeedBack";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "反馈信息";
+            this.Load += new System.EventHandler(this.UI_FeedBack_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

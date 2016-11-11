@@ -58,5 +58,10 @@ namespace ZonyLrcTools.UI
                 MessageBox.Show("反馈信息提交失败！\r\n你可以加入QQ群:337656932进行反馈。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void UI_FeedBack_Load(object sender, EventArgs e)
+        {
+            Icon = Properties.Resources.App;
+        }
     }
 }

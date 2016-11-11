@@ -59,6 +59,7 @@ namespace ZonyLrcTools.UI
             if(GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR,"加载MusicTag插件管理器失败...");
             if (GlobalMember.LrcPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR, "加载歌词下载插件失败...");
 
+            loadMenuIcon();
             CheckForIllegalCrossThreadCalls = false;
         }
 
@@ -327,6 +328,21 @@ namespace ZonyLrcTools.UI
                 string _path = GlobalMember.AllMusics[_selectCount].Path;
                 FileUtils.OpenFilePos(_path);
             }
+        }
+
+        /// <summary>
+        /// 加载菜单图标数据
+        /// </summary>
+        private void loadMenuIcon()
+        {
+            button_SetWorkDirectory.Image = Properties.Resources.directory;
+            button_DownLoadAlbumImage.Image = button_DownLoadLyric.Image = Properties.Resources.download;
+            button_FeedBack.Image = Properties.Resources.feedback;
+            button_DonateAuthor.Image = Properties.Resources.donate;
+            button_AboutSoftware.Image = Properties.Resources.about;
+            button_PluginsMrg.Image = Properties.Resources.plugins;
+            button_Setting.Image = Properties.Resources.setting;
+            Icon = Properties.Resources.App;
         }
     }
 }

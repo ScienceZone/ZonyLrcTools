@@ -26,6 +26,7 @@ namespace ZonyLrcTools.UI
 
         private void UI_PluginsManager_Load(object sender, EventArgs e)
         {
+            Icon = Properties.Resources.App;
             fillPluginsInfo(GlobalMember.MusicTagPluginsManager);
             fillPluginsInfo(GlobalMember.LrcPluginsManager);
         }
