@@ -369,5 +369,20 @@ namespace ZonyLrcTools.UI
                 }
             });
         }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if(keyData == (Keys.Control | Keys.S))
+            {
+                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
+                MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
+                _info.Artist = textBox_Aritst.Text;
+                _info.SongName = textBox_MusicTitle.Text;
+                _info.Album = textBox_Album.Text;
+                GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info, null, string.Empty);
+                MessageBox.Show("已经保存歌曲标签信息!", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            return false;
+        }
     }
 }

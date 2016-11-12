@@ -49,8 +49,8 @@ namespace LibMusicInfo.cs
         public void SaveTag(MusicInfoModel info,byte[] imgBytes,string lyric)
         {
             ID3Info _info = new ID3Info(info.Path, true);
-            _info.ID3v2Info.SetTextFrame("TIT2", info.Artist);
-            _info.ID3v2Info.SetTextFrame("TPE1", info.SongName);
+            _info.ID3v2Info.SetTextFrame("TIT2", info.SongName);
+            _info.ID3v2Info.SetTextFrame("TPE1", info.Artist);
             _info.ID3v2Info.SetTextFrame("TALB", info.Album);
 
             MemoryStream _ms = null ;
@@ -61,7 +61,7 @@ namespace LibMusicInfo.cs
                 _info.ID3v2Info.AttachedPictureFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame(0, "ZonyLrc", TextEncodings.Ascii, "image/jpeg", ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame.PictureTypes.Media, _ms));
             }
 
-            if (lyric != null) _info.ID3v2Info.SetTextFrame("TEXT", lyric);
+            if (!string.IsNullOrEmpty(lyric)) _info.ID3v2Info.SetTextFrame("TEXT", lyric);
 
             _info.Save();
             if(_ms != null) _ms.Close();
