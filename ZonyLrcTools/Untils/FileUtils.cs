@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using ZonyLrcTools.EnumDefine;
 
 namespace ZonyLrcTools.Untils
 {
@@ -35,6 +36,7 @@ namespace ZonyLrcTools.Untils
             }
             catch(Exception E)
             {
+                LogManager.WriteLogRecord(StatusHeadEnum.EXP, "在方法WriteFile发生异常!", E);
                 return false;
             }
         }
@@ -58,6 +60,7 @@ namespace ZonyLrcTools.Untils
             }
             catch(Exception E)
             {
+                LogManager.WriteLogRecord(StatusHeadEnum.EXP, "在方法WriteFile发生异常!", E);
                 return false;
             }
             return false;
@@ -95,6 +98,7 @@ namespace ZonyLrcTools.Untils
             }
             catch(Exception E)
             {
+                LogManager.WriteLogRecord(StatusHeadEnum.EXP, "在方法SearchFiles发生异常！", E);
                 return false;
             }
         }
