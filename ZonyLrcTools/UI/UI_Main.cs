@@ -15,6 +15,7 @@ using System.IO;
 using LibPlug.Interface;
 using LibPlug;
 using System.Diagnostics;
+using LibNet;
 
 namespace ZonyLrcTools.UI
 {
@@ -54,6 +55,7 @@ namespace ZonyLrcTools.UI
         {
             SettingManager.Load();
             if (!SettingManager.SetValue.IsAgree) new UI_About().ShowDialog();
+            if (SettingManager.SetValue.IsCheckUpdate) checkUpdate();
             setBottomStatusText(StatusHeadEnum.WAIT, "等待用户操作...");
 
             if(GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR,"加载MusicTag插件管理器失败...");
@@ -343,6 +345,29 @@ namespace ZonyLrcTools.UI
             button_PluginsMrg.Image = Properties.Resources.plugins;
             button_Setting.Image = Properties.Resources.setting;
             Icon = Properties.Resources.App;
+        }
+
+        /// <summary>
+        /// 检测更新
+        /// </summary>
+        /// <returns></returns>
+        private async void checkUpdate()
+        {
+            int _currentVer = 0010;
+            await Task.Run(() => 
+            {
+                string _updateInfo =new NetUtils().HttpGet("http://www.myzony.com/updateInfo.txt", Encoding.Default);
+                string[] _result = _updateInfo.TrimEnd(',').Split(',');
+                int _dstVer = int.Parse(_result[0]);
+                string _url = _result[1];
+                if(_currentVer < _dstVer)
+                {
+                    if(MessageBox.Show("检测到新版本，是否下载?", "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                    {
+                        Process.Start("Explorer " + _url);
+                    }
+                }
+            });
         }
     }
 }
