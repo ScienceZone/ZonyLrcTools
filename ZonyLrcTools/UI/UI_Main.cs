@@ -84,7 +84,7 @@ namespace ZonyLrcTools.UI
         {
             new UI_PluginsManager().ShowDialog();
         }
-
+        
         private void listView_MusicInfos_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(listView_MusicInfos.SelectedItems.Count != 0)
