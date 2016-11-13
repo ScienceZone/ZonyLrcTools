@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibMusicInfo.cs", "LibMusic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibAlbumImg", "LibAlbumImg\LibAlbumImg.csproj", "{EE4489A4-8BA9-4752-9BDE-3CE4AFF20F70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ID3", "F:\下载\ID3Class\ID3Class\ID3Class\ID3.csproj", "{5D66099A-A8C5-47AB-B230-C9B60DFC1B40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ID3", "ID3Class\ID3.csproj", "{5D66099A-A8C5-47AB-B230-C9B60DFC1B40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
