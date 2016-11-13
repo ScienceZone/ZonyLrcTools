@@ -137,8 +137,7 @@ namespace ZonyLrcTools.UI
         {
             if (listView_MusicInfos.Items.Count != 0)
             {
-                disEnabledButton();
-                parallelDownLoadAlbumImg();
+                parallelDownLoadAlbumImg(GlobalMember.AllMusics);
             }
             else setBottomStatusText(StatusHeadEnum.ERROR, "请选择歌曲目录再尝试下载专辑图像！");
         }
@@ -150,21 +149,10 @@ namespace ZonyLrcTools.UI
         {
             if (listView_MusicInfos.SelectedItems.Count != 0)
             {
-                byte[] _imgBytes;
                 int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
-                MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
-                if (_info.IsAlbumImg == true)
-                {
-                    listView_MusicInfos.Items[_selectCount].SubItems[6].Text = "略过";
-                    setBottomStatusText(StatusHeadEnum.FAILED, "该歌曲已经有专辑图像了！");
-                    return;
-                }
-                if(GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(_info.Artist, _info.SongName, out _imgBytes))
-                {
-                    GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info,_imgBytes,string.Empty);
-                    listView_MusicInfos.Items[_selectCount].SubItems[6].Text = "成功";
-                    setBottomStatusText(StatusHeadEnum.SUCCESS, "下载专辑图像成功!");
-                }
+                var _tempDic = new Dictionary<int, MusicInfoModel>();
+                _tempDic.Add(_selectCount, GlobalMember.AllMusics[_selectCount]);
+                parallelDownLoadAlbumImg(_tempDic);
             }
         }
 
@@ -229,26 +217,32 @@ namespace ZonyLrcTools.UI
         /// <summary>
         /// 并行下载专辑图像任务
         /// </summary>
-        private async void parallelDownLoadAlbumImg()
+        private async void parallelDownLoadAlbumImg(Dictionary<int,MusicInfoModel> list)
         {
             setBottomStatusText(StatusHeadEnum.NORMAL, "正在下载专辑图像...");
+            progress_DownLoad.Maximum = list.Count;progress_DownLoad.Value = 0;
             await Task.Run(() => 
             {
-                Parallel.ForEach(GlobalMember.AllMusics,new ParallelOptions() { MaxDegreeOfParallelism=SettingManager.SetValue.DownloadThreadNum }, (info) => 
+                disEnabledButton();
+                Parallel.ForEach(list, new ParallelOptions() { MaxDegreeOfParallelism=SettingManager.SetValue.DownloadThreadNum }, (info) => 
                 {
-                    if (info.Value.IsAlbumImg) listView_MusicInfos.Items[info.Key].SubItems[6].Text = "略过";
-                    else
+                    lock(info.Value)
                     {
-                        byte[] _imgBytes;
-                        if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(info.Value.Artist, info.Value.SongName, out _imgBytes))
+                        if (info.Value.IsAlbumImg) listView_MusicInfos.Items[info.Key].SubItems[6].Text = "略过";
+                        else
                         {
-                            GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(info.Value, _imgBytes,string.Empty);
-                            listView_MusicInfos.Items[info.Key].SubItems[6].Text = "成功";
+                            byte[] _imgBytes;
+                            if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(info.Value.Artist, info.Value.SongName, out _imgBytes))
+                            {
+                                GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(info.Value, _imgBytes, string.Empty);
+                                listView_MusicInfos.Items[info.Key].SubItems[6].Text = "成功";
+                            }
+                            else listView_MusicInfos.Items[info.Key].SubItems[6].Text = "失败";
+                            progress_DownLoad.Value += 1;
                         }
-                        else listView_MusicInfos.Items[info.Key].SubItems[6].Text = "失败";
-                        progress_DownLoad.Value += 1;
                     }
                 });
+                setBottomStatusText(StatusHeadEnum.SUCCESS, "下载专辑图像完成...");
                 enabledButton();
             });
         }

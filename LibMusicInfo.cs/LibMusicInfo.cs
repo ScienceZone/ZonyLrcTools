@@ -14,10 +14,17 @@ namespace LibMusicInfo.cs
 
         public Stream LoadAlbumImg(string path)
         {
-            ID3Info _info = new ID3Info(path, true);
-            if (_info.ID3v2Info.AttachedPictureFrames.Items.Length == 0) return null;
-            MemoryStream _imgStream = _info.ID3v2Info.AttachedPictureFrames.Items[0].Data;
-            return _imgStream;
+            try
+            {
+                ID3Info _info = new ID3Info(path, false);
+                if (_info.ID3v2Info.AttachedPictureFrames.Items.Length == 0) return null;
+                MemoryStream _imgStream = _info.ID3v2Info.AttachedPictureFrames.Items[0].Data;
+                return _imgStream;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public string LoadLyricText(string path)
@@ -29,21 +36,36 @@ namespace LibMusicInfo.cs
 
         public void LoadTag(string path, MusicInfoModel info)
         {
-            ID3Info _info = new ID3Info(path, true);
+            string _songName = null;
+            string _artist = null;
             string _fileName = Path.GetFileNameWithoutExtension(path);
-            string _songName = _info.ID3v1Info.Title != null ? _info.ID3v1Info.Title : _info.ID3v2Info.GetTextFrame("TIT2").Replace("�", string.Empty);
-            string _artist = _info.ID3v1Info.Artist != null ? _info.ID3v1Info.Artist : _info.ID3v2Info.GetTextFrame("TPE1").Replace("�", string.Empty);
-            string _album = _info.ID3v1Info.Album != null ? _info.ID3v1Info.Album : _info.ID3v2Info.GetTextFrame("TALB").Replace("�", string.Empty);
+            try
+            {
+                ID3Info _info = new ID3Info(path, true);
+                _songName = _info.ID3v1Info.Title != null ? _info.ID3v1Info.Title : _info.ID3v2Info.GetTextFrame("TIT2").Replace("�", string.Empty);
+                _artist = _info.ID3v1Info.Artist != null ? _info.ID3v1Info.Artist : _info.ID3v2Info.GetTextFrame("TPE1").Replace("�", string.Empty);
+                string _album = _info.ID3v1Info.Album != null ? _info.ID3v1Info.Album : _info.ID3v2Info.GetTextFrame("TALB").Replace("�", string.Empty);
 
-            if (string.IsNullOrEmpty(_songName)) _songName = _fileName;
-            if (string.IsNullOrEmpty(_artist)) _artist = _fileName;
+                if (string.IsNullOrEmpty(_songName)) _songName = _fileName;
+                if (string.IsNullOrEmpty(_artist)) _artist = _fileName;
 
-            info.TagType = _info.ID3v1Info.HaveTag ? "ID3v1" : "ID3v2";
+                info.TagType = _info.ID3v1Info.HaveTag ? "ID3v1" : "ID3v2";
+                info.IsAlbumImg = _info.ID3v2Info.AttachedPictureFrames.Count > 0 ? true : false;
+                info.IsBuildInLyric = string.IsNullOrEmpty(_info.ID3v2Info.GetTextFrame("TEXT"));
+                info.Album = _album;
+            }
+            catch
+            {
+                if (string.IsNullOrEmpty(_songName)) _songName = _fileName;
+                if (string.IsNullOrEmpty(_artist)) _artist = string.Empty;
+                info.TagType = "无";
+                info.IsAlbumImg = false;
+                info.IsBuildInLyric = false;
+                info.Album = "无";
+            }
+
             info.Artist = _artist;
             info.SongName = _songName;
-            info.Album = _album;
-            info.IsAlbumImg = _info.ID3v2Info.AttachedPictureFrames.Count > 0 ? true : false;
-            info.IsBuildInLyric = string.IsNullOrEmpty(_info.ID3v2Info.GetTextFrame("TEXT"));
         }
 
         public void SaveTag(MusicInfoModel info,byte[] imgBytes,string lyric)

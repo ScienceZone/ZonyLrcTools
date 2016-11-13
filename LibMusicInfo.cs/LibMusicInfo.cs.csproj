@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ID3">
-      <HintPath>F:\下载\ID3Class\ID3Class\ID3Class\bin\Debug\ID3.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -48,6 +45,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ID3Class\ID3.csproj">
+      <Project>{5d66099a-a8c5-47ab-b230-c9b60dfc1b40}</Project>
+      <Name>ID3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LibPlug\LibPlug.csproj">
       <Project>{AA0B7F42-C97B-4052-B92A-E6AE2B63B14A}</Project>
       <Name>LibPlug</Name>
