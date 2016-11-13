@@ -70,23 +70,28 @@ namespace LibMusicInfo.cs
 
         public void SaveTag(MusicInfoModel info,byte[] imgBytes,string lyric)
         {
-            ID3Info _info = new ID3Info(info.Path, true);
-            _info.ID3v2Info.SetTextFrame("TIT2", info.SongName);
-            _info.ID3v2Info.SetTextFrame("TPE1", info.Artist);
-            _info.ID3v2Info.SetTextFrame("TALB", info.Album);
-
-            MemoryStream _ms = null ;
-            if (imgBytes != null)
+            ID3Info _info = null;
+            try
             {
-                // 将专辑图像数据添加进Mp3文件当中
-                _ms = new MemoryStream(imgBytes);
-                _info.ID3v2Info.AttachedPictureFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame(0, "ZonyLrc", TextEncodings.Ascii, "image/jpeg", ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame.PictureTypes.Media, _ms));
+                _info = new ID3Info(info.Path, true);
+                _info.ID3v2Info.SetTextFrame("TIT2", info.SongName);
+                _info.ID3v2Info.SetTextFrame("TPE1", info.Artist);
+                _info.ID3v2Info.SetTextFrame("TALB", info.Album);
+
+                MemoryStream _ms = null;
+                if (imgBytes != null)
+                {
+                    // 将专辑图像数据添加进Mp3文件当中
+                    _ms = new MemoryStream(imgBytes);
+                    _info.ID3v2Info.AttachedPictureFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame(0, "ZonyLrc", TextEncodings.Ascii, "image/jpeg", ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame.PictureTypes.Media, _ms));
+                }
+
+                if (!string.IsNullOrEmpty(lyric)) _info.ID3v2Info.SetTextFrame("TEXT", lyric);
+
+                _info.Save();
+                if (_ms != null) _ms.Close();
             }
-
-            if (!string.IsNullOrEmpty(lyric)) _info.ID3v2Info.SetTextFrame("TEXT", lyric);
-
-            _info.Save();
-            if(_ms != null) _ms.Close();
+            catch{ }
         }
     }
 }
