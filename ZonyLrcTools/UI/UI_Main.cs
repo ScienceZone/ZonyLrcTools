@@ -45,7 +45,7 @@ namespace ZonyLrcTools.UI
                 }
                 else
                 {
-                    setBottomStatusText(StatusHeadEnum.NORMAL, "没有搜索到文件...");
+                    setBottomStatusText(StatusHeadEnum.NORMAL, "并没有搜索到文件...");
                     enabledButton();
                 }
             }

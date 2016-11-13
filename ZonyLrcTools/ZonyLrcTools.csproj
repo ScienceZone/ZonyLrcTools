@@ -173,7 +173,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DLL\ID3.dll" />
     <None Include="Resources\App.ico" />
     <None Include="Resources\setting.ico" />
     <None Include="Resources\plugins.ico" />
@@ -185,7 +184,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)\DLL\ID3.dll" "$(SolutionDir)$(SolutionName)\bin\Debug\Plugins"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
