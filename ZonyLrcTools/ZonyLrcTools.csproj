@@ -88,6 +88,12 @@
     <Compile Include="UI\UI_FeedBack.Designer.cs">
       <DependentUpon>UI_FeedBack.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\UI_FunctionTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UI_FunctionTest.Designer.cs">
+      <DependentUpon>UI_FunctionTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\UI_Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UI_FeedBack.resx">
       <DependentUpon>UI_FeedBack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_FunctionTest.resx">
+      <DependentUpon>UI_FunctionTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UI_Main.resx">
       <DependentUpon>UI_Main.cs</DependentUpon>

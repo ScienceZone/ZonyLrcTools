@@ -1,10 +1,7 @@
 ﻿using LibPlug.Model;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using ZonyLrcTools.EnumDefine;
 
@@ -15,6 +12,7 @@ namespace ZonyLrcTools.Untils
     /// </summary>
     public static class FileUtils
     {
+        private static object m_lock = new object();
         /// <summary>
         /// 将数据写入到文件
         /// </summary>
@@ -25,13 +23,13 @@ namespace ZonyLrcTools.Untils
         {
             try
             {
-                using (FileStream _fs = new FileStream(filePath, FileMode.OpenOrCreate))
+                lock(m_lock)
                 {
-                    lock(_fs)
+                    using (FileStream _fs = new FileStream(filePath, FileMode.OpenOrCreate))
                     {
                         _fs.Write(data, 0, data.Length);
+                        return true;
                     }
-                    return true;
                 }
             }
             catch(Exception E)
@@ -53,9 +51,12 @@ namespace ZonyLrcTools.Untils
             byte[] _dataBytes = encoding.GetBytes(data);
             try
             {
-                using (FileStream _fs = new FileStream(filePath, FileMode.OpenOrCreate))
+                lock(m_lock)
                 {
-                    _fs.Write(_dataBytes, 0, _dataBytes.Length);
+                    using (FileStream _fs = new FileStream(filePath, FileMode.OpenOrCreate))
+                    {
+                        _fs.Write(_dataBytes, 0, _dataBytes.Length);
+                    }
                 }
             }
             catch(Exception E)

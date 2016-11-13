@@ -11,13 +11,13 @@ namespace ZonyLrcTools.Untils
         private static FileStream m_logFile;
         private static string m_logName;
         private static string m_logPath = Environment.CurrentDirectory + @"\LogFiles\";
-        private static object m_lockObj;
+        private static object m_lockObj = new object();
 
         static LogManager()
         {
             if (!Directory.Exists(m_logPath)) Directory.CreateDirectory(m_logPath);
-            m_logName = DateTime.Now.ToString("yyyyMMddHHmmss.log");
-            m_logFile = new FileStream(Path.Combine(m_logPath,m_logName), FileMode.Create);
+            m_logName = DateTime.Now.ToString("yyyyMMddHHmmss") + ".log";
+            m_logFile = new FileStream(Path.Combine(m_logPath,m_logName), FileMode.OpenOrCreate);
         }
 
         /// <summary>
@@ -32,10 +32,10 @@ namespace ZonyLrcTools.Untils
             {
                 if (m_logFile != null)
                 {
-                    using (StreamWriter _sw = new StreamWriter(m_logFile))
-                    {
-                        _sw.Write(buildWriteString(status, text, e));
-                    }
+                    StreamWriter _sw = new StreamWriter(m_logFile);
+                    _sw.Write(buildWriteString(status, text, e));
+                    _sw.Flush();
+                    m_logFile.Flush();
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace ZonyLrcTools.Untils
         {
             string _writeString = "状态:" + status + "\r\n" +
                                   "信息:" + status + "\r\n" +
-                                  "错误堆栈：" + e == null ? "无" : e.Message;
+                                  "错误堆栈：" + (e == null ? "无" : e.Message != null ? e.Message : e.InnerException.Message);
             return _writeString;
         }
     }
