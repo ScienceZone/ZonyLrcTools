@@ -3,7 +3,6 @@ using LibPlug;
 using LibPlug.Interface;
 using LibPlug.Model;
 using ID3;
-using System;
 
 namespace LibMusicInfo.cs
 {

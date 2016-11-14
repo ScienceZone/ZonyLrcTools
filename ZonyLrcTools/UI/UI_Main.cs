@@ -179,7 +179,6 @@ namespace ZonyLrcTools.UI
                         if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource)[0].DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData))
                         {
                             string _lrcPath = null;
-                            _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
 
                             #region > 输出方式 <
                             if (SettingManager.SetValue.UserDirectory.Equals(string.Empty)) // 同目录
@@ -202,14 +201,18 @@ namespace ZonyLrcTools.UI
                             #endregion
 
                             // 编码转换
-                            _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
-                            FileUtils.WriteFile(_lrcPath, _lrcData);
+                            _lrcData = Encoding.Convert(Encoding.UTF8, SettingManager.SetValue.EncodingName.Equals("utf-8 bom") ? Encoding.UTF8 : Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
+                            byte[] _tmpData = new byte[_lrcData.Length + 3];
+                            _tmpData[0] = 0xef;_tmpData[1] = 0xbb;_tmpData[2] = 0xbf;
+                            Array.Copy(_lrcData, 0, _tmpData, 3, _lrcData.Length);
+                            FileUtils.WriteFile(_lrcPath, _tmpData);
                             listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
                         }
                         else listView_MusicInfos.Items[item.Key].SubItems[6].Text = "失败";
                     }
                     progress_DownLoad.Value += 1;
                 });
+                setBottomStatusText(StatusHeadEnum.SUCCESS, "歌词下载完成！");
                 enabledButton();
             });
         }

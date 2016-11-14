@@ -1,13 +1,12 @@
 ﻿using LibPlug.Interface;
 using LibPlug;
-using System;
 using LibNet;
 using System.Text;
 using Newtonsoft.Json.Linq;
 
 namespace LibLyricNetEase
 {
-    [Plugins("网易云Lrc歌词下载插件", "Zony", "从网易云下载lrc格式的歌词。", 1300, PluginTypesEnum.LrcSource)]
+    [Plugins("网易云Lrc歌词下载插件", "Zony", "从网易云下载lrc格式的歌词。", 1400, PluginTypesEnum.LrcSource)]
     public class LibLyricNetEase : IPlug_Lrc
     {
         private NetUtils m_netUtils;
@@ -38,8 +37,10 @@ namespace LibLyricNetEase
             string _lyric = JObject.Parse(_result)["lrc"].ToString();
             if (!_lyric.Contains("lyric")) return false;
             string _lrc = JObject.Parse(_lyric)["lyric"].ToString();
+            string _trc = getTranslateLyric(_result);
+            string _lrcString = splitLyricBuildResultValue(_lrc, _trc);
 
-            lrcData = Encoding.UTF8.GetBytes(_lrc);
+            lrcData = Encoding.UTF8.GetBytes(_lrcString);
             return true;
         }
 
@@ -65,9 +66,27 @@ namespace LibLyricNetEase
         /// </summary>
         /// <param name="tlrc">已翻译的歌词</param>
         /// <returns></returns>
-        private string getTranslateLyric(string tlrc)
+        private string getTranslateLyric(string json)
         {
-            return null;
+            if (!json.Contains("tlyric")) return null;
+            JObject _jsonObj = JObject.Parse(json);
+            if (_jsonObj["tlyric"]["lyric"] == null) return null;
+            else return _jsonObj["tlyric"]["lyric"].ToObject<string>();
+        }
+
+        /// <summary>
+        /// 如果有翻译歌词的情况下构建双语歌词
+        /// </summary>
+        /// <param name="lyric">原始歌词</param>
+        /// <param name="tlyric">翻译歌词</param>
+        /// <returns></returns>
+        private string splitLyricBuildResultValue(string lyric,string tlyric)
+        {
+            if (!string.IsNullOrEmpty(tlyric))
+            {
+                return lyric + tlyric;
+            }
+            else return lyric;
         }
     }
 }
