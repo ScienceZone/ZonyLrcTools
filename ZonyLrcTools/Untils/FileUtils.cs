@@ -82,7 +82,7 @@ namespace ZonyLrcTools.Untils
                 foreach(var ext in exts)
                 {
                     string[] _files = Directory.GetFiles(dirPath, ext, SearchOption.AllDirectories);
-                    if (_files.Length > 0)
+                    if (_files.Length != 0)
                     {
                         int _count = 0;
                         foreach (var fileName in _files)

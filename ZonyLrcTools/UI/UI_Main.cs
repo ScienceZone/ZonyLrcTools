@@ -122,7 +122,11 @@ namespace ZonyLrcTools.UI
         /// </summary>
         private void button_DownLoadLyric_Click(object sender, EventArgs e)
         {
-            if (listView_MusicInfos.Items.Count != 0) parallelDownLoadLryic(GlobalMember.AllMusics);
+            if (listView_MusicInfos.Items.Count != 0)
+            {
+               //var list = GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource);
+               parallelDownLoadLryic(GlobalMember.AllMusics);
+            }
             else setBottomStatusText(StatusHeadEnum.ERROR, "请选择歌曲目录再尝试下载歌词！");
         }
 
@@ -196,11 +200,13 @@ namespace ZonyLrcTools.UI
                             }
                             #endregion
 
-                            // 编码转换
+                            #region > UTF-8 带BOM转换 <
                             _lrcData = Encoding.Convert(Encoding.UTF8, SettingManager.SetValue.EncodingName.Equals("utf-8 bom") ? Encoding.UTF8 : Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
                             byte[] _tmpData = new byte[_lrcData.Length + 3];
                             _tmpData[0] = 0xef;_tmpData[1] = 0xbb;_tmpData[2] = 0xbf;
                             Array.Copy(_lrcData, 0, _tmpData, 3, _lrcData.Length);
+                            #endregion
+
                             FileUtils.WriteFile(_lrcPath, _tmpData);
                             listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
                         }

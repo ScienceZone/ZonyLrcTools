@@ -2,6 +2,7 @@
 using LibPlug.Interface;
 using System.Collections.Generic;
 using System.Linq;
+using ZonyLrcTools.Untils;
 
 namespace ZonyLrcTools.Plugin
 {
@@ -21,7 +22,14 @@ namespace ZonyLrcTools.Plugin
         /// <returns></returns>
         public List<IPlug_Lrc> BaseOnTypeGetPlugins(PluginTypesEnum pType)
         {
-            return Plugins.Where(x => x.PlugInfo.TypeEnum == pType).ToList();
+            return Plugins.Where(x => 
+            {
+                if (x.PlugInfo.TypeEnum == pType)
+                {
+                    return SettingManager.SetValue.PluginsStatus.FirstOrDefault(y => y.PluginName.Equals(x.PlugInfo.PlugName)).IsOpen;
+                }
+                else return false;
+            }).ToList();
         }
     }
 }
