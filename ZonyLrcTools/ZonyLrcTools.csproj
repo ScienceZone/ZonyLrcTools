@@ -168,9 +168,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resource\Icon\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\LibNet\LibNet.csproj">
       <Project>{D38DDC8C-36C2-47EB-B40E-3B5B11B469A9}</Project>
