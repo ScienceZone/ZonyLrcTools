@@ -100,6 +100,7 @@
             this.Name = "UI_PluginsManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "插件管理";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UI_PluginsManager_FormClosed);
             this.Load += new System.EventHandler(this.UI_PluginsManager_Load);
             this.ResumeLayout(false);
 

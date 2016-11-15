@@ -2,6 +2,8 @@
 using System.IO;
 using Newtonsoft.Json;
 using System.Text;
+using System.Collections.Generic;
+using ZonyLrcTools.Plugin;
 
 namespace ZonyLrcTools.Untils
 {
@@ -74,11 +76,32 @@ namespace ZonyLrcTools.Untils
             if (SetValue == null) SetValue = new SetValue();
             SetValue.DownloadThreadNum = 4;
             SetValue.FileSuffixs = "*.acc;*.mp3;*.ape;*.flac";
-            SetValue.IsIgnoreExitsFile = false;
+            SetValue.IsIgnoreExitsFile = true;
             SetValue.EncodingName = "utf-8";
             SetValue.UserDirectory = string.Empty;
             SetValue.IsCheckUpdate = true;
             SetValue.IsAgree = false;
+            SetValue.PluginsStatus = new List<PluginStatusModel>();
+            // 加载所有默认开启的插件
+            loadPluginStatus(GlobalMember.LrcPluginsManager);
+            loadPluginStatus(GlobalMember.MusicTagPluginsManager);
+        }
+
+        /// <summary>
+        /// 加载默认插件设置
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="pluginsMgr"></param>
+        private static void loadPluginStatus<T>(BasePlugins<T> pluginsMgr)
+        {
+            foreach (var item in pluginsMgr.PluginInfos)
+            {
+                SetValue.PluginsStatus.Add(new PluginStatusModel()
+                {
+                    IsOpen = true,
+                    PluginName = item.PlugName
+                });
+            }
         }
     }
 
@@ -116,6 +139,19 @@ namespace ZonyLrcTools.Untils
         /// 是否同意用户协议
         /// </summary>
         public bool IsAgree { get; set; }
+        /// <summary>
+        /// 插件状态模型
+        /// </summary>
+        public List<PluginStatusModel> PluginsStatus { get; set; }
+    }
+    
+    /// <summary>
+    /// 插件状态模型
+    /// </summary>
+    public class PluginStatusModel
+    {
+        public bool IsOpen { get; set; }
+        public string PluginName { get; set; }
     }
     #endregion
 }

@@ -48,13 +48,14 @@ namespace ZonyLrcTools.UI
 
         private void UI_Main_Load(object sender, EventArgs e)
         {
-            SettingManager.Load();
-            if (!SettingManager.SetValue.IsAgree) new UI_About().ShowDialog();
-            if (SettingManager.SetValue.IsCheckUpdate) checkUpdate();
             setBottomStatusText(StatusHeadEnum.WAIT, "等待用户操作...");
 
             if(GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR,"加载MusicTag插件管理器失败...");
             if (GlobalMember.LrcPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR, "加载歌词下载插件失败...");
+
+            SettingManager.Load();
+            if (!SettingManager.SetValue.IsAgree) new UI_About().ShowDialog();
+            if (SettingManager.SetValue.IsCheckUpdate) checkUpdate();
 
             loadMenuIcon();
             CheckForIllegalCrossThreadCalls = false;
