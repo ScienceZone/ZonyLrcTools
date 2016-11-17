@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using ZonyLrcTools.Untils;
+using System.Diagnostics;
 
 namespace ZonyLrcTools.UI
 {
@@ -39,6 +40,30 @@ namespace ZonyLrcTools.UI
         private void UI_About_FormClosed(object sender, FormClosedEventArgs e)
         {
             SettingManager.Save();
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            openExplorer("https://jq.qq.com/?_wv=1027&k=41bejmu");
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            openExplorer("http://git.oschina.net/jokers/ZonyLrcTools");
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            openExplorer("http://www.myzony.com");
+        }
+
+        /// <summary>
+        /// 通过默认浏览器打开指定网页
+        /// </summary>
+        /// <param name="url">网页的URL</param>
+        private void openExplorer(string url)
+        {
+            Process.Start(url);
         }
     }
 }
