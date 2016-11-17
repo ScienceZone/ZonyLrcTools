@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using ZonyLrcTools.EnumDefine;
+using System.Collections.Generic;
 
 namespace ZonyLrcTools.Untils
 {
@@ -74,7 +75,7 @@ namespace ZonyLrcTools.Untils
             {
                 foreach(var ext in exts)
                 {
-                    string[] _files = Directory.GetFiles(dirPath, ext, SearchOption.AllDirectories);
+                    string[] _files = Directory.GetFiles(dirPath, ext, SearchOption.TopDirectoryOnly);
                     if (_files.Length != 0)
                     {
                         int _count = 0;
@@ -95,6 +96,15 @@ namespace ZonyLrcTools.Untils
                 LogManager.WriteLogRecord(StatusHeadEnum.EXP, "在方法SearchFiles发生异常！", E);
                 return false;
             }
+        }
+
+        private static string[] getFiles(string dir,string ext)
+        {
+            List<string> _result = new List<string>();
+            if(!string.IsNullOrEmpty(dir))
+            {
+                
+            }return _result.ToArray();
         }
 
         /// <summary>
