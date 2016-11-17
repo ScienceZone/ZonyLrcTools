@@ -12,7 +12,6 @@ namespace ZonyLrcTools.Untils
     /// </summary>
     public static class FileUtils
     {
-        private static object m_lock = new object();
         /// <summary>
         /// 将数据写入到文件
         /// </summary>
@@ -23,13 +22,10 @@ namespace ZonyLrcTools.Untils
         {
             try
             {
-                lock(m_lock)
+                using (FileStream _fs = new FileStream(filePath, FileMode.OpenOrCreate))
                 {
-                    using (FileStream _fs = new FileStream(filePath, FileMode.OpenOrCreate))
-                    {
-                        _fs.Write(data, 0, data.Length);
-                        return true;
-                    }
+                    _fs.Write(data, 0, data.Length);
+                    return true;
                 }
             }
             catch(Exception E)
@@ -51,12 +47,9 @@ namespace ZonyLrcTools.Untils
             byte[] _dataBytes = encoding.GetBytes(data);
             try
             {
-                lock(m_lock)
+                using (FileStream _fs = new FileStream(filePath, FileMode.OpenOrCreate))
                 {
-                    using (FileStream _fs = new FileStream(filePath, FileMode.OpenOrCreate))
-                    {
-                        _fs.Write(_dataBytes, 0, _dataBytes.Length);
-                    }
+                    _fs.Write(_dataBytes, 0, _dataBytes.Length);
                 }
             }
             catch(Exception E)
