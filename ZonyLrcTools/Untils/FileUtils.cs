@@ -98,15 +98,6 @@ namespace ZonyLrcTools.Untils
             }
         }
 
-        private static string[] getFiles(string dir,string ext)
-        {
-            List<string> _result = new List<string>();
-            if(!string.IsNullOrEmpty(dir))
-            {
-                
-            }return _result.ToArray();
-        }
-
         /// <summary>
         /// 在资源管理器当中定位文件的位置
         /// </summary>
@@ -116,6 +107,15 @@ namespace ZonyLrcTools.Untils
             ProcessStartInfo _start = new ProcessStartInfo("Explorer.exe");
             _start.Arguments = "/e,/select," + filePath;
             Process.Start(_start);
+        }
+
+        private static string[] getFiles(string dir,string ext)
+        {
+            List<string> _result = new List<string>();
+            if(!string.IsNullOrEmpty(dir))
+            {
+                
+            }return _result.ToArray();
         }
     }
 }

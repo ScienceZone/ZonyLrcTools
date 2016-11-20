@@ -29,25 +29,20 @@ namespace ZonyLrcTools.UI
 
             if (!string.IsNullOrEmpty(_folderDlg.SelectedPath))
             {
-                //disEnabledButton();
-                //setBottomStatusText(StatusHeadEnum.NORMAL, "开始扫描目录...");
-                //GlobalMember.AllMusics.Clear(); listView_MusicInfos.Items.Clear(); progress_DownLoad.Value = 0;
+                disEnabledButton();
+                setBottomStatusText(StatusHeadEnum.NORMAL, "开始扫描目录...");
+                GlobalMember.AllMusics.Clear(); listView_MusicInfos.Items.Clear(); progress_DownLoad.Value = 0;
 
-                //if (FileUtils.SearchFiles(_folderDlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';')))
-                //{
-                //    progress_DownLoad.Value = 0; progress_DownLoad.Maximum = GlobalMember.AllMusics.Count;
-                //    getMusicInfo(GlobalMember.AllMusics);
-                //}
-                //else
-                //{
-                //    setBottomStatusText(StatusHeadEnum.NORMAL, "并没有搜索到文件...");
-                //    enabledButton();
-                //}
-                if (FileUtils.SearchFiles(_folderDlg.SelectedPath, new string[] { "*.txt;*.png"}))
+                if (FileUtils.SearchFiles(_folderDlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';')))
                 {
-                    MessageBox.Show("ok");
+                    progress_DownLoad.Value = 0; progress_DownLoad.Maximum = GlobalMember.AllMusics.Count;
+                    getMusicInfo(GlobalMember.AllMusics);
                 }
-                else MessageBox.Show("NO");
+                else
+                {
+                    setBottomStatusText(StatusHeadEnum.NORMAL, "并没有搜索到文件...");
+                    enabledButton();
+                }
             }
         }
 
