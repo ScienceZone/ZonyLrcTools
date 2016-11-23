@@ -246,7 +246,7 @@
             this.MinimizeBox = false;
             this.Name = "UI_About";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "关于窗口";
+            this.Text = "关于";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UI_About_FormClosed);
             this.Load += new System.EventHandler(this.UI_About_Load);
             this.groupBox2.ResumeLayout(false);

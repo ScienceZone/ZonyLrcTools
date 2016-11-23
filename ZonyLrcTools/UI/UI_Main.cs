@@ -33,7 +33,9 @@ namespace ZonyLrcTools.UI
                 setBottomStatusText(StatusHeadEnum.NORMAL, "开始扫描目录...");
                 GlobalMember.AllMusics.Clear(); listView_MusicInfos.Items.Clear(); progress_DownLoad.Value = 0;
 
-                if (FileUtils.SearchFiles(_folderDlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';')))
+                string[] _files = FileUtils.SearchFiles(_folderDlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';'));
+                for (int i = 0; i < _files.Length; i++) GlobalMember.AllMusics.Add(i,new MusicInfoModel() { Path=_files[i]});
+                if (GlobalMember.AllMusics.Count > 0)
                 {
                     progress_DownLoad.Value = 0; progress_DownLoad.Maximum = GlobalMember.AllMusics.Count;
                     getMusicInfo(GlobalMember.AllMusics);

@@ -67,35 +67,28 @@ namespace ZonyLrcTools.Untils
         /// <param name="dirPath">要搜索的目录</param>
         /// <param name="exts">音乐文件后缀名集合</param>
         /// <returns></returns>
-        public static bool SearchFiles(string dirPath,string[] exts)
+        public static string[] SearchFiles(string dirPath,string[] exts)
         {
-            if (!Directory.Exists(dirPath)) return false;
-            int _invaildCount = 0; // 未搜索到的后缀名文件计数
-            try
+            List<string> _result = new List<string>();
+            if (!Directory.Exists(dirPath)) return _result.ToArray();
+
+            foreach (var ext in exts)
             {
-                foreach(var ext in exts)
+                try
                 {
                     string[] _files = Directory.GetFiles(dirPath, ext, SearchOption.TopDirectoryOnly);
-                    if (_files.Length != 0)
+                    foreach (var fileName in _files)
                     {
-                        int _count = 0;
-                        foreach (var fileName in _files)
-                        {
-                            GlobalMember.AllMusics.Add(_count, new MusicInfoModel() { Path = fileName });
-                            _count++;
-                        }
+                        _result.Add(fileName); 
                     }
-                    else _invaildCount++;
                 }
-
-                if (_invaildCount == exts.Length) return false;
-                else return true;
+                catch (Exception E)
+                {
+                    LogManager.WriteLogRecord(StatusHeadEnum.EXP, "在函数SearchFiles发生异常。", E);
+                    continue;
+                }
             }
-            catch(Exception E)
-            {
-                LogManager.WriteLogRecord(StatusHeadEnum.EXP, "在方法SearchFiles发生异常！", E);
-                return false;
-            }
+            return _result.ToArray();
         }
 
         /// <summary>

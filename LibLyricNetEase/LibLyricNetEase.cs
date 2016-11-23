@@ -1,7 +1,7 @@
-﻿using LibPlug.Interface;
+﻿using System.Text;
+using LibPlug.Interface;
 using LibPlug;
 using LibNet;
-using System.Text;
 using Newtonsoft.Json.Linq;
 
 namespace LibLyricNetEase
