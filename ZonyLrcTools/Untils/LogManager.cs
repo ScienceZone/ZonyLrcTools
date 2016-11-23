@@ -47,7 +47,8 @@ namespace ZonyLrcTools.Untils
         {
             string _writeString = "状态:" + status + "\r\n" +
                                   "信息:" + status + "\r\n" +
-                                  "错误堆栈：" + (e == null ? "无" : e.Message != null ? e.Message : e.InnerException.Message);
+                                  "错误信息：" + (e == null ? "无" : e.Message != null ? e.Message : e.InnerException.Message) + "\r\n" +
+                                  "错误堆栈：" + (e == null ? "无" : e.StackTrace != null ? e.StackTrace : e.InnerException.StackTrace);
             return _writeString;
         }
     }
