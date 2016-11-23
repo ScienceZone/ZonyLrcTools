@@ -24,10 +24,7 @@ namespace ZonyLrcTools.Plugin
         {
             return Plugins.Where(x => 
             {
-                if (x.PlugInfo.TypeEnum == pType)
-                {
-                    return SettingManager.SetValue.PluginsStatus.FirstOrDefault(y => y.PluginName.Equals(x.PlugInfo.PlugName)).IsOpen;
-                }
+                if (x.PlugInfo.TypeEnum == pType) return SettingManager.SetValue.PluginsStatus.FirstOrDefault(y => y.PluginName.Equals(x.PlugInfo.PlugName)).IsOpen;
                 else return false;
             }).ToList();
         }
