@@ -17,14 +17,15 @@ namespace ZonyLrcTools.Plugin
         }
 
         /// <summary>
-        /// 获得指定类型的插件集
+        /// 获得指定已经开启的类型的插件集
         /// </summary>
         /// <returns></returns>
         public List<IPlug_Lrc> BaseOnTypeGetPlugins(PluginTypesEnum pType)
         {
             return Plugins.Where(x => 
             {
-                if (x.PlugInfo.TypeEnum == pType) return SettingManager.SetValue.PluginsStatus.FirstOrDefault(y => y.PluginName.Equals(x.PlugInfo.PlugName)).IsOpen;
+                if (x.PlugInfo.TypeEnum == pType)
+                    return SettingManager.SetValue.PluginsStatus.FirstOrDefault(y => y.PluginName.Equals(x.PlugInfo.PlugName)).IsOpen;
                 else return false;
             }).ToList();
         }

@@ -11,6 +11,7 @@ using ZonyLrcTools.Untils;
 using LibPlug.Model;
 using LibPlug;
 using LibNet;
+using LibPlug.Interface;
 
 namespace ZonyLrcTools.UI
 {
@@ -46,6 +47,23 @@ namespace ZonyLrcTools.UI
                     enabledButton();
                 }
             }
+        }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (listView_MusicInfos.SelectedItems.Count != 0)
+            {
+                if (keyData == (Keys.Control | Keys.S))
+                {
+                    int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
+                    MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
+                    _info.Artist = textBox_Aritst.Text;
+                    _info.SongName = textBox_MusicTitle.Text;
+                    _info.Album = textBox_Album.Text;
+                    GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info, null, string.Empty);
+                    MessageBox.Show("已经保存歌曲标签信息!", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            return false;
         }
 
         private void UI_Main_Load(object sender, EventArgs e)
@@ -110,7 +128,7 @@ namespace ZonyLrcTools.UI
                 int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
                 var _tempDic = new Dictionary<int, MusicInfoModel>();
                 _tempDic.Add(_selectCount, GlobalMember.AllMusics[_selectCount]);
-                parallelDownLoadLryic(_tempDic);
+                //parallelDownLoadLryic(_tempDic);
             }
         }
 
@@ -126,8 +144,10 @@ namespace ZonyLrcTools.UI
         {
             if (listView_MusicInfos.Items.Count != 0)
             {
-               //var list = GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource);
-               parallelDownLoadLryic(GlobalMember.AllMusics);
+                foreach(var item in GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource))
+                {
+                    parallelDownLoadLryic(GlobalMember.AllMusics,item);
+                }
             }
             else setBottomStatusText(StatusHeadEnum.ERROR, "请选择歌曲目录再尝试下载歌词！");
         }
@@ -161,7 +181,9 @@ namespace ZonyLrcTools.UI
         /// <summary>
         /// 并行下载歌词任务
         /// </summary>
-        private async void parallelDownLoadLryic(Dictionary<int,MusicInfoModel> list)
+        /// <param name="down">插件</param>
+        /// <param name="list">待下载列表</param>
+        private async void parallelDownLoadLryic(Dictionary<int,MusicInfoModel> list,IPlug_Lrc down)
         {
             setBottomStatusText(StatusHeadEnum.NORMAL,"正在下载歌词...");
             progress_DownLoad.Maximum = list.Count; progress_DownLoad.Value = 0;
@@ -178,10 +200,9 @@ namespace ZonyLrcTools.UI
                     else
                     {
                         byte[] _lrcData;
-                        if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource)[0].DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData))
+                        if (down.DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData))
                         {
                             string _lrcPath = null;
-
                             #region > 输出方式 <
                             if (SettingManager.SetValue.UserDirectory.Equals(string.Empty)) // 同目录
                             {
@@ -201,15 +222,7 @@ namespace ZonyLrcTools.UI
                                 _lrcPath = Path.Combine(SettingManager.SetValue.UserDirectory, Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc");
                             }
                             #endregion
-
-                            #region > UTF-8 带BOM转换 <
-                            _lrcData = Encoding.Convert(Encoding.UTF8, SettingManager.SetValue.EncodingName.Equals("utf-8 bom") ? Encoding.UTF8 : Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
-                            byte[] _tmpData = new byte[_lrcData.Length + 3];
-                            _tmpData[0] = 0xef;_tmpData[1] = 0xbb;_tmpData[2] = 0xbf;
-                            Array.Copy(_lrcData, 0, _tmpData, 3, _lrcData.Length);
-                            #endregion
-
-                            FileUtils.WriteFile(_lrcPath, _tmpData);
+                            FileUtils.WriteFile(_lrcPath, convertBytesToUTF_8_BOM(_lrcData));
                             listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
                         }
                         else listView_MusicInfos.Items[item.Key].SubItems[6].Text = "失败";
@@ -371,22 +384,18 @@ namespace ZonyLrcTools.UI
             });
         }
 
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        /// <summary>
+        /// 将字节序列转换为UTF-8 带BOM格式
+        /// </summary>
+        /// <param name="source">待转换的字节序列</param>
+        /// <returns></returns>
+        private byte[] convertBytesToUTF_8_BOM(byte[] source)
         {
-            if(listView_MusicInfos.SelectedItems.Count != 0)
-            {
-                if (keyData == (Keys.Control | Keys.S))
-                {
-                    int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
-                    MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
-                    _info.Artist = textBox_Aritst.Text;
-                    _info.SongName = textBox_MusicTitle.Text;
-                    _info.Album = textBox_Album.Text;
-                    GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info, null, string.Empty);
-                    MessageBox.Show("已经保存歌曲标签信息!", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            return false;
+            byte[] _result = Encoding.Convert(Encoding.UTF8, SettingManager.SetValue.EncodingName.Equals("utf-8 bom") ? Encoding.UTF8 : Encoding.GetEncoding(SettingManager.SetValue.EncodingName), source);
+            byte[] _tmpData = new byte[_result.Length + 3];
+            _tmpData[0] = 0xef; _tmpData[1] = 0xbb; _tmpData[2] = 0xbf;
+            Array.Copy(_result, 0, _tmpData, 3, _result.Length);
+            return _result;
         }
     }
 }
