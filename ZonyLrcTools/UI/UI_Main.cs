@@ -121,6 +121,9 @@ namespace ZonyLrcTools.UI
             new UI_FeedBack().ShowDialog();
         }
 
+        /// <summary>
+        /// 下载单首歌曲的歌词，支持多插件
+        /// </summary>
         private void ToolStripMenuItem_DownLoadSelectMusic_Click(object sender, EventArgs e)
         {
             if(listView_MusicInfos.SelectedItems.Count != 0)
@@ -128,7 +131,13 @@ namespace ZonyLrcTools.UI
                 int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
                 var _tempDic = new Dictionary<int, MusicInfoModel>();
                 _tempDic.Add(_selectCount, GlobalMember.AllMusics[_selectCount]);
-                //parallelDownLoadLryic(_tempDic);
+                var _dlg = new UI_PluginSelect();
+                _dlg.ShowDialog();
+                if(!string.IsNullOrEmpty(_dlg.Name))
+                {
+                    var _plug = GlobalMember.LrcPluginsManager.BaseOnNameGetPlugin(_dlg.Name);
+                    parallelDownLoadLryic(_tempDic,_plug);
+                }
             }
         }
 
@@ -144,9 +153,9 @@ namespace ZonyLrcTools.UI
         {
             if (listView_MusicInfos.Items.Count != 0)
             {
-                foreach(var item in GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource))
+                foreach (var item in GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.LrcSource))
                 {
-                    parallelDownLoadLryic(GlobalMember.AllMusics,item);
+                    parallelDownLoadLryic(GlobalMember.AllMusics, item);
                 }
             }
             else setBottomStatusText(StatusHeadEnum.ERROR, "请选择歌曲目录再尝试下载歌词！");

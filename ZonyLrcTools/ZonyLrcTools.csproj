@@ -106,6 +106,12 @@
     <Compile Include="UI\UI_Main.Designer.cs">
       <DependentUpon>UI_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\UI_PluginSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UI_PluginSelect.Designer.cs">
+      <DependentUpon>UI_PluginSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\UI_PluginsManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UI_Main.resx">
       <DependentUpon>UI_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_PluginSelect.resx">
+      <DependentUpon>UI_PluginSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\UI_PluginsManager.resx">
       <DependentUpon>UI_PluginsManager.cs</DependentUpon>

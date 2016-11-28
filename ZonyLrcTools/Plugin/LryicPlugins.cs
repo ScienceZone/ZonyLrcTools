@@ -29,5 +29,15 @@ namespace ZonyLrcTools.Plugin
                 else return false;
             }).ToList();
         }
+
+        /// <summary>
+        /// 根据插件名称获取插件
+        /// </summary>
+        /// <param name="pluginName">插件名称</param>
+        /// <returns></returns>
+        public IPlug_Lrc BaseOnNameGetPlugin(string pluginName)
+        {
+            return Plugins.Where(x => x.PlugInfo.PlugName.Equals(pluginName)).FirstOrDefault();
+        }
     }
 }
