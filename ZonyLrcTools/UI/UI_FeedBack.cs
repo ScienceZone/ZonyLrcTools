@@ -3,6 +3,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net.Mail;
 using System.Threading;
+using System.Diagnostics;
 
 namespace ZonyLrcTools.UI
 {
@@ -62,6 +63,11 @@ namespace ZonyLrcTools.UI
         private void UI_FeedBack_Load(object sender, EventArgs e)
         {
             Icon = Properties.Resources.App;
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(@"https://jq.qq.com/?_wv=1027&k=41bejmu");
         }
     }
 }

@@ -147,7 +147,7 @@ namespace ZonyLrcTools.UI
                 _tempDic.Add(_selectCount, GlobalMember.AllMusics[_selectCount]);
                 var _dlg = new UI_PluginSelect();
                 _dlg.ShowDialog();
-                if(!string.IsNullOrEmpty(_dlg.Name))
+                if(!string.IsNullOrEmpty(_dlg.SelectPluginName))
                 {
                     var _plug = GlobalMember.LrcPluginsManager.BaseOnNameGetPlugin(_dlg.Name);
                     parallelDownLoadLryic(_tempDic,_plug);
