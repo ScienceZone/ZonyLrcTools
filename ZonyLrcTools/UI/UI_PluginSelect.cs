@@ -35,9 +35,9 @@ namespace ZonyLrcTools.UI
 
         private void button_OK_Click(object sender, EventArgs e)
         {
-            if(listBox_LrcSourcePluginsList.SelectedIndex != 0)
+            if(listBox_LrcSourcePluginsList.SelectedIndex != -1)
             {
-                Name = listBox_LrcSourcePluginsList.Items[listBox_LrcSourcePluginsList.SelectedIndex].ToString();
+                SelectPluginName = listBox_LrcSourcePluginsList.Items[listBox_LrcSourcePluginsList.SelectedIndex].ToString();
             }
             Close();
         }

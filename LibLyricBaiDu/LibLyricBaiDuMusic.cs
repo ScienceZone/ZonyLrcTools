@@ -14,18 +14,19 @@ namespace LibLyricBaiDu
 
         public bool DownLoad(string artist, string songName, out byte[] lrcData)
         {
+            lrcData = null;
             // 请求URL构建
             const string Request_Url = "http://music.baidu.com/search/lrc?key=";
             const string ResponseUrl = "http://music.baidu.com";
 
-            string _key = artist + "+" + songName;
+            string _key = /*artist + "+" +*/ songName;
             string _result = m_netUtils.HttpGet(Request_Url + _key, Encoding.UTF8);
 
             if (!string.IsNullOrWhiteSpace(_result))
             {
-                Regex _reg = new Regex("/data2/lrc/\\d*/\\d*.lrc");
+                Regex _reg = new Regex(@"/data2/lrc/\d*/\d*.lrc");
                 string _lrcURL = _reg.Match(_result).ToString();
-
+                if (string.IsNullOrEmpty(_lrcURL)) return false;
                 string _lrcData = m_netUtils.HttpGet(ResponseUrl + _lrcURL,Encoding.UTF8);
                 lrcData = Encoding.UTF8.GetBytes(_lrcData);
                 return true;

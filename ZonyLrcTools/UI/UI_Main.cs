@@ -149,7 +149,7 @@ namespace ZonyLrcTools.UI
                 _dlg.ShowDialog();
                 if(!string.IsNullOrEmpty(_dlg.SelectPluginName))
                 {
-                    var _plug = GlobalMember.LrcPluginsManager.BaseOnNameGetPlugin(_dlg.Name);
+                    var _plug = GlobalMember.LrcPluginsManager.BaseOnNameGetPlugin(_dlg.SelectPluginName);
                     parallelDownLoadLryic(_tempDic,_plug);
                 }
             }
