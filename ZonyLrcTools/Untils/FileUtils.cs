@@ -76,7 +76,8 @@ namespace ZonyLrcTools.Untils
             {
                 try
                 {
-                    string[] _files = Directory.GetFiles(dirPath, ext, SearchOption.TopDirectoryOnly);
+                    string[] _files = Directory.GetFiles(dirPath, ext, SearchOption.AllDirectories);
+
                     foreach (var fileName in _files)
                     {
                         _result.Add(fileName); 

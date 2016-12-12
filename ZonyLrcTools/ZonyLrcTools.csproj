@@ -125,6 +125,7 @@
       <DependentUpon>UI_Settings.cs</DependentUpon>
     </Compile>
     <Compile Include="Untils\FileUtils.cs" />
+    <Compile Include="Untils\FuncUtils.cs" />
     <Compile Include="Untils\GlobalMember.cs" />
     <Compile Include="Untils\LogManager.cs" />
     <Compile Include="Untils\SettingManager.cs" />

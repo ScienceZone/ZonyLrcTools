@@ -47,7 +47,9 @@ namespace ZonyLrcTools.UI
             this.ToolStripMenuItem_EditLyric = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_DownLoadSelectMusic = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_DownLoadSelectedAlbumImg = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.ToolStripMenuItem_OpenFileFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_AddDirectory = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox_MusicInfo = new System.Windows.Forms.GroupBox();
             this.textBox_Lryic = new System.Windows.Forms.TextBox();
             this.label_Lryic = new System.Windows.Forms.Label();
@@ -182,9 +184,11 @@ namespace ZonyLrcTools.UI
             this.ToolStripMenuItem_EditLyric,
             this.ToolStripMenuItem_DownLoadSelectMusic,
             this.ToolStripMenuItem_DownLoadSelectedAlbumImg,
-            this.ToolStripMenuItem_OpenFileFolder});
+            this.toolStripMenuItem1,
+            this.ToolStripMenuItem_OpenFileFolder,
+            this.ToolStripMenuItem_AddDirectory});
             this.contextMenuStrip_FileListView.Name = "contextMenuStrip_FileListView";
-            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(197, 92);
+            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(197, 142);
             // 
             // ToolStripMenuItem_EditLyric
             // 
@@ -207,12 +211,24 @@ namespace ZonyLrcTools.UI
             this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Text = "下载选中歌曲专辑图像";
             this.ToolStripMenuItem_DownLoadSelectedAlbumImg.Click += new System.EventHandler(this.ToolStripMenuItem_DownLoadSelectedAlbumImg_Click);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(193, 6);
+            // 
             // ToolStripMenuItem_OpenFileFolder
             // 
             this.ToolStripMenuItem_OpenFileFolder.Name = "ToolStripMenuItem_OpenFileFolder";
             this.ToolStripMenuItem_OpenFileFolder.Size = new System.Drawing.Size(196, 22);
             this.ToolStripMenuItem_OpenFileFolder.Text = "打开歌曲所在文件夹";
             this.ToolStripMenuItem_OpenFileFolder.Click += new System.EventHandler(this.ToolStripMenuItem_OpenFileFolder_Click);
+            // 
+            // ToolStripMenuItem_AddDirectory
+            // 
+            this.ToolStripMenuItem_AddDirectory.Name = "ToolStripMenuItem_AddDirectory";
+            this.ToolStripMenuItem_AddDirectory.Size = new System.Drawing.Size(196, 22);
+            this.ToolStripMenuItem_AddDirectory.Text = "添加歌曲文件夹";
+            this.ToolStripMenuItem_AddDirectory.Click += new System.EventHandler(this.ToolStripMenuItem_AddDirectory_Click);
             // 
             // groupBox_MusicInfo
             // 
@@ -471,5 +487,7 @@ namespace ZonyLrcTools.UI
         private System.Windows.Forms.ToolStripButton button_Setting;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_DownLoadSelectedAlbumImg;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_OpenFileFolder;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_AddDirectory;
     }
 }

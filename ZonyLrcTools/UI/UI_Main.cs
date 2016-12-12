@@ -22,6 +22,11 @@ namespace ZonyLrcTools.UI
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 设置工作目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_SetWorkDirectory_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog _folderDlg = new FolderBrowserDialog();
@@ -31,15 +36,17 @@ namespace ZonyLrcTools.UI
             if (!string.IsNullOrEmpty(_folderDlg.SelectedPath))
             {
                 disEnabledButton();
+                clearContainer();
                 setBottomStatusText(StatusHeadEnum.NORMAL, "开始扫描目录...");
-                GlobalMember.AllMusics.Clear(); listView_MusicInfos.Items.Clear(); progress_DownLoad.Value = 0;
+                progress_DownLoad.Value = 0;
 
                 string[] _files = FileUtils.SearchFiles(_folderDlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';'));
                 for (int i = 0; i < _files.Length; i++) GlobalMember.AllMusics.Add(i,new MusicInfoModel() { Path=_files[i]});
-                if (GlobalMember.AllMusics.Count > 0)
+
+                if (_files.Length > 0)
                 {
                     progress_DownLoad.Value = 0; progress_DownLoad.Maximum = GlobalMember.AllMusics.Count;
-                    getMusicInfo(GlobalMember.AllMusics);
+                    getMusicInfoAndFillList(GlobalMember.AllMusics);
                 }
                 else
                 {
@@ -48,6 +55,13 @@ namespace ZonyLrcTools.UI
                 }
             }
         }
+
+        /// <summary>
+        /// 快捷键检测
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (listView_MusicInfos.SelectedItems.Count != 0)
@@ -188,15 +202,62 @@ namespace ZonyLrcTools.UI
         }
 
         /// <summary>
+        /// 打开歌曲所在文件夹
+        /// </summary>
+        private void ToolStripMenuItem_OpenFileFolder_Click(object sender, EventArgs e)
+        {
+            if (listView_MusicInfos.SelectedItems.Count != 0)
+            {
+                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
+                string _path = GlobalMember.AllMusics[_selectCount].Path;
+                FileUtils.OpenFilePos(_path);
+            }
+        }
+
+        /// <summary>
+        /// 添加歌曲文件夹
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToolStripMenuItem_AddDirectory_Click(object sender, EventArgs e)
+        {
+            disEnabledButton(); progress_DownLoad.Value = 0;
+            FolderBrowserDialog _dlg = new FolderBrowserDialog();
+            _dlg.Description = "请选择歌曲文件夹";
+            if (_dlg.ShowDialog() == DialogResult.OK)
+            {
+                if (Directory.Exists(_dlg.SelectedPath))
+                {
+                    setBottomStatusText(StatusHeadEnum.NORMAL, "开始扫描目录...");
+                    progress_DownLoad.Value = 0;
+                    string[] _files = FileUtils.SearchFiles(_dlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';'));
+                    if (_files.Length < 0)
+                    {
+                        setBottomStatusText(StatusHeadEnum.NORMAL, "没有搜索到任何支持的文件！");
+                        return;
+                    }
+                    Dictionary<int, MusicInfoModel> _tmpDic = new Dictionary<int, MusicInfoModel>();
+                    for (int i = 0; i < _files.Length; i++) _tmpDic.Add(GlobalMember.AllMusics.Count == 0 ? i : GlobalMember.AllMusics.Count + i, new MusicInfoModel { Path = _files[i] });
+                    progress_DownLoad.Value = 0; progress_DownLoad.Maximum = _tmpDic.Count;
+                    getMusicInfoAndFillList(_tmpDic);
+                    GlobalMember.AllMusics.AddRange(_tmpDic);
+                }
+            }
+            else enabledButton();
+        }
+
+        #region > 私有方法集合 <
+
+        /// <summary>
         /// 并行下载歌词任务
         /// </summary>
         /// <param name="down">插件</param>
         /// <param name="list">待下载列表</param>
-        private async void parallelDownLoadLryic(Dictionary<int,MusicInfoModel> list,IPlug_Lrc down)
+        private async void parallelDownLoadLryic(Dictionary<int, MusicInfoModel> list, IPlug_Lrc down)
         {
-            setBottomStatusText(StatusHeadEnum.NORMAL,"正在下载歌词...");
+            setBottomStatusText(StatusHeadEnum.NORMAL, "正在下载歌词...");
             progress_DownLoad.Maximum = list.Count; progress_DownLoad.Value = 0;
-            await Task.Run(() => 
+            await Task.Run(() =>
             {
                 disEnabledButton();
                 Parallel.ForEach(list, new ParallelOptions() { MaxDegreeOfParallelism = SettingManager.SetValue.DownloadThreadNum }, (item) =>
@@ -246,16 +307,16 @@ namespace ZonyLrcTools.UI
         /// <summary>
         /// 并行下载专辑图像任务
         /// </summary>
-        private async void parallelDownLoadAlbumImg(Dictionary<int,MusicInfoModel> list)
+        private async void parallelDownLoadAlbumImg(Dictionary<int, MusicInfoModel> list)
         {
             setBottomStatusText(StatusHeadEnum.NORMAL, "正在下载专辑图像...");
-            progress_DownLoad.Maximum = list.Count;progress_DownLoad.Value = 0;
-            await Task.Run(() => 
+            progress_DownLoad.Maximum = list.Count; progress_DownLoad.Value = 0;
+            await Task.Run(() =>
             {
                 disEnabledButton();
-                Parallel.ForEach(list, new ParallelOptions() { MaxDegreeOfParallelism=SettingManager.SetValue.DownloadThreadNum }, (info) => 
+                Parallel.ForEach(list, new ParallelOptions() { MaxDegreeOfParallelism = SettingManager.SetValue.DownloadThreadNum }, (info) =>
                 {
-                    lock(info.Value)
+                    lock (info.Value)
                     {
                         if (info.Value.IsAlbumImg) listView_MusicInfos.Items[info.Key].SubItems[6].Text = "略过";
                         else
@@ -290,11 +351,11 @@ namespace ZonyLrcTools.UI
         /// 填充主界面ListView
         /// </summary>
         /// <param name="musics"></param>
-        private void fillMusicListView()
+        private void fillMusicListView(Dictionary<int,MusicInfoModel> music)
         {
             setBottomStatusText(StatusHeadEnum.NORMAL, "正在填充列表...");
             progress_DownLoad.Value = 0;
-            foreach (var info in GlobalMember.AllMusics)
+            foreach (var info in music)
             {
                 listView_MusicInfos.Items.Insert(info.Key, new ListViewItem(new string[]
                 {
@@ -311,10 +372,10 @@ namespace ZonyLrcTools.UI
         }
 
         /// <summary>
-        /// 获得歌曲信息
+        /// 获得歌曲信息并且填充列表
         /// </summary>
         /// <param name="musics"></param>
-        private async void getMusicInfo(Dictionary<int, MusicInfoModel> musics)
+        private async void getMusicInfoAndFillList(Dictionary<int, MusicInfoModel> musics)
         {
             await Task.Run(() =>
             {
@@ -323,9 +384,9 @@ namespace ZonyLrcTools.UI
                     GlobalMember.MusicTagPluginsManager.Plugins[0].LoadTag(item.Value.Path, item.Value);
                     progress_DownLoad.Value += 1;
                 });
-                fillMusicListView();
-                MessageBox.Show(string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count), "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                setBottomStatusText(StatusHeadEnum.SUCCESS, string.Format("扫描成功，一共有{0}个音乐文件！", GlobalMember.AllMusics.Count));
+                fillMusicListView(musics);
+                MessageBox.Show(string.Format("扫描成功，一共有{0}个音乐文件！", musics.Count), "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                setBottomStatusText(StatusHeadEnum.SUCCESS, string.Format("扫描成功，一共有{0}个音乐文件！", musics.Count));
                 enabledButton();
             });
         }
@@ -343,16 +404,11 @@ namespace ZonyLrcTools.UI
         #endregion
 
         /// <summary>
-        /// 打开歌曲所在文件夹
+        /// 清空容器
         /// </summary>
-        private void ToolStripMenuItem_OpenFileFolder_Click(object sender, EventArgs e)
+        private void clearContainer()
         {
-            if(listView_MusicInfos.SelectedItems.Count != 0)
-            {
-                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
-                string _path = GlobalMember.AllMusics[_selectCount].Path;
-                FileUtils.OpenFilePos(_path);
-            }
+            GlobalMember.AllMusics.Clear(); listView_MusicInfos.Items.Clear();
         }
 
         /// <summary>
@@ -376,16 +432,16 @@ namespace ZonyLrcTools.UI
         /// <returns></returns>
         private async void checkUpdate()
         {
-            int _currentVer = 0010;
-            await Task.Run(() => 
+            int _currentVer = 0018;
+            await Task.Run(() =>
             {
-                string _updateInfo =new NetUtils().HttpGet("http://www.myzony.com/updateInfo.txt", Encoding.Default);
+                string _updateInfo = new NetUtils().HttpGet("http://www.myzony.com/updateInfo.txt", Encoding.Default);
                 string[] _result = _updateInfo.TrimEnd(',').Split(',');
                 int _dstVer = int.Parse(_result[0]);
                 string _url = _result[1];
-                if(_currentVer < _dstVer)
+                if (_currentVer < _dstVer)
                 {
-                    if(MessageBox.Show("检测到新版本，是否下载?", "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                    if (MessageBox.Show("检测到新版本，是否下载?", "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
                         Process.Start("Explorer " + _url);
                     }
@@ -406,5 +462,6 @@ namespace ZonyLrcTools.UI
             Array.Copy(_result, 0, _tmpData, 3, _result.Length);
             return _result;
         }
+        #endregion
     }
 }
