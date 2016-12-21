@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using System.Linq;
 using ZonyLrcTools.EnumDefine;
 using ZonyLrcTools.Untils;
 using LibPlug.Model;
@@ -117,15 +118,21 @@ namespace ZonyLrcTools.UI
         
         private void listView_MusicInfos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listView_MusicInfos.SelectedItems.Count != 0)
+            if(listView_MusicInfos.SelectedItems.Count > 0)
             {
+                var _tmpDic = new Dictionary<int, MusicInfoModel>();
+                foreach (ListViewItem item in listView_MusicInfos.SelectedItems)
+                {
+                    var _query = GlobalMember.AllMusics.Where(x => x.Key == item.Index).SingleOrDefault();
+                    _tmpDic.Add(_query.Key, _query.Value);
+                }
                 int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
                 MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
                 textBox_Aritst.Text = _info.Artist;
                 textBox_MusicTitle.Text = _info.SongName;
                 textBox_Album.Text = _info.Album;
                 Stream _imgStream = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(_info.Path);
-                if(_imgStream != null) pictureBox_AlbumImage.Image = Image.FromStream(_imgStream);
+                if (_imgStream != null) pictureBox_AlbumImage.Image = Image.FromStream(_imgStream);
                 if (_info.IsBuildInLyric) textBox_Lryic.Text = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadLyricText(_info.Path);
             }
         }
@@ -443,7 +450,14 @@ namespace ZonyLrcTools.UI
                 {
                     if (MessageBox.Show("检测到新版本，是否下载?", "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
-                        Process.Start("Explorer " + _url);
+                        try
+                        {
+                            Process.Start("explorer " + _url);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("貌似不能够直接下载呢，你可以到以下地址去下载：" + _url + "\r\n是不是觉得很难输入，那就加QQ群下载最新版本呢：337656932");
+                        }
                     }
                 }
             });
