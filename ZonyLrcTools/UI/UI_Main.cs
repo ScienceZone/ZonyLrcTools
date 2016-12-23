@@ -125,15 +125,18 @@ namespace ZonyLrcTools.UI
                 {
                     var _query = GlobalMember.AllMusics.Where(x => x.Key == item.Index).SingleOrDefault();
                     _tmpDic.Add(_query.Key, _query.Value);
+                    // 获得第一个选中的ListItem作为专辑信息显示
+                    int _selectCount = item.Index;
+                    #region > 加载歌曲信息 <
+                    MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
+                    textBox_Aritst.Text = _info.Artist;
+                    textBox_MusicTitle.Text = _info.SongName;
+                    textBox_Album.Text = _info.Album;
+                    Stream _imgStream = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(_info.Path);
+                    if (_imgStream != null) pictureBox_AlbumImage.Image = Image.FromStream(_imgStream);
+                    if (_info.IsBuildInLyric) textBox_Lryic.Text = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadLyricText(_info.Path);
+                    #endregion
                 }
-                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
-                MusicInfoModel _info = GlobalMember.AllMusics[_selectCount];
-                textBox_Aritst.Text = _info.Artist;
-                textBox_MusicTitle.Text = _info.SongName;
-                textBox_Album.Text = _info.Album;
-                Stream _imgStream = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(_info.Path);
-                if (_imgStream != null) pictureBox_AlbumImage.Image = Image.FromStream(_imgStream);
-                if (_info.IsBuildInLyric) textBox_Lryic.Text = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadLyricText(_info.Path);
             }
         }
 
@@ -285,19 +288,15 @@ namespace ZonyLrcTools.UI
                             {
                                 _lrcPath = Path.GetDirectoryName(item.Value.Path) + @"\" + Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc";
                             }
-                            else if (SettingManager.SetValue.UserDirectory.Equals("ID3v2")) // 写入ID3v2(bug)
-                            {
-                                #region > 注释 <
-                                //string _lrcString = Encoding.GetEncoding(SettingManager.SetValue.EncodingName).GetString(_lrcData);
-                                //GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(item.Value, null, _lrcString);
-                                //listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
-                                //return;
-                                #endregion
-                            }
                             else // 自定义目录
                             {
                                 _lrcPath = Path.Combine(SettingManager.SetValue.UserDirectory, Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc");
                             }
+                            #endregion
+                            #region > 将字节集编码进行转换 <
+                            if (SettingManager.SetValue.EncodingName == "utf-8 bom") _lrcData = convertBytesToUTF_8_BOM(_lrcData);
+                            else if (SettingManager.SetValue.EncodingName == "ANSI") _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.Default, _lrcData);
+                            else _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
                             #endregion
                             FileUtils.WriteFile(_lrcPath, convertBytesToUTF_8_BOM(_lrcData));
                             listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
