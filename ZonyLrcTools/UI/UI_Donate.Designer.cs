@@ -32,10 +32,10 @@ namespace ZonyLrcTools.UI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_Donate));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.listView1 = new ListViewNF();
+            this.listView1 = new LibPlug.UI.ListViewNF();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -55,14 +55,6 @@ namespace ZonyLrcTools.UI
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "作者的话";
             // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(6, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(246, 43);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "如果您觉得本工具帮助到您了，可以选择捐赠作者来让工具更加完善，作者也十分感谢您的支持。";
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -72,6 +64,14 @@ namespace ZonyLrcTools.UI
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(6, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(246, 43);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "如果您觉得本工具帮助到您了，可以选择捐赠作者来让工具更加完善，作者也十分感谢您的支持。";
             // 
             // label2
             // 
@@ -108,6 +108,7 @@ namespace ZonyLrcTools.UI
             // columnHeader3
             // 
             this.columnHeader3.Text = "金额";
+            this.columnHeader3.Width = 85;
             // 
             // label_LoadingText
             // 

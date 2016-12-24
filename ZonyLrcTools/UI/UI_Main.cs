@@ -152,15 +152,18 @@ namespace ZonyLrcTools.UI
         {
             if(listView_MusicInfos.SelectedItems.Count != 0)
             {
-                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
                 var _tempDic = new Dictionary<int, MusicInfoModel>();
-                _tempDic.Add(_selectCount, GlobalMember.AllMusics[_selectCount]);
+                foreach (ListViewItem item in listView_MusicInfos.SelectedItems)
+                {
+                    _tempDic.Add(item.Index, GlobalMember.AllMusics[item.Index]);
+                }
+                // 选择下载插件
                 var _dlg = new UI_PluginSelect();
                 _dlg.ShowDialog();
-                if(!string.IsNullOrEmpty(_dlg.SelectPluginName))
+                if (!string.IsNullOrEmpty(_dlg.SelectPluginName))
                 {
                     var _plug = GlobalMember.LrcPluginsManager.BaseOnNameGetPlugin(_dlg.SelectPluginName);
-                    parallelDownLoadLryic(_tempDic,_plug);
+                    parallelDownLoadLryic(_tempDic, _plug);
                 }
             }
         }
@@ -204,9 +207,13 @@ namespace ZonyLrcTools.UI
         {
             if (listView_MusicInfos.SelectedItems.Count != 0)
             {
-                int _selectCount = listView_MusicInfos.Items.IndexOf(listView_MusicInfos.FocusedItem);
+                #region > 获得选中条目的歌曲信息并且加入容器 <
                 var _tempDic = new Dictionary<int, MusicInfoModel>();
-                _tempDic.Add(_selectCount, GlobalMember.AllMusics[_selectCount]);
+                foreach (ListViewItem item in listView_MusicInfos.SelectedItems)
+                {
+                    _tempDic.Add(item.Index, GlobalMember.AllMusics[item.Index]);
+                }
+                #endregion
                 parallelDownLoadAlbumImg(_tempDic);
             }
         }

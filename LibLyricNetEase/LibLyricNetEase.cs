@@ -88,5 +88,15 @@ namespace LibLyricNetEase
             }
             else return lyric;
         }
+
+        /// <summary>
+        /// 更改翻译歌词的时间轴
+        /// <param name="lrcText">翻译的歌词</param>
+        /// </summary>
+        /// <returns></returns>
+        private string modfiyTranslateLyricTimeAxis(string lrcText)
+        {
+            return null;
+        }
     }
 }

@@ -6,11 +6,23 @@ namespace ZonyLrcTools.Untils
 {
     public static class GlobalMember
     {
+        /// <summary>
+        /// 工作路径
+        /// </summary>
         public static string WorkPath = null;
+        /// <summary>
+        /// 音乐标签插件集合
+        /// </summary>
         public static MusicTagPlugins MusicTagPluginsManager = new MusicTagPlugins();
+        /// <summary>
+        /// 歌词源插件集合
+        /// </summary>
         public static LryicPlugins LrcPluginsManager = new LryicPlugins();
 
         private static Dictionary<int, MusicInfoModel> m_allMusics = null;
+        /// <summary>
+        /// 歌曲信息集合
+        /// </summary>
         public static Dictionary<int, MusicInfoModel> AllMusics
         {
             get
