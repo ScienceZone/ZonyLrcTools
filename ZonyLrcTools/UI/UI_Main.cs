@@ -74,7 +74,7 @@ namespace ZonyLrcTools.UI
                     _info.Artist = textBox_Aritst.Text;
                     _info.SongName = textBox_MusicTitle.Text;
                     _info.Album = textBox_Album.Text;
-                    GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info, null, string.Empty);
+                    GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(_info, null, textBox_Lryic.Text);
                     MessageBox.Show("已经保存歌曲标签信息!", "信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
