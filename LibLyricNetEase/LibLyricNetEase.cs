@@ -100,11 +100,18 @@ namespace LibLyricNetEase
             Regex _reg = new Regex(@"\[\d+:\d+.\d+\]");
             return _reg.Replace(lrcText,new MatchEvaluator((Match machs)=> 
             {
-                string[] _strs = machs.Value.Split('.');
-                string _value = _strs[1].Remove(_strs[1].Length -1);
-                int _iValue = int.Parse(_value);
-                _iValue -= 1;
-                return string.Format("{0}.{1:D2}]",_strs[0],_iValue);
+                try
+                {
+                    string[] _strs = machs.Value.Split('.');
+                    string _value = _strs[1].Remove(_strs[1].Length - 1);
+                    int _iValue = int.Parse(_value);
+                    _iValue -= 1;
+                    return string.Format("{0}.{1:D2}]", _strs[0], _iValue);
+                }
+                catch
+                {
+                    return machs.Value;
+                }
             }));
         }
     }
