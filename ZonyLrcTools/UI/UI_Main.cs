@@ -445,7 +445,7 @@ namespace ZonyLrcTools.UI
         /// <returns></returns>
         private async void checkUpdate()
         {
-            int _currentVer = 0019;
+            int _currentVer = 0020;
             await Task.Run(() =>
             {
                 string _updateInfo = new NetUtils().HttpGet("http://www.myzony.com/updateInfo.txt", Encoding.Default);
