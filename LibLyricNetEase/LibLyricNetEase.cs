@@ -3,10 +3,11 @@ using LibPlug.Interface;
 using LibPlug;
 using LibNet;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace LibLyricNetEase
 {
-    [Plugins("网易云Lrc歌词下载插件", "Zony", "从网易云下载lrc格式的歌词。", 1400, PluginTypesEnum.LrcSource)]
+    [Plugins("网易云Lrc歌词下载插件", "Zony", "从网易云下载lrc格式的歌词。", 1410, PluginTypesEnum.LrcSource)]
     public class LibLyricNetEase : IPlug_Lrc
     {
         private NetUtils m_netUtils;
@@ -84,7 +85,7 @@ namespace LibLyricNetEase
         {
             if (!string.IsNullOrEmpty(tlyric))
             {
-                return lyric + tlyric;
+                return lyric + modfiyTranslateLyricTimeAxis(tlyric);
             }
             else return lyric;
         }
@@ -96,7 +97,15 @@ namespace LibLyricNetEase
         /// <returns></returns>
         private string modfiyTranslateLyricTimeAxis(string lrcText)
         {
-            return null;
+            Regex _reg = new Regex(@"\[\d+:\d+.\d+\]");
+            return _reg.Replace(lrcText,new MatchEvaluator((Match machs)=> 
+            {
+                string[] _strs = machs.Value.Split('.');
+                string _value = _strs[1].Remove(_strs[1].Length -1);
+                int _iValue = int.Parse(_value);
+                _iValue -= 1;
+                return string.Format("{0}.{1:D2}]",_strs[0],_iValue);
+            }));
         }
     }
 }
