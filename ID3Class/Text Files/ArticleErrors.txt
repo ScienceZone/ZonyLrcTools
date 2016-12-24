@@ -1,3 +1,0 @@
-4.16: Content descriptor must have string
-LinkFrame 4 byte FrameID
-TermOfUse 

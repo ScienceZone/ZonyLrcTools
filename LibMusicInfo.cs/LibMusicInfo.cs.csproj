@@ -45,13 +45,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ID3Class\ID3.csproj">
-      <Project>{5d66099a-a8c5-47ab-b230-c9b60dfc1b40}</Project>
-      <Name>ID3</Name>
-    </ProjectReference>
     <ProjectReference Include="..\LibPlug\LibPlug.csproj">
       <Project>{AA0B7F42-C97B-4052-B92A-E6AE2B63B14A}</Project>
       <Name>LibPlug</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LibTagLib\taglib-sharp.csproj">
+      <Project>{6b143a39-c7b2-4743-9917-92262c60e9a6}</Project>
+      <Name>taglib-sharp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

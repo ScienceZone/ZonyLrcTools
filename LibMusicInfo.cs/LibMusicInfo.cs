@@ -2,7 +2,6 @@
 using LibPlug;
 using LibPlug.Interface;
 using LibPlug.Model;
-using ID3;
 
 namespace LibMusicInfo.cs
 {
@@ -15,9 +14,9 @@ namespace LibMusicInfo.cs
         {
             try
             {
-                ID3Info _info = new ID3Info(path, true);
-                if (_info.ID3v2Info.AttachedPictureFrames.Items.Length == 0) return null;
-                MemoryStream _imgStream = _info.ID3v2Info.AttachedPictureFrames.Items[0].Data;
+                TagLib.File _info = TagLib.File.Create(path);
+                if (_info.Tag.Pictures.Length == 0) return null;
+                MemoryStream _imgStream = new MemoryStream(_info.Tag.Pictures[0].Data.Data);
                 return _imgStream;
             }
             catch
@@ -28,8 +27,8 @@ namespace LibMusicInfo.cs
 
         public string LoadLyricText(string path)
         {
-            ID3Info _info = new ID3Info(path, true);
-            string _lyric = _info.ID3v2Info.GetTextFrame("TEXT");
+            TagLib.File _info = TagLib.File.Create(path);
+            string _lyric = _info.Tag.Lyrics;
             return !string.IsNullOrEmpty(_lyric) ? _lyric : "没有内置歌词";
         }
 
@@ -40,17 +39,17 @@ namespace LibMusicInfo.cs
             string _fileName = Path.GetFileNameWithoutExtension(path);
             try
             {
-                ID3Info _info = new ID3Info(path, true);
-                _songName = _info.ID3v1Info.Title != null ? _info.ID3v1Info.Title : _info.ID3v2Info.GetTextFrame("TIT2").Replace("�", string.Empty);
-                _artist = _info.ID3v1Info.Artist != null ? _info.ID3v1Info.Artist : _info.ID3v2Info.GetTextFrame("TPE1").Replace("�", string.Empty);
-                string _album = _info.ID3v1Info.Album != null ? _info.ID3v1Info.Album : _info.ID3v2Info.GetTextFrame("TALB").Replace("�", string.Empty);
+                TagLib.File _info = TagLib.File.Create(path);
+                _songName = _info.Tag.Title;
+                _artist = _info.Tag.FirstPerformer;
+                string _album = _info.Tag.Album;
 
                 if (string.IsNullOrEmpty(_songName)) _songName = _fileName;
                 if (string.IsNullOrEmpty(_artist)) _artist = _fileName;
 
-                info.TagType = _info.ID3v1Info.HaveTag ? "ID3v1" : "ID3v2";
-                info.IsAlbumImg = _info.ID3v2Info.AttachedPictureFrames.Count > 0 ? true : false;
-                info.IsBuildInLyric = string.IsNullOrEmpty(_info.ID3v2Info.GetTextFrame("TEXT"));
+                info.TagType = string.Join(",", _info.TagTypes);
+                info.IsAlbumImg = _info.Tag.Pictures.Length > 0 ? true : false;
+                info.IsBuildInLyric = string.IsNullOrEmpty(_info.Tag.Lyrics);
                 info.Album = _album;
             }
             catch
@@ -69,23 +68,22 @@ namespace LibMusicInfo.cs
 
         public void SaveTag(MusicInfoModel info,byte[] imgBytes,string lyric)
         {
-            ID3Info _info = null;
             try
             {
-                _info = new ID3Info(info.Path, true);
-                _info.ID3v2Info.SetTextFrame("TIT2", info.SongName);
-                _info.ID3v2Info.SetTextFrame("TPE1", info.Artist);
-                _info.ID3v2Info.SetTextFrame("TALB", info.Album);
+                TagLib.File _info = TagLib.File.Create(info.Path);
+                _info.Tag.Title = info.SongName;
+                _info.Tag.Performers[0] = info.Artist;
+                _info.Tag.Album = info.Album;
 
                 MemoryStream _ms = null;
                 if (imgBytes != null)
                 {
                     // 将专辑图像数据添加进Mp3文件当中
-                    _ms = new MemoryStream(imgBytes);
-                    _info.ID3v2Info.AttachedPictureFrames.Add(new ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame(0, "ZonyLrc", TextEncodings.Ascii, "image/jpeg", ID3.ID3v2Frames.BinaryFrames.AttachedPictureFrame.PictureTypes.Media, _ms));
+                    _info.Tag.Pictures[0].Data.Clear();
+                    _info.Tag.Pictures[0].Data.Add(imgBytes);                    
                 }
 
-                if (!string.IsNullOrEmpty(lyric)) _info.ID3v2Info.SetTextFrame("TEXT", lyric);
+                if (!string.IsNullOrEmpty(lyric)) _info.Tag.Lyrics = lyric;
 
                 _info.Save();
                 if (_ms != null) _ms.Close();

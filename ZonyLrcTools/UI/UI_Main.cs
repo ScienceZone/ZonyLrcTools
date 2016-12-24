@@ -456,14 +456,7 @@ namespace ZonyLrcTools.UI
                 {
                     if (MessageBox.Show("检测到新版本，是否下载?", "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
-                        try
-                        {
-                            Process.Start(_url);
-                        }
-                        catch
-                        {
-                            MessageBox.Show("貌似不能够直接下载呢，你可以到以下地址去下载：" + _url + "\r\n是不是觉得很难输入，那就加QQ群下载最新版本呢：337656932","出错啦",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                        }
+                        Process.Start(_url);
                     }
                 }
             });
