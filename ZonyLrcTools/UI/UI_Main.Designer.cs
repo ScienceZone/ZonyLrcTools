@@ -72,11 +72,15 @@ namespace ZonyLrcTools.UI
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuStrip_AlbumPic = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuItem_UpdateImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_SaveAlbumImage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip_TopMenus.SuspendLayout();
             this.contextMenuStrip_FileListView.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_AlbumImage)).BeginInit();
             this.statusStrip_BottomTools.SuspendLayout();
+            this.contextMenuStrip_AlbumPic.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip_TopMenus
@@ -188,7 +192,7 @@ namespace ZonyLrcTools.UI
             this.ToolStripMenuItem_OpenFileFolder,
             this.ToolStripMenuItem_AddDirectory});
             this.contextMenuStrip_FileListView.Name = "contextMenuStrip_FileListView";
-            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(197, 142);
+            this.contextMenuStrip_FileListView.Size = new System.Drawing.Size(197, 120);
             // 
             // ToolStripMenuItem_EditLyric
             // 
@@ -273,6 +277,7 @@ namespace ZonyLrcTools.UI
             // pictureBox_AlbumImage
             // 
             this.pictureBox_AlbumImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox_AlbumImage.ContextMenuStrip = this.contextMenuStrip_AlbumPic;
             this.pictureBox_AlbumImage.Location = new System.Drawing.Point(14, 149);
             this.pictureBox_AlbumImage.Name = "pictureBox_AlbumImage";
             this.pictureBox_AlbumImage.Size = new System.Drawing.Size(200, 200);
@@ -417,6 +422,28 @@ namespace ZonyLrcTools.UI
             this.columnHeader7.Text = "状态";
             this.columnHeader7.Width = 57;
             // 
+            // contextMenuStrip_AlbumPic
+            // 
+            this.contextMenuStrip_AlbumPic.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_UpdateImage,
+            this.ToolStripMenuItem_SaveAlbumImage});
+            this.contextMenuStrip_AlbumPic.Name = "contextMenuStrip_AlbumPic";
+            this.contextMenuStrip_AlbumPic.Size = new System.Drawing.Size(153, 70);
+            // 
+            // ToolStripMenuItem_UpdateImage
+            // 
+            this.ToolStripMenuItem_UpdateImage.Enabled = false;
+            this.ToolStripMenuItem_UpdateImage.Name = "ToolStripMenuItem_UpdateImage";
+            this.ToolStripMenuItem_UpdateImage.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_UpdateImage.Text = "更换专辑图像";
+            // 
+            // ToolStripMenuItem_SaveAlbumImage
+            // 
+            this.ToolStripMenuItem_SaveAlbumImage.Name = "ToolStripMenuItem_SaveAlbumImage";
+            this.ToolStripMenuItem_SaveAlbumImage.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_SaveAlbumImage.Text = "保存图像";
+            this.ToolStripMenuItem_SaveAlbumImage.Click += new System.EventHandler(this.ToolStripMenuItem_SaveAlbumImage_Click);
+            // 
             // UI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -441,6 +468,7 @@ namespace ZonyLrcTools.UI
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_AlbumImage)).EndInit();
             this.statusStrip_BottomTools.ResumeLayout(false);
             this.statusStrip_BottomTools.PerformLayout();
+            this.contextMenuStrip_AlbumPic.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -489,5 +517,8 @@ namespace ZonyLrcTools.UI
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_OpenFileFolder;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_AddDirectory;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip_AlbumPic;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_UpdateImage;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_SaveAlbumImage;
     }
 }

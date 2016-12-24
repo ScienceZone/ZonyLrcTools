@@ -476,5 +476,33 @@ namespace ZonyLrcTools.UI
             return _result;
         }
         #endregion
+
+        /// <summary>
+        /// 保存专辑图像
+        /// </summary>
+        private void ToolStripMenuItem_SaveAlbumImage_Click(object sender, EventArgs e)
+        {
+            if (pictureBox_AlbumImage.Image != null)
+            {
+                SaveFileDialog _dlg = new SaveFileDialog();
+                _dlg.Title = "保存专辑图像";
+                _dlg.Filter = "*.png|*.png|*.bmp|*.bmp";
+                _dlg.ShowDialog();
+                if (!string.IsNullOrEmpty(_dlg.FileName))
+                {
+                    switch (Path.GetExtension(_dlg.FileName))
+                    {
+                        case ".png":
+                            pictureBox_AlbumImage.Image.Save(_dlg.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                            break;
+                        case ".bmp":
+                            pictureBox_AlbumImage.Image.Save(_dlg.FileName, System.Drawing.Imaging.ImageFormat.Bmp);
+                            break;
+                    }
+                    setBottomStatusText(StatusHeadEnum.SUCCESS, "保存图像成功!");
+                }
+            }
+            else setBottomStatusText(StatusHeadEnum.ERROR, "并没有图片让你保存哦!");
+        }
     }
 }
