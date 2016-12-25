@@ -305,7 +305,7 @@ namespace ZonyLrcTools.UI
                             else if (SettingManager.SetValue.EncodingName == "ANSI") _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.Default, _lrcData);
                             else _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
                             #endregion
-                            FileUtils.WriteFile(_lrcPath, convertBytesToUTF_8_BOM(_lrcData));
+                            FileUtils.WriteFile(_lrcPath, _lrcData);
                             listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
                         }
                         else listView_MusicInfos.Items[item.Key].SubItems[6].Text = "失败";

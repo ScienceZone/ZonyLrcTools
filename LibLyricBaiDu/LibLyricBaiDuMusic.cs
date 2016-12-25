@@ -12,7 +12,7 @@ namespace LibLyricBaiDu
         public PluginsAttribute PlugInfo { get; set; }
         private NetUtils m_netUtils = new NetUtils();
 
-        public bool DownLoad(string artist, string songName, out byte[] lrcData)
+        public bool DownLoad(string artist, string songName, out byte[] lrcData,bool isOpenTrans)
         {
             lrcData = null;
             // 请求URL构建

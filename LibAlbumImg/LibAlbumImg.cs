@@ -13,7 +13,7 @@ namespace LibAlbumImg
         private NetUtils m_netUtils = new NetUtils();
         public PluginsAttribute PlugInfo { get; set; }
 
-        public bool DownLoad(string artist, string songName, out byte[] lrcData)
+        public bool DownLoad(string artist, string songName, out byte[] lrcData,bool isOpenTrans)
         {
             lrcData = null;
             string _songName = m_netUtils.URL_Encoding(songName, Encoding.UTF8);
