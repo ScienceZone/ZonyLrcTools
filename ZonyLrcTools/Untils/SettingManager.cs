@@ -82,6 +82,7 @@ namespace ZonyLrcTools.Untils
             SetValue.IsCheckUpdate = true;
             SetValue.IsAgree = false;
             SetValue.PluginsStatus = new List<PluginStatusModel>();
+            SetValue.IsDownTranslate = true;
             // 加载所有默认开启的插件
             loadPluginStatus(GlobalMember.LrcPluginsManager);
             loadPluginStatus(GlobalMember.MusicTagPluginsManager);
@@ -143,6 +144,10 @@ namespace ZonyLrcTools.Untils
         /// 插件状态模型
         /// </summary>
         public List<PluginStatusModel> PluginsStatus { get; set; }
+        /// <summary>
+        /// 是否下载翻译歌词
+        /// </summary>
+        public bool IsDownTranslate { get; set; }
     }
     
     /// <summary>

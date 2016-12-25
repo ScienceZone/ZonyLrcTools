@@ -287,7 +287,7 @@ namespace ZonyLrcTools.UI
                     else
                     {
                         byte[] _lrcData;
-                        if (down.DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData))
+                        if (down.DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData,SettingManager.SetValue.IsDownTranslate))
                         {
                             string _lrcPath = null;
                             #region > 输出方式 <
@@ -335,7 +335,7 @@ namespace ZonyLrcTools.UI
                         else
                         {
                             byte[] _imgBytes;
-                            if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(info.Value.Artist, info.Value.SongName, out _imgBytes))
+                            if (GlobalMember.LrcPluginsManager.BaseOnTypeGetPlugins(PluginTypesEnum.AlbumImg)[0].DownLoad(info.Value.Artist, info.Value.SongName, out _imgBytes, SettingManager.SetValue.IsDownTranslate))
                             {
                                 GlobalMember.MusicTagPluginsManager.Plugins[0].SaveTag(info.Value, _imgBytes, string.Empty);
                                 listView_MusicInfos.Items[info.Key].SubItems[6].Text = "成功";
@@ -445,7 +445,7 @@ namespace ZonyLrcTools.UI
         /// <returns></returns>
         private async void checkUpdate()
         {
-            int _currentVer = 0021;
+            int _currentVer = 0022;
             await Task.Run(() =>
             {
                 string _updateInfo = new NetUtils().HttpGet("http://www.myzony.com/updateInfo.txt", Encoding.Default);
@@ -454,7 +454,12 @@ namespace ZonyLrcTools.UI
                 string _url = _result[1];
                 if (_currentVer < _dstVer)
                 {
-                    if (MessageBox.Show("检测到新版本，是否下载?", "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                    StringBuilder _sb = new StringBuilder();
+                    foreach (var item in _result[2].Split('|'))
+                    {
+                        _sb.Append(item + "\r\n");
+                    }
+                    if (MessageBox.Show(string.Format("检测到新版本，是否下载?\r\n更新内容:\r\n{0}",_sb.ToString()), "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
                         Process.Start(_url);
                     }

@@ -55,6 +55,7 @@ namespace ZonyLrcTools.UI
                 checkBox_IsIgnoreExitsFile.Checked = SettingManager.SetValue.IsIgnoreExitsFile;
                 textBox_DownLoadThreadNum.Text = SettingManager.SetValue.DownloadThreadNum.ToString();
                 checkBox_IsCheckUpdate.Checked = SettingManager.SetValue.IsCheckUpdate;
+                checkBox_IsDownTranslate.Checked = SettingManager.SetValue.IsDownTranslate;
                 if (SettingManager.SetValue.UserDirectory == string.Empty)
                 {
                     comboBox_LrcOutput.SelectedIndex = 0;
@@ -82,6 +83,7 @@ namespace ZonyLrcTools.UI
             SettingManager.SetValue.DownloadThreadNum = int.Parse(textBox_DownLoadThreadNum.Text);
             if (comboBox_LrcOutput.SelectedIndex == 2) SettingManager.SetValue.UserDirectory = "ID3v2";
             else if(comboBox_LrcOutput.SelectedIndex == 0) SettingManager.SetValue.UserDirectory = string.Empty;
+            SettingManager.SetValue.IsDownTranslate = checkBox_IsDownTranslate.Checked;
             SettingManager.Save();
         }
 

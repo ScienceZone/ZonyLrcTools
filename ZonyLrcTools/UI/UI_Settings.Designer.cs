@@ -43,15 +43,19 @@
             this.textBox_DownLoadThreadNum = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button_SaveSetting = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.checkBox_IsDownTranslate = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
             resources.ApplyResources(this.tabControl1, "tabControl1");
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -143,6 +147,19 @@
             this.button_SaveSetting.UseVisualStyleBackColor = true;
             this.button_SaveSetting.Click += new System.EventHandler(this.button_SaveSetting_Click);
             // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.checkBox_IsDownTranslate);
+            resources.ApplyResources(this.tabPage3, "tabPage3");
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_IsDownTranslate
+            // 
+            resources.ApplyResources(this.checkBox_IsDownTranslate, "checkBox_IsDownTranslate");
+            this.checkBox_IsDownTranslate.Name = "checkBox_IsDownTranslate";
+            this.checkBox_IsDownTranslate.UseVisualStyleBackColor = true;
+            // 
             // UI_Settings
             // 
             resources.ApplyResources(this, "$this");
@@ -159,6 +176,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -179,5 +198,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox_SearchSuffixs;
         private System.Windows.Forms.CheckBox checkBox_IsIgnoreExitsFile;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.CheckBox checkBox_IsDownTranslate;
     }
 }

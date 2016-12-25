@@ -7,14 +7,14 @@ using System.Text.RegularExpressions;
 
 namespace LibLyricNetEase
 {
-    [Plugins("网易云Lrc歌词下载插件", "Zony", "从网易云下载lrc格式的歌词。", 1410, PluginTypesEnum.LrcSource)]
+    [Plugins("网易云Lrc歌词下载插件", "Zony", "从网易云下载lrc格式的歌词。", 1420, PluginTypesEnum.LrcSource)]
     public class LibLyricNetEase : IPlug_Lrc
     {
         private NetUtils m_netUtils;
 
         public PluginsAttribute PlugInfo { get; set; }
 
-        public bool DownLoad(string artist, string songName, out byte[] lrcData)
+        public bool DownLoad(string artist, string songName, out byte[] lrcData,bool isOpenTrans)
         {
             m_netUtils = new NetUtils();
             lrcData = null;
@@ -39,7 +39,9 @@ namespace LibLyricNetEase
             if (!_lyric.Contains("lyric")) return false;
             string _lrc = JObject.Parse(_lyric)["lyric"].ToString();
             string _trc = getTranslateLyric(_result);
-            string _lrcString = splitLyricBuildResultValue(_lrc, _trc);
+            string _lrcString;
+            if (isOpenTrans) _lrcString = splitLyricBuildResultValue(_lrc, _trc);
+            else _lrcString = _lrc;
 
             lrcData = Encoding.UTF8.GetBytes(_lrcString);
             return true;
@@ -85,7 +87,7 @@ namespace LibLyricNetEase
         {
             if (!string.IsNullOrEmpty(tlyric))
             {
-                return lyric + modfiyTranslateLyricTimeAxis(tlyric);
+                return lyric + /*modfiyTranslateLyricTimeAxis(tlyric);*/tlyric;
             }
             else return lyric;
         }
