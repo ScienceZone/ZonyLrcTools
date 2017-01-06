@@ -42,7 +42,7 @@ namespace ZonyLrcTools.UI
                 progress_DownLoad.Value = 0;
 
                 string[] _files = FileUtils.SearchFiles(_folderDlg.SelectedPath, SettingManager.SetValue.FileSuffixs.Split(';'));
-                for (int i = 0; i < _files.Length; i++) GlobalMember.AllMusics.Add(i,new MusicInfoModel() { Path=_files[i]});
+                for (int i = 0; i < _files.Length; i++) GlobalMember.AllMusics.Add(i, new MusicInfoModel() { Path = _files[i] });
 
                 if (_files.Length > 0)
                 {
@@ -85,7 +85,7 @@ namespace ZonyLrcTools.UI
         {
             setBottomStatusText(StatusHeadEnum.WAIT, "等待用户操作...");
 
-            if(GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR,"加载MusicTag插件管理器失败...");
+            if (GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR, "加载MusicTag插件管理器失败...");
             if (GlobalMember.LrcPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR, "加载歌词下载插件失败...");
 
             SettingManager.Load();
@@ -115,10 +115,10 @@ namespace ZonyLrcTools.UI
         {
             new UI_PluginsManager().ShowDialog();
         }
-        
+
         private void listView_MusicInfos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listView_MusicInfos.SelectedItems.Count > 0)
+            if (listView_MusicInfos.SelectedItems.Count > 0)
             {
                 var _tmpDic = new Dictionary<int, MusicInfoModel>();
                 foreach (ListViewItem item in listView_MusicInfos.SelectedItems)
@@ -150,7 +150,7 @@ namespace ZonyLrcTools.UI
         /// </summary>
         private void ToolStripMenuItem_DownLoadSelectMusic_Click(object sender, EventArgs e)
         {
-            if(listView_MusicInfos.SelectedItems.Count != 0)
+            if (listView_MusicInfos.SelectedItems.Count != 0)
             {
                 var _tempDic = new Dictionary<int, MusicInfoModel>();
                 foreach (ListViewItem item in listView_MusicInfos.SelectedItems)
@@ -287,7 +287,7 @@ namespace ZonyLrcTools.UI
                     else
                     {
                         byte[] _lrcData;
-                        if (down.DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData,SettingManager.SetValue.IsDownTranslate))
+                        if (down.DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData, SettingManager.SetValue.IsDownTranslate))
                         {
                             string _lrcPath = null;
                             #region > 输出方式 <
@@ -364,7 +364,7 @@ namespace ZonyLrcTools.UI
         /// 填充主界面ListView
         /// </summary>
         /// <param name="musics"></param>
-        private void fillMusicListView(Dictionary<int,MusicInfoModel> music)
+        private void fillMusicListView(Dictionary<int, MusicInfoModel> music)
         {
             setBottomStatusText(StatusHeadEnum.NORMAL, "正在填充列表...");
             progress_DownLoad.Value = 0;
@@ -436,6 +436,7 @@ namespace ZonyLrcTools.UI
             button_AboutSoftware.Image = Properties.Resources.about;
             button_PluginsMrg.Image = Properties.Resources.plugins;
             button_Setting.Image = Properties.Resources.setting;
+            button_RenameFile.Image = Properties.Resources.download;
             Icon = Properties.Resources.App;
         }
 
@@ -459,7 +460,7 @@ namespace ZonyLrcTools.UI
                     {
                         _sb.Append(item + "\r\n");
                     }
-                    if (MessageBox.Show(string.Format("检测到新版本，是否下载?\r\n更新内容:\r\n{0}",_sb.ToString()), "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                    if (MessageBox.Show(string.Format("检测到新版本，是否下载?\r\n更新内容:\r\n{0}", _sb.ToString()), "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
                         Process.Start(_url);
                     }
@@ -508,6 +509,36 @@ namespace ZonyLrcTools.UI
                 }
             }
             else setBottomStatusText(StatusHeadEnum.ERROR, "并没有图片让你保存哦!");
+        }
+
+        /// <summary>
+        /// 批量改名
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButton_RenameFile_Click(object sender, EventArgs e)
+        {
+            if (listView_MusicInfos.Items.Count > 0)
+            {
+                setBottomStatusText(StatusHeadEnum.NORMAL, "正在批量更名...");
+                progress_DownLoad.Value = 0;
+                progress_DownLoad.Maximum = GlobalMember.AllMusics.Count;
+                Task.Run(() => 
+                {
+                    foreach (var item in GlobalMember.AllMusics)
+                    {
+                        string _newFileName = item.Value.SongName + "(" + item.Value.Artist + ")" + Path.GetExtension(item.Value.Path);
+                        string _newPath = Path.GetDirectoryName(item.Value.Path) + @"\" + _newFileName;
+                        try
+                        {
+                            File.Move(item.Value.Path, _newPath);
+                            item.Value.Path = _newPath;
+                        }
+                        catch { }
+                    }
+                    setBottomStatusText(StatusHeadEnum.COMPLETE, "更改文件名成功!");
+                });
+            }
         }
     }
 }

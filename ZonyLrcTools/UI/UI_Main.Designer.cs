@@ -36,6 +36,7 @@ namespace ZonyLrcTools.UI
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.button_DownLoadLyric = new System.Windows.Forms.ToolStripButton();
             this.button_DownLoadAlbumImage = new System.Windows.Forms.ToolStripButton();
+            this.button_RenameFile = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.button_FeedBack = new System.Windows.Forms.ToolStripButton();
             this.button_DonateAuthor = new System.Windows.Forms.ToolStripButton();
@@ -54,6 +55,9 @@ namespace ZonyLrcTools.UI
             this.textBox_Lryic = new System.Windows.Forms.TextBox();
             this.label_Lryic = new System.Windows.Forms.Label();
             this.pictureBox_AlbumImage = new System.Windows.Forms.PictureBox();
+            this.contextMenuStrip_AlbumPic = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuItem_UpdateImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_SaveAlbumImage = new System.Windows.Forms.ToolStripMenuItem();
             this.label_AlbumImage = new System.Windows.Forms.Label();
             this.textBox_Album = new System.Windows.Forms.TextBox();
             this.label_Album = new System.Windows.Forms.Label();
@@ -72,15 +76,12 @@ namespace ZonyLrcTools.UI
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.contextMenuStrip_AlbumPic = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripMenuItem_UpdateImage = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem_SaveAlbumImage = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip_TopMenus.SuspendLayout();
             this.contextMenuStrip_FileListView.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_AlbumImage)).BeginInit();
-            this.statusStrip_BottomTools.SuspendLayout();
             this.contextMenuStrip_AlbumPic.SuspendLayout();
+            this.statusStrip_BottomTools.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip_TopMenus
@@ -90,6 +91,7 @@ namespace ZonyLrcTools.UI
             this.toolStripSeparator1,
             this.button_DownLoadLyric,
             this.button_DownLoadAlbumImage,
+            this.button_RenameFile,
             this.toolStripSeparator2,
             this.button_FeedBack,
             this.button_DonateAuthor,
@@ -131,6 +133,14 @@ namespace ZonyLrcTools.UI
             this.button_DownLoadAlbumImage.Size = new System.Drawing.Size(84, 22);
             this.button_DownLoadAlbumImage.Text = "下载专辑图像";
             this.button_DownLoadAlbumImage.Click += new System.EventHandler(this.button_DownLoadAlbumImage_Click);
+            // 
+            // button_RenameFile
+            // 
+            this.button_RenameFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.button_RenameFile.Name = "button_RenameFile";
+            this.button_RenameFile.Size = new System.Drawing.Size(60, 22);
+            this.button_RenameFile.Text = "批量更名";
+            this.button_RenameFile.Click += new System.EventHandler(this.toolStripButton_RenameFile_Click);
             // 
             // toolStripSeparator2
             // 
@@ -285,6 +295,28 @@ namespace ZonyLrcTools.UI
             this.pictureBox_AlbumImage.TabIndex = 2;
             this.pictureBox_AlbumImage.TabStop = false;
             // 
+            // contextMenuStrip_AlbumPic
+            // 
+            this.contextMenuStrip_AlbumPic.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_UpdateImage,
+            this.ToolStripMenuItem_SaveAlbumImage});
+            this.contextMenuStrip_AlbumPic.Name = "contextMenuStrip_AlbumPic";
+            this.contextMenuStrip_AlbumPic.Size = new System.Drawing.Size(149, 48);
+            // 
+            // ToolStripMenuItem_UpdateImage
+            // 
+            this.ToolStripMenuItem_UpdateImage.Enabled = false;
+            this.ToolStripMenuItem_UpdateImage.Name = "ToolStripMenuItem_UpdateImage";
+            this.ToolStripMenuItem_UpdateImage.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem_UpdateImage.Text = "更换专辑图像";
+            // 
+            // ToolStripMenuItem_SaveAlbumImage
+            // 
+            this.ToolStripMenuItem_SaveAlbumImage.Name = "ToolStripMenuItem_SaveAlbumImage";
+            this.ToolStripMenuItem_SaveAlbumImage.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem_SaveAlbumImage.Text = "保存图像";
+            this.ToolStripMenuItem_SaveAlbumImage.Click += new System.EventHandler(this.ToolStripMenuItem_SaveAlbumImage_Click);
+            // 
             // label_AlbumImage
             // 
             this.label_AlbumImage.AutoSize = true;
@@ -422,28 +454,6 @@ namespace ZonyLrcTools.UI
             this.columnHeader7.Text = "状态";
             this.columnHeader7.Width = 57;
             // 
-            // contextMenuStrip_AlbumPic
-            // 
-            this.contextMenuStrip_AlbumPic.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_UpdateImage,
-            this.ToolStripMenuItem_SaveAlbumImage});
-            this.contextMenuStrip_AlbumPic.Name = "contextMenuStrip_AlbumPic";
-            this.contextMenuStrip_AlbumPic.Size = new System.Drawing.Size(153, 70);
-            // 
-            // ToolStripMenuItem_UpdateImage
-            // 
-            this.ToolStripMenuItem_UpdateImage.Enabled = false;
-            this.ToolStripMenuItem_UpdateImage.Name = "ToolStripMenuItem_UpdateImage";
-            this.ToolStripMenuItem_UpdateImage.Size = new System.Drawing.Size(152, 22);
-            this.ToolStripMenuItem_UpdateImage.Text = "更换专辑图像";
-            // 
-            // ToolStripMenuItem_SaveAlbumImage
-            // 
-            this.ToolStripMenuItem_SaveAlbumImage.Name = "ToolStripMenuItem_SaveAlbumImage";
-            this.ToolStripMenuItem_SaveAlbumImage.Size = new System.Drawing.Size(152, 22);
-            this.ToolStripMenuItem_SaveAlbumImage.Text = "保存图像";
-            this.ToolStripMenuItem_SaveAlbumImage.Click += new System.EventHandler(this.ToolStripMenuItem_SaveAlbumImage_Click);
-            // 
             // UI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -466,9 +476,9 @@ namespace ZonyLrcTools.UI
             this.groupBox_MusicInfo.ResumeLayout(false);
             this.groupBox_MusicInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_AlbumImage)).EndInit();
+            this.contextMenuStrip_AlbumPic.ResumeLayout(false);
             this.statusStrip_BottomTools.ResumeLayout(false);
             this.statusStrip_BottomTools.PerformLayout();
-            this.contextMenuStrip_AlbumPic.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -520,5 +530,6 @@ namespace ZonyLrcTools.UI
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip_AlbumPic;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_UpdateImage;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_SaveAlbumImage;
+        private System.Windows.Forms.ToolStripButton button_RenameFile;
     }
 }
