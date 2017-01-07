@@ -33,7 +33,18 @@ namespace ZonyLrcTools.UI
             Icon = Properties.Resources.App;
             fillPluginsInfo(GlobalMember.MusicTagPluginsManager);
             fillPluginsInfo(GlobalMember.LrcPluginsManager);
-            checkPluginsOpenStatus();
+            Task.Run(() =>
+            {
+                foreach (ListViewItem item in listView_Plugins.Items)
+                {
+                    if (SettingManager.SetValue.PluginsStatus.Where(x => x.PluginName.Equals(item.SubItems[0].Text)).Count() <= 0)
+                    {
+                        item.Checked = true;
+                        SettingManager.SetValue.PluginsStatus.Add(new PluginStatusModel() { IsOpen = true, PluginName = item.SubItems[0].Text });
+                    }
+                    item.Checked = SettingManager.SetValue.PluginsStatus.FirstOrDefault(x => x.PluginName.Equals(item.SubItems[0].Text)).IsOpen;
+                }
+            });
         }
 
         private void fillPluginsInfo<T>(BasePlugins<T> manager)
@@ -49,22 +60,6 @@ namespace ZonyLrcTools.UI
                     item.Version.ToString()
                 }));
             }
-        }
-
-        private async void checkPluginsOpenStatus()
-        {
-            await Task.Run(() =>
-            {
-                foreach(ListViewItem item in listView_Plugins.Items)
-                {
-                    if (SettingManager.SetValue.PluginsStatus.Where(x => x.PluginName.Equals(item.SubItems[0].Text)).Count() <= 0)
-                    {
-                        item.Checked = true;
-                        SettingManager.SetValue.PluginsStatus.Add(new PluginStatusModel() { IsOpen = true,PluginName = item.SubItems[0].Text });
-                    }
-                    item.Checked = SettingManager.SetValue.PluginsStatus.FirstOrDefault(x => x.PluginName.Equals(item.SubItems[0].Text)).IsOpen;
-                }
-            });
         }
 
         private void UI_PluginsManager_FormClosed(object sender, FormClosedEventArgs e)

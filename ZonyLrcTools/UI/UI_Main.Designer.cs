@@ -136,6 +136,7 @@ namespace ZonyLrcTools.UI
             // 
             // button_RenameFile
             // 
+            this.button_RenameFile.Enabled = false;
             this.button_RenameFile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.button_RenameFile.Name = "button_RenameFile";
             this.button_RenameFile.Size = new System.Drawing.Size(60, 22);
