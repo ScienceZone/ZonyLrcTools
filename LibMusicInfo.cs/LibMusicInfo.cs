@@ -2,6 +2,7 @@
 using LibPlug;
 using LibPlug.Interface;
 using LibPlug.Model;
+using System.Collections.Generic;
 
 namespace LibMusicInfo.cs
 {
@@ -79,8 +80,9 @@ namespace LibMusicInfo.cs
                 if (imgBytes != null)
                 {
                     // 将专辑图像数据添加进Mp3文件当中
-                    _info.Tag.Pictures[0].Data.Clear();
-                    _info.Tag.Pictures[0].Data.Add(imgBytes);                    
+                    var _picList = new List<TagLib.Picture>();
+                    _picList.Add(new TagLib.Picture(new TagLib.ByteVector(imgBytes)));
+                    _info.Tag.Pictures = _picList.ToArray();
                 }
 
                 if (!string.IsNullOrEmpty(lyric)) _info.Tag.Lyrics = lyric;

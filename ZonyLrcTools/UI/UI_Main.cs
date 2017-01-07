@@ -134,6 +134,7 @@ namespace ZonyLrcTools.UI
                     textBox_Album.Text = _info.Album;
                     Stream _imgStream = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadAlbumImg(_info.Path);
                     if (_imgStream != null) pictureBox_AlbumImage.Image = Image.FromStream(_imgStream);
+                    else pictureBox_AlbumImage.Image = null;
                     if (_info.IsBuildInLyric) textBox_Lryic.Text = GlobalMember.MusicTagPluginsManager.Plugins[0].LoadLyricText(_info.Path);
                     #endregion
                 }
@@ -446,7 +447,7 @@ namespace ZonyLrcTools.UI
         /// <returns></returns>
         private async void checkUpdate()
         {
-            int _currentVer = 0022;
+            int _currentVer = 0023;
             await Task.Run(() =>
             {
                 string _updateInfo = new NetUtils().HttpGet("http://www.myzony.com/updateInfo.txt", Encoding.Default);
