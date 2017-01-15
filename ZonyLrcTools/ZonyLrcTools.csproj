@@ -124,6 +124,7 @@
     <Compile Include="UI\UI_Settings.Designer.cs">
       <DependentUpon>UI_Settings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Untils\EncodingConverter.cs" />
     <Compile Include="Untils\FileUtils.cs" />
     <Compile Include="Untils\FuncUtils.cs" />
     <Compile Include="Untils\GlobalMember.cs" />
