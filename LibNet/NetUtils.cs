@@ -47,7 +47,7 @@ namespace LibNet
             }
             catch(Exception E)
             {
-                return null;
+                throw E;
             }
         }
 
@@ -58,6 +58,8 @@ namespace LibNet
         /// <param name="encoding">提交数据的编码方式</param>
         /// <param name="data">要提交的数据</param>
         /// <param name="referer">要提供的来源站点地址</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="UriFormatException"/>
         /// <returns>成功返回数据，否则返回null</returns>
         public string HttpPost(string url,Encoding encoding,string data = null,string referer = null)
         {
@@ -93,7 +95,7 @@ namespace LibNet
             }
             catch(Exception E)
             {
-                return null;
+                throw E;
             }
         }
 
@@ -110,7 +112,7 @@ namespace LibNet
 
             for (int i = 0; i < _dataBytes.Length;i++)
             {
-                _sb.Append(@"%" + Convert.ToString(_dataBytes[i], 16));
+                _sb.Append(@"%" + _dataBytes[i].ToString("x2"));
             }
 
             return _sb.ToString();
