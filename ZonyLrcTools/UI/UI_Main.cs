@@ -84,13 +84,21 @@ namespace ZonyLrcTools.UI
         private void UI_Main_Load(object sender, EventArgs e)
         {
             setBottomStatusText(StatusHeadEnum.WAIT, "等待用户操作...");
-
             if (GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR, "加载MusicTag插件管理器失败...");
             if (GlobalMember.LrcPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR, "加载歌词下载插件失败...");
 
             SettingManager.Load();
             if (!SettingManager.SetValue.IsAgree) new UI_About().ShowDialog();
-            if (SettingManager.SetValue.IsCheckUpdate) checkUpdate();
+            if (SettingManager.SetValue.IsCheckUpdate)
+            {
+                if(VersionManager.CheckUpdate())
+                {
+                    if (MessageBox.Show(string.Format("检测到新版本，是否下载?\r\n更新内容:\r\n{0}", VersionManager.Info.UpdateInfo), "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                    {
+                        Process.Start(VersionManager.Info.DownLoadUrl);
+                    }
+                }
+            }
 
             loadMenuIcon();
             CheckForIllegalCrossThreadCalls = false;
@@ -266,6 +274,7 @@ namespace ZonyLrcTools.UI
 
         #region > 私有方法集合 <
 
+        #region > 并行下载任务 <
         /// <summary>
         /// 并行下载歌词任务
         /// </summary>
@@ -350,6 +359,7 @@ namespace ZonyLrcTools.UI
                 enabledButton();
             });
         }
+        #endregion
 
         /// <summary>
         /// 设置底部状态标识文本
@@ -439,34 +449,6 @@ namespace ZonyLrcTools.UI
             button_Setting.Image = Properties.Resources.setting;
             button_RenameFile.Image = Properties.Resources.download;
             Icon = Properties.Resources.App;
-        }
-
-        /// <summary>
-        /// 检测更新
-        /// </summary>
-        /// <returns></returns>
-        private async void checkUpdate()
-        {
-            int _currentVer = 0023;
-            await Task.Run(() =>
-            {
-                string _updateInfo = new NetUtils().HttpGet("http://www.myzony.com/updateInfo.txt", Encoding.Default);
-                string[] _result = _updateInfo.TrimEnd(',').Split(',');
-                int _dstVer = int.Parse(_result[0]);
-                string _url = _result[1];
-                if (_currentVer < _dstVer)
-                {
-                    StringBuilder _sb = new StringBuilder();
-                    foreach (var item in _result[2].Split('|'))
-                    {
-                        _sb.Append(item + "\r\n");
-                    }
-                    if (MessageBox.Show(string.Format("检测到新版本，是否下载?\r\n更新内容:\r\n{0}", _sb.ToString()), "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
-                    {
-                        Process.Start(_url);
-                    }
-                }
-            });
         }
 
         /// <summary>

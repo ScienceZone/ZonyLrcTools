@@ -6,6 +6,8 @@ namespace ZonyLrcTools.Untils
 {
     public static class GlobalMember
     {
+        public static int Current_Version = 0023;
+
         /// <summary>
         /// 工作路径
         /// </summary>

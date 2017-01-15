@@ -129,6 +129,7 @@
     <Compile Include="Untils\GlobalMember.cs" />
     <Compile Include="Untils\LogManager.cs" />
     <Compile Include="Untils\SettingManager.cs" />
+    <Compile Include="Untils\VersionManager.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
