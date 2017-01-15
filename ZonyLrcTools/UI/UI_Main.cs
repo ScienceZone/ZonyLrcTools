@@ -91,7 +91,7 @@ namespace ZonyLrcTools.UI
             if (!SettingManager.SetValue.IsAgree) new UI_About().ShowDialog();
             if (SettingManager.SetValue.IsCheckUpdate)
             {
-                if(VersionManager.CheckUpdate())
+                if (VersionManager.CheckUpdate())
                 {
                     if (MessageBox.Show(string.Format("检测到新版本，是否下载?\r\n更新内容:\r\n{0}", VersionManager.Info.UpdateInfo), "检测到更新", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                     {
@@ -101,27 +101,21 @@ namespace ZonyLrcTools.UI
             }
 
             loadMenuIcon();
+            funcBindUI();
             CheckForIllegalCrossThreadCalls = false;
         }
 
-        private void UI_Main_FormClosed(object sender, FormClosedEventArgs e)
+        /// <summary>
+        /// UI点击事件绑定
+        /// </summary>
+        private void funcBindUI()
         {
-            Environment.Exit(0);
-        }
-
-        private void button_DonateAuthor_Click(object sender, EventArgs e)
-        {
-            new UI_Donate().ShowDialog();
-        }
-
-        private void button_AboutSoftware_Click(object sender, EventArgs e)
-        {
-            new UI_About().ShowDialog();
-        }
-
-        private void button_PluginsMrg_Click(object sender, EventArgs e)
-        {
-            new UI_PluginsManager().ShowDialog();
+            button_AboutSoftware.Click += (object sender, EventArgs e) => { new UI_About().ShowDialog(); };
+            button_DonateAuthor.Click += (object sender, EventArgs e) => { new UI_Donate().ShowDialog(); };
+            button_PluginsMrg.Click += (object sender, EventArgs e) => { new UI_PluginsManager().ShowDialog(); };
+            button_FeedBack.Click += (object sender, EventArgs e) => { new UI_FeedBack().ShowDialog(); };
+            button_Setting.Click += (object sender, EventArgs e) => { new UI_Settings().ShowDialog(); };
+            this.FormClosed += (object sender, FormClosedEventArgs e) => { Environment.Exit(0); };
         }
 
         private void listView_MusicInfos_SelectedIndexChanged(object sender, EventArgs e)
@@ -149,11 +143,6 @@ namespace ZonyLrcTools.UI
             }
         }
 
-        private void button_FeedBack_Click(object sender, EventArgs e)
-        {
-            new UI_FeedBack().ShowDialog();
-        }
-
         /// <summary>
         /// 下载单首歌曲的歌词，支持多插件
         /// </summary>
@@ -175,11 +164,6 @@ namespace ZonyLrcTools.UI
                     parallelDownLoadLryic(_tempDic, _plug);
                 }
             }
-        }
-
-        private void button_Setting_Click(object sender, EventArgs e)
-        {
-            new UI_Settings().ShowDialog();
         }
 
         /// <summary>
@@ -361,6 +345,18 @@ namespace ZonyLrcTools.UI
         }
         #endregion
 
+        #region > 下载按钮启用/停用 <
+        private void disEnabledButton()
+        {
+            button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = false;
+        }
+
+        private void enabledButton()
+        {
+            button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = true;
+        }
+        #endregion
+
         /// <summary>
         /// 设置底部状态标识文本
         /// </summary>
@@ -414,18 +410,6 @@ namespace ZonyLrcTools.UI
                 enabledButton();
             });
         }
-
-        #region > 下载按钮启用/停用 <
-        private void disEnabledButton()
-        {
-            button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = false;
-        }
-
-        private void enabledButton()
-        {
-            button_SetWorkDirectory.Enabled = button_DownLoadLyric.Enabled = button_DownLoadAlbumImage.Enabled = true;
-        }
-        #endregion
 
         /// <summary>
         /// 清空容器
@@ -506,7 +490,7 @@ namespace ZonyLrcTools.UI
                 setBottomStatusText(StatusHeadEnum.NORMAL, "正在批量更名...");
                 progress_DownLoad.Value = 0;
                 progress_DownLoad.Maximum = GlobalMember.AllMusics.Count;
-                Task.Run(() => 
+                Task.Run(() =>
                 {
                     foreach (var item in GlobalMember.AllMusics)
                     {

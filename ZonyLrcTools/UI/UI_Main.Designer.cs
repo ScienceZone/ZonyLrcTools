@@ -154,7 +154,6 @@ namespace ZonyLrcTools.UI
             this.button_FeedBack.Name = "button_FeedBack";
             this.button_FeedBack.Size = new System.Drawing.Size(60, 22);
             this.button_FeedBack.Text = "反馈信息";
-            this.button_FeedBack.Click += new System.EventHandler(this.button_FeedBack_Click);
             // 
             // button_DonateAuthor
             // 
@@ -162,7 +161,6 @@ namespace ZonyLrcTools.UI
             this.button_DonateAuthor.Name = "button_DonateAuthor";
             this.button_DonateAuthor.Size = new System.Drawing.Size(60, 22);
             this.button_DonateAuthor.Text = "捐赠作者";
-            this.button_DonateAuthor.Click += new System.EventHandler(this.button_DonateAuthor_Click);
             // 
             // button_AboutSoftware
             // 
@@ -170,7 +168,6 @@ namespace ZonyLrcTools.UI
             this.button_AboutSoftware.Name = "button_AboutSoftware";
             this.button_AboutSoftware.Size = new System.Drawing.Size(36, 22);
             this.button_AboutSoftware.Text = "关于";
-            this.button_AboutSoftware.Click += new System.EventHandler(this.button_AboutSoftware_Click);
             // 
             // toolStripSeparator3
             // 
@@ -183,7 +180,6 @@ namespace ZonyLrcTools.UI
             this.button_PluginsMrg.Name = "button_PluginsMrg";
             this.button_PluginsMrg.Size = new System.Drawing.Size(60, 22);
             this.button_PluginsMrg.Text = "插件管理";
-            this.button_PluginsMrg.Click += new System.EventHandler(this.button_PluginsMrg_Click);
             // 
             // button_Setting
             // 
@@ -191,7 +187,6 @@ namespace ZonyLrcTools.UI
             this.button_Setting.Name = "button_Setting";
             this.button_Setting.Size = new System.Drawing.Size(36, 22);
             this.button_Setting.Text = "设置";
-            this.button_Setting.Click += new System.EventHandler(this.button_Setting_Click);
             // 
             // contextMenuStrip_FileListView
             // 
@@ -469,7 +464,6 @@ namespace ZonyLrcTools.UI
             this.Name = "UI_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ZonyLrcTools";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UI_Main_FormClosed);
             this.Load += new System.EventHandler(this.UI_Main_Load);
             this.toolStrip_TopMenus.ResumeLayout(false);
             this.toolStrip_TopMenus.PerformLayout();
