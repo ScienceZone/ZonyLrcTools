@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ZonyLrcTools.Untils
 {
@@ -11,15 +8,29 @@ namespace ZonyLrcTools.Untils
     /// </summary>
     public class EncodingConverter
     {
-        private byte[] _convertedBytes;
-        public EncodingConverter()
+        public virtual byte[] ConvertBytes(byte[] _sourceBytes, string encodingName)
         {
-
+            return Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(encodingName), _sourceBytes);
         }
+    }
 
-        public byte[] ConvertBytes(byte[] _sourceBytes)
+    public class EncodingUTF8_Bom : EncodingConverter
+    {
+        public override byte[] ConvertBytes(byte[] _sourceBytes, string encodingName)
         {
-            return null;
+            byte[] _tmpData = new byte[_sourceBytes.Length + 3];
+            _tmpData[0] = 0xef; _tmpData[1] = 0xbb; _tmpData[2] = 0xbf;
+
+            Array.Copy(_sourceBytes, 0, _tmpData, 3, _sourceBytes.Length);
+            return _tmpData;
+        }
+    }
+
+    public class EncodingANSI : EncodingConverter
+    {
+        public override byte[] ConvertBytes(byte[] _sourceBytes, string encodingName)
+        {
+            return Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(encodingName), _sourceBytes);
         }
     }
 }

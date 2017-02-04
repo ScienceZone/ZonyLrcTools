@@ -62,7 +62,6 @@ namespace LibNet
         {
             try
             {
-                byte[] _data;
                 HttpRequestMessage _req = new HttpRequestMessage(HttpMethod.Post, url);
 
                 if (referer != null) _req.Headers.Referrer = new Uri(referer);

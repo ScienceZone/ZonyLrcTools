@@ -284,6 +284,7 @@ namespace ZonyLrcTools.UI
                         if (down.DownLoad(item.Value.Artist, item.Value.SongName, out _lrcData, SettingManager.SetValue.IsDownTranslate))
                         {
                             string _lrcPath = null;
+
                             #region > 输出方式 <
                             if (SettingManager.SetValue.UserDirectory.Equals(string.Empty)) // 同目录
                             {
@@ -294,11 +295,10 @@ namespace ZonyLrcTools.UI
                                 _lrcPath = Path.Combine(SettingManager.SetValue.UserDirectory, Path.GetFileNameWithoutExtension(item.Value.Path) + ".lrc");
                             }
                             #endregion
-                            #region > 将字节集编码进行转换 <
-                            if (SettingManager.SetValue.EncodingName == "utf-8 bom") _lrcData = convertBytesToUTF_8_BOM(_lrcData);
-                            else if (SettingManager.SetValue.EncodingName == "ANSI") _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.Default, _lrcData);
-                            else _lrcData = Encoding.Convert(Encoding.UTF8, Encoding.GetEncoding(SettingManager.SetValue.EncodingName), _lrcData);
-                            #endregion
+
+                            EncodingConverter _convert = getEncodingConvert();
+                            _lrcData = _convert.ConvertBytes(_lrcData, SettingManager.SetValue.EncodingName);
+
                             FileUtils.WriteFile(_lrcPath, _lrcData);
                             listView_MusicInfos.Items[item.Key].SubItems[6].Text = "成功";
                         }
@@ -435,18 +435,17 @@ namespace ZonyLrcTools.UI
             Icon = Properties.Resources.App;
         }
 
-        /// <summary>
-        /// 将字节序列转换为UTF-8 带BOM格式
-        /// </summary>
-        /// <param name="source">待转换的字节序列</param>
-        /// <returns></returns>
-        private byte[] convertBytesToUTF_8_BOM(byte[] source)
+        private EncodingConverter getEncodingConvert()
         {
-            byte[] _result = Encoding.Convert(Encoding.UTF8, SettingManager.SetValue.EncodingName.Equals("utf-8 bom") ? Encoding.UTF8 : Encoding.GetEncoding(SettingManager.SetValue.EncodingName), source);
-            byte[] _tmpData = new byte[_result.Length + 3];
-            _tmpData[0] = 0xef; _tmpData[1] = 0xbb; _tmpData[2] = 0xbf;
-            Array.Copy(_result, 0, _tmpData, 3, _result.Length);
-            return _result;
+            switch (SettingManager.SetValue.EncodingName)
+            {
+                case "utf-8 bom":
+                    return new EncodingUTF8_Bom();
+                case "ANSI":
+                    return new EncodingANSI();
+                default:
+                    return new EncodingConverter();
+            }
         }
         #endregion
 
