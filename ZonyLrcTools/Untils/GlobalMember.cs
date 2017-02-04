@@ -20,6 +20,7 @@ namespace ZonyLrcTools.Untils
         /// 歌词源插件集合
         /// </summary>
         public static LryicPlugins LrcPluginsManager = new LryicPlugins();
+        public static DIYPlugins DIYPluginsManager = new DIYPlugins();
 
         private static Dictionary<int, MusicInfoModel> m_allMusics = null;
         /// <summary>

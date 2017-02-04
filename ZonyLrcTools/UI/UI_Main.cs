@@ -84,8 +84,11 @@ namespace ZonyLrcTools.UI
         private void UI_Main_Load(object sender, EventArgs e)
         {
             setBottomStatusText(StatusHeadEnum.WAIT, "等待用户操作...");
+            var _res = resourceInit();
+
             if (GlobalMember.MusicTagPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR, "加载MusicTag插件管理器失败...");
             if (GlobalMember.LrcPluginsManager.LoadPlugins() == 0) setBottomStatusText(StatusHeadEnum.ERROR, "加载歌词下载插件失败...");
+            if (GlobalMember.DIYPluginsManager.LoadPlugins(_res) == 0) setBottomStatusText(StatusHeadEnum.ERROR, "自定义高级插件加载失败...");
 
             SettingManager.Load();
             if (!SettingManager.SetValue.IsAgree) new UI_About().ShowDialog();
@@ -419,7 +422,6 @@ namespace ZonyLrcTools.UI
             button_AboutSoftware.Image = Properties.Resources.about;
             button_PluginsMrg.Image = Properties.Resources.plugins;
             button_Setting.Image = Properties.Resources.setting;
-            button_RenameFile.Image = Properties.Resources.download;
             Icon = Properties.Resources.App;
         }
 
@@ -451,6 +453,20 @@ namespace ZonyLrcTools.UI
                 default:
                     return new EncodingConverter();
             }
+        }
+
+        /// <summary>
+        /// 初始化插件共享资源
+        /// </summary>
+        private ResourceModel resourceInit()
+        {
+            ResourceModel _res = new ResourceModel();
+            _res.MusicInfos = GlobalMember.AllMusics;
+            _res.UI_Main_BottomLabel = statusLabel_StateText;
+            _res.UI_Main_ListView = listView_MusicInfos;
+            _res.UI_Main_ListView_RightClickMenu = contextMenuStrip_FileListView;
+            _res.UI_Main_TopButtonMenu = toolStrip_TopMenus;
+            return _res;
         }
         #endregion
 

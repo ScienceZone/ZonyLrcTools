@@ -24,7 +24,6 @@ namespace LibPlug.UI
             {
                 base.OnNotifyMessage(m);
             }
-
         }
     }
 }

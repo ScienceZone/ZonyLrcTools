@@ -36,7 +36,6 @@ namespace ZonyLrcTools.UI
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.button_DownLoadLyric = new System.Windows.Forms.ToolStripButton();
             this.button_DownLoadAlbumImage = new System.Windows.Forms.ToolStripButton();
-            this.button_RenameFile = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.button_FeedBack = new System.Windows.Forms.ToolStripButton();
             this.button_DonateAuthor = new System.Windows.Forms.ToolStripButton();
@@ -76,6 +75,7 @@ namespace ZonyLrcTools.UI
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip_TopMenus.SuspendLayout();
             this.contextMenuStrip_FileListView.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
@@ -91,14 +91,14 @@ namespace ZonyLrcTools.UI
             this.toolStripSeparator1,
             this.button_DownLoadLyric,
             this.button_DownLoadAlbumImage,
-            this.button_RenameFile,
             this.toolStripSeparator2,
             this.button_FeedBack,
             this.button_DonateAuthor,
             this.button_AboutSoftware,
             this.toolStripSeparator3,
             this.button_PluginsMrg,
-            this.button_Setting});
+            this.button_Setting,
+            this.toolStripSeparator4});
             this.toolStrip_TopMenus.Location = new System.Drawing.Point(0, 0);
             this.toolStrip_TopMenus.Name = "toolStrip_TopMenus";
             this.toolStrip_TopMenus.Size = new System.Drawing.Size(1007, 25);
@@ -133,15 +133,6 @@ namespace ZonyLrcTools.UI
             this.button_DownLoadAlbumImage.Size = new System.Drawing.Size(84, 22);
             this.button_DownLoadAlbumImage.Text = "下载专辑图像";
             this.button_DownLoadAlbumImage.Click += new System.EventHandler(this.button_DownLoadAlbumImage_Click);
-            // 
-            // button_RenameFile
-            // 
-            this.button_RenameFile.Enabled = false;
-            this.button_RenameFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.button_RenameFile.Name = "button_RenameFile";
-            this.button_RenameFile.Size = new System.Drawing.Size(60, 22);
-            this.button_RenameFile.Text = "批量更名";
-            this.button_RenameFile.Click += new System.EventHandler(this.toolStripButton_RenameFile_Click);
             // 
             // toolStripSeparator2
             // 
@@ -450,6 +441,11 @@ namespace ZonyLrcTools.UI
             this.columnHeader7.Text = "状态";
             this.columnHeader7.Width = 57;
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
             // UI_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -525,6 +521,6 @@ namespace ZonyLrcTools.UI
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip_AlbumPic;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_UpdateImage;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_SaveAlbumImage;
-        private System.Windows.Forms.ToolStripButton button_RenameFile;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }

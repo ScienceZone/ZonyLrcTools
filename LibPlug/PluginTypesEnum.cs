@@ -16,6 +16,10 @@
         /// <summary>
         /// 专辑图像下载插件
         /// </summary>
-        AlbumImg = LrcSource + 0x02
+        AlbumImg = LrcSource + 0x02,
+        /// <summary>
+        /// 高级插件
+        /// </summary>
+        DIY = LrcSource + 0x03
     }
 }

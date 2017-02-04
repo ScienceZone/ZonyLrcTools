@@ -32,7 +32,7 @@ namespace ZonyLrcTools.Plugin
         /// 加载插件
         /// </summary>
         /// <returns></returns>
-        public int LoadPlugins()
+        public virtual int LoadPlugins()
         {
             Plugins.Clear();
             PluginInfos.Clear();
