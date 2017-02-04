@@ -105,19 +105,6 @@ namespace ZonyLrcTools.UI
             CheckForIllegalCrossThreadCalls = false;
         }
 
-        /// <summary>
-        /// UI点击事件绑定
-        /// </summary>
-        private void funcBindUI()
-        {
-            button_AboutSoftware.Click += (object sender, EventArgs e) => { new UI_About().ShowDialog(); };
-            button_DonateAuthor.Click += (object sender, EventArgs e) => { new UI_Donate().ShowDialog(); };
-            button_PluginsMrg.Click += (object sender, EventArgs e) => { new UI_PluginsManager().ShowDialog(); };
-            button_FeedBack.Click += (object sender, EventArgs e) => { new UI_FeedBack().ShowDialog(); };
-            button_Setting.Click += (object sender, EventArgs e) => { new UI_Settings().ShowDialog(); };
-            this.FormClosed += (object sender, FormClosedEventArgs e) => { Environment.Exit(0); };
-        }
-
         private void listView_MusicInfos_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listView_MusicInfos.SelectedItems.Count > 0)
@@ -155,6 +142,7 @@ namespace ZonyLrcTools.UI
                 {
                     _tempDic.Add(item.Index, GlobalMember.AllMusics[item.Index]);
                 }
+
                 // 选择下载插件
                 var _dlg = new UI_PluginSelect();
                 _dlg.ShowDialog();
@@ -435,6 +423,23 @@ namespace ZonyLrcTools.UI
             Icon = Properties.Resources.App;
         }
 
+        /// <summary>
+        /// UI点击事件绑定
+        /// </summary>
+        private void funcBindUI()
+        {
+            button_AboutSoftware.Click += (object sender, EventArgs e) => { new UI_About().ShowDialog(); };
+            button_DonateAuthor.Click += (object sender, EventArgs e) => { new UI_Donate().ShowDialog(); };
+            button_PluginsMrg.Click += (object sender, EventArgs e) => { new UI_PluginsManager().ShowDialog(); };
+            button_FeedBack.Click += (object sender, EventArgs e) => { new UI_FeedBack().ShowDialog(); };
+            button_Setting.Click += (object sender, EventArgs e) => { new UI_Settings().ShowDialog(); };
+            this.FormClosed += (object sender, FormClosedEventArgs e) => { Environment.Exit(0); };
+        }
+
+        /// <summary>
+        /// 获得编码转换器
+        /// </summary>
+        /// <returns></returns>
         private EncodingConverter getEncodingConvert()
         {
             switch (SettingManager.SetValue.EncodingName)

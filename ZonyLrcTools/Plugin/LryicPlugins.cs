@@ -22,7 +22,7 @@ namespace ZonyLrcTools.Plugin
         /// <returns></returns>
         public List<IPlug_Lrc> BaseOnTypeGetPlugins(PluginTypesEnum pType)
         {
-            return Plugins.Where(x => 
+            return Plugins.Where(x =>
             {
                 if (x.PlugInfo.TypeEnum == pType)
                     return SettingManager.SetValue.PluginsStatus.FirstOrDefault(y => y.PluginName.Equals(x.PlugInfo.PlugName)).IsOpen;
@@ -37,7 +37,7 @@ namespace ZonyLrcTools.Plugin
         /// <returns></returns>
         public IPlug_Lrc BaseOnNameGetPlugin(string pluginName)
         {
-            return Plugins.Where(x => x.PlugInfo.PlugName.Equals(pluginName)).FirstOrDefault();
+            return Plugins.Find(x => x.PlugInfo.PlugName.Equals(pluginName));
         }
     }
 }
