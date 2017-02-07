@@ -468,6 +468,22 @@ namespace ZonyLrcTools.UI
             _res.UI_Main_TopButtonMenu = toolStrip_TopMenus;
             return _res;
         }
+
+        /// <summary>
+        /// 搜索多路径的所有文件，并将其加入数据当中
+        /// </summary>
+        /// <param name="paths">多个路径的集合数组</param>
+        /// <returns></returns>
+        private string[] searchFolderFiles(string[] paths)
+        {
+            List<string> _pathList = new List<string>();
+            foreach (var item in paths)
+            {
+                _pathList.AddRange(FileUtils.SearchFiles(item, SettingManager.SetValue.FileSuffixs.Split(';')));
+            }
+
+            return _pathList.ToArray();
+        }
         #endregion
 
         /// <summary>
@@ -525,6 +541,29 @@ namespace ZonyLrcTools.UI
                     }
                     setBottomStatusText(StatusHeadEnum.COMPLETE, "更改文件名成功!");
                 });
+            }
+        }
+
+        /// <summary>
+        /// 获得拖拽目录并进行扫描
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listView_MusicInfos_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Link;
+            }
+        }
+
+        private void listView_MusicInfos_DragOver(object sender, DragEventArgs e)
+        {
+            var _path = ((string[])e.Data.GetData(DataFormats.FileDrop));
+            if (_path.Length > 0)
+            {
+                var _result = searchFolderFiles(_path);
+
             }
         }
     }

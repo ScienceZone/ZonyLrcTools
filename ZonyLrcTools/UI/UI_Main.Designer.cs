@@ -43,6 +43,7 @@ namespace ZonyLrcTools.UI
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.button_PluginsMrg = new System.Windows.Forms.ToolStripButton();
             this.button_Setting = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip_FileListView = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItem_EditLyric = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_DownLoadSelectMusic = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,6 +68,7 @@ namespace ZonyLrcTools.UI
             this.statusStrip_BottomTools = new System.Windows.Forms.StatusStrip();
             this.statusLabel_StateText = new System.Windows.Forms.ToolStripStatusLabel();
             this.progress_DownLoad = new System.Windows.Forms.ToolStripProgressBar();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.listView_MusicInfos = new LibPlug.UI.ListViewNF();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -75,7 +77,6 @@ namespace ZonyLrcTools.UI
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip_TopMenus.SuspendLayout();
             this.contextMenuStrip_FileListView.SuspendLayout();
             this.groupBox_MusicInfo.SuspendLayout();
@@ -178,6 +179,11 @@ namespace ZonyLrcTools.UI
             this.button_Setting.Name = "button_Setting";
             this.button_Setting.Size = new System.Drawing.Size(36, 22);
             this.button_Setting.Text = "设置";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // contextMenuStrip_FileListView
             // 
@@ -386,6 +392,7 @@ namespace ZonyLrcTools.UI
             // 
             // listView_MusicInfos
             // 
+            this.listView_MusicInfos.AllowDrop = true;
             this.listView_MusicInfos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -406,6 +413,8 @@ namespace ZonyLrcTools.UI
             this.listView_MusicInfos.UseCompatibleStateImageBehavior = false;
             this.listView_MusicInfos.View = System.Windows.Forms.View.Details;
             this.listView_MusicInfos.SelectedIndexChanged += new System.EventHandler(this.listView_MusicInfos_SelectedIndexChanged);
+            this.listView_MusicInfos.DragEnter += new System.Windows.Forms.DragEventHandler(this.listView_MusicInfos_DragEnter);
+            this.listView_MusicInfos.DragOver += new System.Windows.Forms.DragEventHandler(this.listView_MusicInfos_DragOver);
             // 
             // columnHeader1
             // 
@@ -440,11 +449,6 @@ namespace ZonyLrcTools.UI
             // 
             this.columnHeader7.Text = "状态";
             this.columnHeader7.Width = 57;
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // UI_Main
             // 
@@ -522,5 +526,6 @@ namespace ZonyLrcTools.UI
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_UpdateImage;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_SaveAlbumImage;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
