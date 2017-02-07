@@ -33,6 +33,7 @@ namespace ZonyLrcTools.UI
             Icon = Properties.Resources.App;
             fillPluginsInfo(GlobalMember.MusicTagPluginsManager);
             fillPluginsInfo(GlobalMember.LrcPluginsManager);
+            fillPluginsInfo(GlobalMember.DIYPluginsManager);
             Task.Run(() =>
             {
                 foreach (ListViewItem item in listView_Plugins.Items)
