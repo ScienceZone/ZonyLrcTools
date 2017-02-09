@@ -14,23 +14,24 @@ namespace LibLyricNetEase
 
         public PluginsAttribute PlugInfo { get; set; }
 
-        public bool DownLoad(string artist, string songName, out byte[] lrcData,bool isOpenTrans)
+        public bool DownLoad(string artist, string songName, out byte[] lrcData, bool isOpenTrans)
         {
             m_netUtils = new NetUtils();
             lrcData = null;
             const string _requestUrl = @"http://music.163.com/api/search/get/web?csrf_token=";
+            const string _referer = @"http://music.163.com";
 
             string _artistName = m_netUtils.URL_Encoding(artist, Encoding.UTF8);
             string _songName = m_netUtils.URL_Encoding(songName, Encoding.UTF8);
             string _searchKey = string.Format("{0}+{1}", _artistName, _songName);
 
             string _requestData = "&s=" + _searchKey + "&type=1&offset=0&total=true&limit=5";
-            string _result = m_netUtils.HttpPost(_requestUrl, Encoding.UTF8, _requestData, @"http://music.163.com");
+            string _result = m_netUtils.HttpPost(_requestUrl, Encoding.UTF8, _requestData, _referer);
             string _sid = getSID(_result);
             if (string.IsNullOrEmpty(_sid)) return false;
 
             string _lrcUrl = "http://music.163.com/api/song/lyric?os=osx&id=" + _sid + "&lv=-1&kv=-1&tv=-1";
-            _result = m_netUtils.HttpGet(_lrcUrl, Encoding.UTF8, @"http://music.163.com");
+            _result = m_netUtils.HttpGet(_lrcUrl, Encoding.UTF8, _referer);
 
             if (_result.Contains("nolyric")) return false;
             if (_result.Contains("uncollected")) return false;
@@ -83,7 +84,7 @@ namespace LibLyricNetEase
         /// <param name="lyric">原始歌词</param>
         /// <param name="tlyric">翻译歌词</param>
         /// <returns></returns>
-        private string splitLyricBuildResultValue(string lyric,string tlyric)
+        private string splitLyricBuildResultValue(string lyric, string tlyric)
         {
             if (!string.IsNullOrEmpty(tlyric))
             {
@@ -100,21 +101,21 @@ namespace LibLyricNetEase
         private string modfiyTranslateLyricTimeAxis(string lrcText)
         {
             Regex _reg = new Regex(@"\[\d+:\d+.\d+\]");
-            return _reg.Replace(lrcText,new MatchEvaluator((Match machs)=> 
-            {
-                try
-                {
-                    string[] _strs = machs.Value.Split('.');
-                    string _value = _strs[1].Remove(_strs[1].Length - 1);
-                    int _iValue = int.Parse(_value);
-                    _iValue -= 1;
-                    return string.Format("{0}.{1:D2}]", _strs[0], _iValue);
-                }
-                catch
-                {
-                    return machs.Value;
-                }
-            }));
+            return _reg.Replace(lrcText, new MatchEvaluator((Match machs) =>
+             {
+                 try
+                 {
+                     string[] _strs = machs.Value.Split('.');
+                     string _value = _strs[1].Remove(_strs[1].Length - 1);
+                     int _iValue = int.Parse(_value);
+                     _iValue -= 1;
+                     return string.Format("{0}.{1:D2}]", _strs[0], _iValue);
+                 }
+                 catch
+                 {
+                     return machs.Value;
+                 }
+             }));
         }
     }
 }

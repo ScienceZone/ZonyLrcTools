@@ -39,8 +39,9 @@ namespace LibSingleLyricSearch
         /// 解析歌词列表
         /// </summary>
         /// <returns></returns>
-        private List<SongListItem> decodeSongList()
+        private List<SongListItem> decodeSongList(string jsonList)
         {
+            
             return null;
         }
 
