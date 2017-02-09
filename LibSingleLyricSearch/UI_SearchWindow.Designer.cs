@@ -35,11 +35,11 @@
             this.textBox_Artist = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button_Search = new System.Windows.Forms.Button();
-            this.listViewNF1 = new LibPlug.UI.ListViewNF();
+            this.listView_LyricList = new LibPlug.UI.ListViewNF();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.下载ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_DownLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,18 +94,18 @@
             this.button_Search.UseVisualStyleBackColor = true;
             this.button_Search.Click += new System.EventHandler(this.button_Search_Click);
             // 
-            // listViewNF1
+            // listView_LyricList
             // 
-            this.listViewNF1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listView_LyricList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.listViewNF1.ContextMenuStrip = this.contextMenuStrip1;
-            this.listViewNF1.Location = new System.Drawing.Point(12, 45);
-            this.listViewNF1.Name = "listViewNF1";
-            this.listViewNF1.Size = new System.Drawing.Size(427, 174);
-            this.listViewNF1.TabIndex = 0;
-            this.listViewNF1.UseCompatibleStateImageBehavior = false;
-            this.listViewNF1.View = System.Windows.Forms.View.Details;
+            this.listView_LyricList.ContextMenuStrip = this.contextMenuStrip1;
+            this.listView_LyricList.Location = new System.Drawing.Point(12, 45);
+            this.listView_LyricList.Name = "listView_LyricList";
+            this.listView_LyricList.Size = new System.Drawing.Size(427, 174);
+            this.listView_LyricList.TabIndex = 0;
+            this.listView_LyricList.UseCompatibleStateImageBehavior = false;
+            this.listView_LyricList.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
@@ -120,15 +120,16 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.下载ToolStripMenuItem});
+            this.ToolStripMenuItem_DownLoad});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(101, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 48);
             // 
-            // 下载ToolStripMenuItem
+            // ToolStripMenuItem_DownLoad
             // 
-            this.下载ToolStripMenuItem.Name = "下载ToolStripMenuItem";
-            this.下载ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.下载ToolStripMenuItem.Text = "下载";
+            this.ToolStripMenuItem_DownLoad.Name = "ToolStripMenuItem_DownLoad";
+            this.ToolStripMenuItem_DownLoad.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_DownLoad.Text = "下载";
+            this.ToolStripMenuItem_DownLoad.Click += new System.EventHandler(this.ToolStripMenuItem_DownLoad_Click);
             // 
             // UI_SearchWindow
             // 
@@ -141,7 +142,7 @@
             this.Controls.Add(this.textBox_SongName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.listViewNF1);
+            this.Controls.Add(this.listView_LyricList);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "UI_SearchWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -154,7 +155,7 @@
 
         #endregion
 
-        private LibPlug.UI.ListViewNF listViewNF1;
+        private LibPlug.UI.ListViewNF listView_LyricList;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBox_SongName;
@@ -164,6 +165,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 下载ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_DownLoad;
     }
 }
