@@ -35,11 +35,11 @@
             this.textBox_Artist = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.button_Search = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ToolStripMenuItem_DownLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.listView_LyricList = new LibPlug.UI.ListViewNF();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ToolStripMenuItem_DownLoad = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,6 +94,20 @@
             this.button_Search.UseVisualStyleBackColor = true;
             this.button_Search.Click += new System.EventHandler(this.button_Search_Click);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_DownLoad});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(101, 26);
+            // 
+            // ToolStripMenuItem_DownLoad
+            // 
+            this.ToolStripMenuItem_DownLoad.Name = "ToolStripMenuItem_DownLoad";
+            this.ToolStripMenuItem_DownLoad.Size = new System.Drawing.Size(100, 22);
+            this.ToolStripMenuItem_DownLoad.Text = "下载";
+            this.ToolStripMenuItem_DownLoad.Click += new System.EventHandler(this.ToolStripMenuItem_DownLoad_Click);
+            // 
             // listView_LyricList
             // 
             this.listView_LyricList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -106,6 +120,7 @@
             this.listView_LyricList.TabIndex = 0;
             this.listView_LyricList.UseCompatibleStateImageBehavior = false;
             this.listView_LyricList.View = System.Windows.Forms.View.Details;
+            this.listView_LyricList.ItemActivate += new System.EventHandler(this.listView_LyricList_ItemActivate);
             // 
             // columnHeader1
             // 
@@ -116,20 +131,6 @@
             // 
             this.columnHeader2.Text = "歌手";
             this.columnHeader2.Width = 223;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem_DownLoad});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 48);
-            // 
-            // ToolStripMenuItem_DownLoad
-            // 
-            this.ToolStripMenuItem_DownLoad.Name = "ToolStripMenuItem_DownLoad";
-            this.ToolStripMenuItem_DownLoad.Size = new System.Drawing.Size(152, 22);
-            this.ToolStripMenuItem_DownLoad.Text = "下载";
-            this.ToolStripMenuItem_DownLoad.Click += new System.EventHandler(this.ToolStripMenuItem_DownLoad_Click);
             // 
             // UI_SearchWindow
             // 

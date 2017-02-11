@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Forms;
 using LibNet;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace LibSingleLyricSearch
 {
@@ -19,6 +20,8 @@ namespace LibSingleLyricSearch
 
         private void button_Search_Click(object sender, EventArgs e)
         {
+            listView_LyricList.Items.Clear();
+
             string _artist, _songName;
             const string _requestUrl = @"http://music.163.com/api/search/get/web?csrf_token=";
             const string _referer = @"http://music.163.com";
@@ -36,7 +39,30 @@ namespace LibSingleLyricSearch
 
         private void ToolStripMenuItem_DownLoad_Click(object sender, EventArgs e)
         {
+            foreach (ListViewItem item in listView_LyricList.SelectedItems)
+            {
+                string _lyricText = getLyricText(item.SubItems[2].Text);
+                string _lyricPath = Environment.CurrentDirectory + @"\Lyric";
+                string _fileName = string.Format("{0}{1}.lrc", item.SubItems[0].Text, item.SubItems[1].Text);
 
+                if (!Directory.Exists(_lyricPath)) Directory.CreateDirectory(_lyricPath);
+                using (FileStream _fs = new FileStream(string.Format("{0}{1}", _lyricPath + @"\", _fileName), FileMode.OpenOrCreate))
+                {
+                    byte[] _data = Encoding.UTF8.GetBytes(_lyricText);
+                    _fs.Write(_data, 0, _data.Length);
+                }
+                MessageBox.Show("下载成功!", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void listView_LyricList_ItemActivate(object sender, EventArgs e)
+        {
+            if (listView_LyricList.SelectedItems != null)
+            {
+                var _window = new UI_LyricView();
+                _window.LyricText = getLyricText(listView_LyricList.SelectedItems[0].SubItems[2].Text);
+                _window.Show();
+            }
         }
 
         /// <summary>
@@ -47,16 +73,19 @@ namespace LibSingleLyricSearch
         {
             List<SongListItem> _resultList = new List<SongListItem>();
 
-            JObject _result = JObject.Parse(jsonList);
-            JArray _jArray = (JArray)_result["result"]["songs"];
-            foreach (var item in _jArray)
+            if (!string.IsNullOrEmpty(jsonList) && jsonList.IndexOf("songs") != -1)
             {
-                _resultList.Add(new SongListItem()
+                JObject _result = JObject.Parse(jsonList);
+                JArray _jArray = (JArray)_result["result"]["songs"];
+                foreach (var item in _jArray)
                 {
-                    SongName = item.Value<string>("name"),
-                    SongID = item.Value<string>("id"),
-                    Artist = ((JArray)item["artists"])[0].Value<string>("name")
-                });
+                    _resultList.Add(new SongListItem()
+                    {
+                        SongName = item.Value<string>("name"),
+                        SongID = item.Value<string>("id"),
+                        Artist = ((JArray)item["artists"])[0].Value<string>("name")
+                    });
+                }
             }
             return _resultList;
         }
@@ -69,18 +98,21 @@ namespace LibSingleLyricSearch
         {
             foreach (var item in list)
             {
-                listView_LyricList.Items.Add(new ListViewItem(new string[] { item.SongName, item.Artist }));
+                listView_LyricList.Items.Add(new ListViewItem(new string[] { item.SongName, item.Artist, item.SongID }));
             }
         }
 
         /// <summary>
-        /// 获得指定SID的Json歌词数据
+        /// 获得指定SID的歌词数据
         /// </summary>
         /// <param name="sid"></param>
-        private string getLyricJson(string sid)
+        private string getLyricText(string sid)
         {
             string _lrcUrl = "http://music.163.com/api/song/lyric?os=osx&id=" + sid + "&lv=-1&kv=-1&tv=-1";
-            return m_netUtils.HttpGet(_lrcUrl, Encoding.UTF8, @"http://music.163.com");
+            string _lyricJson = m_netUtils.HttpGet(_lrcUrl, Encoding.UTF8, @"http://music.163.com");
+
+            JObject _jObj = JObject.Parse(_lyricJson);
+            return _jObj["lrc"] != null ? _jObj["lrc"]["lyric"].ToString() : "暂时没有歌词";
         }
 
         /// <summary>
