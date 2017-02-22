@@ -6,8 +6,6 @@ namespace ZonyLrcTools.Untils
 {
     public static class GlobalMember
     {
-        public static int Current_Version = 0023;
-
         /// <summary>
         /// 工作路径
         /// </summary>
@@ -20,6 +18,9 @@ namespace ZonyLrcTools.Untils
         /// 歌词源插件集合
         /// </summary>
         public static LryicPlugins LrcPluginsManager = new LryicPlugins();
+        /// <summary>
+        /// 自定义插件集合
+        /// </summary>
         public static DIYPlugins DIYPluginsManager = new DIYPlugins();
 
         private static Dictionary<int, MusicInfoModel> m_allMusics = null;

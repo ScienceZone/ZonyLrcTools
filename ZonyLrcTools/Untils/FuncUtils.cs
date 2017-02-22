@@ -10,12 +10,9 @@ namespace ZonyLrcTools.Untils
         /// <typeparam name="V"></typeparam>
         /// <param name="value"></param>
         /// <param name="container"></param>
-        public static void AddRange<T,V>(this Dictionary<T,V> value,Dictionary<T,V> container)
+        public static void AddRange<T, V>(this Dictionary<T, V> value, Dictionary<T, V> container)
         {
-            foreach(var item in container)
-            {
-                value.Add(item.Key, item.Value);
-            }
+            foreach (var item in container) value.Add(item.Key, item.Value);
         }
     }
 }
