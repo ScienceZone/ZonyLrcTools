@@ -51,7 +51,7 @@ namespace LibSingleLyricSearch
                     byte[] _data = Encoding.UTF8.GetBytes(_lyricText);
                     _fs.Write(_data, 0, _data.Length);
                 }
-                MessageBox.Show("下载成功!", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("下载成功,歌词文件保存在工具的'Lyric'目录当中!", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
