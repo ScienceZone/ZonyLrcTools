@@ -63,7 +63,8 @@ namespace ZonyLrcTools.Plugin
                             CallBack();
                         }
                     }
-                }catch
+                }
+                catch
                 {
                     return 0;
                 }
