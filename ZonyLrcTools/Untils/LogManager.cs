@@ -17,7 +17,7 @@ namespace ZonyLrcTools.Untils
         {
             if (!Directory.Exists(m_logPath)) Directory.CreateDirectory(m_logPath);
             m_logName = DateTime.Now.ToString("yyyyMMddHHmmss") + ".log";
-            m_logFile = new FileStream(Path.Combine(m_logPath,m_logName), FileMode.OpenOrCreate);
+            m_logFile = new FileStream(Path.Combine(m_logPath, m_logName), FileMode.OpenOrCreate);
         }
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace ZonyLrcTools.Untils
         /// <param name="status">状态</param>
         /// <param name="text">具体信息</param>
         /// <param name="e">错误堆栈</param>
-        public static void WriteLogRecord(string status,string text,Exception e = null)
+        public static void WriteLogRecord(string status, string text, Exception e = null)
         {
-            lock(m_lockObj)
+            lock (m_lockObj)
             {
                 if (m_logFile != null)
                 {
@@ -43,12 +43,13 @@ namespace ZonyLrcTools.Untils
         /// <summary>
         /// 构建写入文本
         /// </summary>
-        private static string buildWriteString(string status,string text,Exception e)
+        private static string buildWriteString(string status, string text, Exception e)
         {
             string _writeString = "状态:" + status + "\r\n" +
-                                  "信息:" + status + "\r\n" +
+                                  "信息:" + text + "\r\n" +
                                   "错误信息：" + (e == null ? "无" : e.Message != null ? e.Message : e.InnerException.Message) + "\r\n" +
-                                  "错误堆栈：" + (e == null ? "无" : e.StackTrace != null ? e.StackTrace : e.InnerException.StackTrace);
+                                  "错误堆栈：" + (e == null ? "无" : e.StackTrace != null ? e.StackTrace : e.InnerException.StackTrace) + "\r\n" +
+                                  "=================================================================================================\r\n\r\n";
             return _writeString;
         }
     }

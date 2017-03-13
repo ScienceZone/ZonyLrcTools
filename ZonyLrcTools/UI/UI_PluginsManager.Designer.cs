@@ -35,6 +35,7 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button_Save = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listView_Plugins
@@ -87,11 +88,23 @@
             this.button_Save.UseVisualStyleBackColor = true;
             this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(144, 500);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(259, 12);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "高级插件启用/禁用请重新启动程序才能生效";
+            // 
             // UI_PluginsManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(525, 507);
+            this.ClientSize = new System.Drawing.Size(525, 521);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button_Save);
             this.Controls.Add(this.listView_Plugins);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -103,6 +116,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UI_PluginsManager_FormClosed);
             this.Load += new System.EventHandler(this.UI_PluginsManager_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -115,5 +129,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.Button button_Save;
+        private System.Windows.Forms.Label label1;
     }
 }

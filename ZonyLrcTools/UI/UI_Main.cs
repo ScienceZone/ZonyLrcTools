@@ -91,6 +91,7 @@ namespace ZonyLrcTools.UI
             if (GlobalMember.DIYPluginsManager.LoadPlugins(_res) == 0) setBottomStatusText(StatusHeadEnum.ERROR, "自定义高级插件加载失败...");
 
             SettingManager.Load();
+            GlobalMember.DIYPluginsManager.InitPlugins(); //高级插件延迟加载
             if (!SettingManager.SetValue.IsAgree) new UI_About().ShowDialog();
             if (SettingManager.SetValue.IsCheckUpdate)
             {
@@ -356,6 +357,7 @@ namespace ZonyLrcTools.UI
         private void setBottomStatusText(string head, string content)
         {
             statusLabel_StateText.Text = string.Format("{0}:{1}", head, content);
+            LogManager.WriteLogRecord(head, content);
         }
 
         /// <summary>
