@@ -97,12 +97,12 @@ namespace ZonyLrcTools.UI
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "捐赠者";
+            this.columnHeader1.Text = "时间";
             this.columnHeader1.Width = 88;
             // 
             // columnHeader2
             // 
-            this.columnHeader2.Text = "时间";
+            this.columnHeader2.Text = "捐赠者";
             this.columnHeader2.Width = 139;
             // 
             // columnHeader3
