@@ -10,13 +10,12 @@ namespace LibLyricNetEase
     [Plugins("网易云Lrc歌词下载插件", "Zony", "从网易云下载lrc格式的歌词。", 1420, PluginTypesEnum.LrcSource)]
     public class LibLyricNetEase : IPlug_Lrc
     {
-        private NetUtils m_netUtils;
+        private NetUtils m_netUtils = new NetUtils();
 
         public PluginsAttribute PlugInfo { get; set; }
 
         public bool DownLoad(string artist, string songName, out byte[] lrcData, bool isOpenTrans)
         {
-            m_netUtils = new NetUtils();
             lrcData = null;
             const string _requestUrl = @"http://music.163.com/api/search/get/web?csrf_token=";
             const string _referer = @"http://music.163.com";
