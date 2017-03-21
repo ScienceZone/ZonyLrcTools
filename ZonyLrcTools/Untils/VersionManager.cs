@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using LibNet;
+using ZonyLrcTools.EnumDefine;
 
 namespace ZonyLrcTools.Untils
 {
@@ -33,23 +34,31 @@ namespace ZonyLrcTools.Untils
         {
             return Task.Run(() =>
             {
-                string _resultStr = new NetUtils().HttpGet("http://www.myzony.com/update.ver", Encoding.Default);
-                string[] _result = _resultStr.TrimEnd(',').Split(',');
-
-                Version _newVersion = new Version(_result[0]);
-                if (_newVersion > CurrentVersion)
+                try
                 {
-                    // 对更新信息进行换行操作
-                    var _sb = new StringBuilder();
-                    foreach (var item in _result[2].Split('|'))
-                    {
-                        _sb.Append(item + "\r\n");
-                    }
+                    string _resultStr = new NetUtils().HttpGet("http://www.myzony.com/update.ver", Encoding.Default);
+                    string[] _result = _resultStr.TrimEnd(',').Split(',');
 
-                    Info = new NewVersionInfo() { DownLoadUrl = _result[1], UpdateInfo = _sb.ToString(), NewVersion = _newVersion.ToString() };
-                    return true;
+                    Version _newVersion = new Version(_result[0]);
+                    if (_newVersion > CurrentVersion)
+                    {
+                        // 对更新信息进行换行操作
+                        var _sb = new StringBuilder();
+                        foreach (var item in _result[2].Split('|'))
+                        {
+                            _sb.Append(item + "\r\n");
+                        }
+
+                        Info = new NewVersionInfo() { DownLoadUrl = _result[1], UpdateInfo = _sb.ToString(), NewVersion = _newVersion.ToString() };
+                        return true;
+                    }
+                    else return false;
                 }
-                else return false;
+                catch (Exception E)
+                {
+                    LogManager.WriteLogRecord(StatusHeadEnum.EXP, "网络异常，请关闭代理软件或者检查网络再次重试!", E);
+                    return false;
+                }
             }).Result;
         }
     }

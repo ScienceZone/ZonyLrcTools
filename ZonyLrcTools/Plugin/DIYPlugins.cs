@@ -1,23 +1,27 @@
 ﻿using LibPlug.Interface;
 using LibPlug.Model;
+using ZonyLrcTools.Untils;
 
 namespace ZonyLrcTools.Plugin
 {
     public class DIYPlugins : BasePlugins<IPlug_DIY>
     {
+        private ResourceModel _resource = null;
         public int LoadPlugins(ResourceModel res)
         {
-            int _loadCount = base.LoadPlugins();
-            if (_loadCount != 0)
+            _resource = res;
+            return base.LoadPlugins();
+        }
+
+        public void InitPlugins()
+        {
+            foreach (var item in Plugins)
             {
-                // 初始化高级插件资源
-                foreach (var item in Plugins)
+                if (SettingManager.SetValue.PluginsStatus.Find(x => x.PluginName == item.PlugInfo.PlugName).IsOpen)
                 {
-                    item.Init(res);
+                    item.Init(_resource);
                 }
             }
-
-            return _loadCount;
         }
 
         protected override void CallBack()

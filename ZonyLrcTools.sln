@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "taglib-sharp", "LibTagLib\t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSingleLyricSearch", "LibSingleLyricSearch\LibSingleLyricSearch.csproj", "{96130558-9D29-4D2D-9207-88CBB2CDC93D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibLyricQQMusic", "LibQQMusic\LibLyricQQMusic.csproj", "{2EDFE2A3-2BCA-40A5-A5EF-B783E949C1DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{96130558-9D29-4D2D-9207-88CBB2CDC93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96130558-9D29-4D2D-9207-88CBB2CDC93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96130558-9D29-4D2D-9207-88CBB2CDC93D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EDFE2A3-2BCA-40A5-A5EF-B783E949C1DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EDFE2A3-2BCA-40A5-A5EF-B783E949C1DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EDFE2A3-2BCA-40A5-A5EF-B783E949C1DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EDFE2A3-2BCA-40A5-A5EF-B783E949C1DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

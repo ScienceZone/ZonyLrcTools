@@ -47,7 +47,7 @@ namespace ZonyLrcTools.Untils
         {
             try
             {
-            	if(!File.Exists(m_confFilePath))
+                if (!File.Exists(m_confFilePath))
                 {
                     defaultSetting();
                     return true;
@@ -59,10 +59,12 @@ namespace ZonyLrcTools.Untils
                     {
                         string _json = _sr.ReadToEnd();
                         SetValue = JsonConvert.DeserializeObject<SetValue>(_json);
+                        SetValue.PluginsStatus = comparePluginStatus(SetValue.PluginsStatus);
                         return true;
                     }
                 }
-            }catch
+            }
+            catch
             {
                 return false;
             }
@@ -84,8 +86,9 @@ namespace ZonyLrcTools.Untils
             SetValue.PluginsStatus = new List<PluginStatusModel>();
             SetValue.IsDownTranslate = true;
             // 加载所有默认开启的插件
-            loadPluginStatus(GlobalMember.LrcPluginsManager);
-            loadPluginStatus(GlobalMember.MusicTagPluginsManager);
+            SetValue.PluginsStatus.AddRange(loadPluginStatus(GlobalMember.LrcPluginsManager));
+            SetValue.PluginsStatus.AddRange(loadPluginStatus(GlobalMember.MusicTagPluginsManager));
+            SetValue.PluginsStatus.AddRange(loadPluginStatus(GlobalMember.DIYPluginsManager));
         }
 
         /// <summary>
@@ -93,16 +96,37 @@ namespace ZonyLrcTools.Untils
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="pluginsMgr"></param>
-        private static void loadPluginStatus<T>(BasePlugins<T> pluginsMgr)
+        private static List<PluginStatusModel> loadPluginStatus<T>(BasePlugins<T> pluginsMgr)
         {
+            List<PluginStatusModel> _list = new List<PluginStatusModel>();
             foreach (var item in pluginsMgr.PluginInfos)
             {
-                SetValue.PluginsStatus.Add(new PluginStatusModel()
+                _list.Add(new PluginStatusModel()
                 {
                     IsOpen = true,
                     PluginName = item.PlugName
                 });
             }
+            return _list;
+        }
+
+        /// <summary>
+        /// 比较最新的插件情况并返回
+        /// </summary>
+        /// <returns></returns>
+        private static List<PluginStatusModel> comparePluginStatus(List<PluginStatusModel> oldStatusList)
+        {
+            List<PluginStatusModel> _result = new List<PluginStatusModel>();
+            _result.AddRange(loadPluginStatus(GlobalMember.LrcPluginsManager));
+            _result.AddRange(loadPluginStatus(GlobalMember.MusicTagPluginsManager));
+            _result.AddRange(loadPluginStatus(GlobalMember.DIYPluginsManager));
+
+            foreach (var _oldItem in oldStatusList)
+            {
+                var _newItem = _result.Find(x => x.PluginName == _oldItem.PluginName);
+                if (_newItem != null) _newItem.IsOpen = _oldItem.IsOpen;
+            }
+            return _result;
         }
     }
 
@@ -149,7 +173,7 @@ namespace ZonyLrcTools.Untils
         /// </summary>
         public bool IsDownTranslate { get; set; }
     }
-    
+
     /// <summary>
     /// 插件状态模型
     /// </summary>

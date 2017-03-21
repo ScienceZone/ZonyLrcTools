@@ -152,7 +152,7 @@ namespace TagLib.Audible
 			}
 			catch (Exception e)
 			{
-				//
+                throw e;
 			}
 			
 			if (data.Count != 0)
